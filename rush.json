@@ -1,0 +1,21 @@
+
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
+  
+    "npmVersion": "7.17.0",
+    "rushVersion": "5.47.0",
+    "projectFolderMaxDepth": 4,
+    "projects": [
+      {
+        "packageName": "@nevware21/grunt-plugins-shared-utils",
+        "projectFolder": "shared",
+        "shouldPublish": false
+      },
+      {
+        "packageName": "@nevware21/grunt-ts-plugin",
+        "projectFolder": "ts-plugin",
+        "shouldPublish": true
+      }
+    ]
+  }
+  

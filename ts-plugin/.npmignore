@@ -1,0 +1,11 @@
+# NPM Ignore
+
+# ignore everything
+*
+
+# ... but these files
+!package.json
+!/CHANGELOG.md
+!/README.md
+!/LICENSE
+!tasks/**
