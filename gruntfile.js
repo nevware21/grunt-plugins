@@ -76,10 +76,6 @@ module.exports = function (grunt) {
     // Actually load this plugin's task(s).
     grunt.loadTasks('tasks');
     grunt.loadNpmTasks("@nevware21/grunt-ts-plugin")
-    // These plugins provide necessary tasks.
-    //grunt.loadTasks("./localtasks/grunt-ts/tasks");
-    //grunt.loadTasks("./localtasks2/ts-plugin/tasks");
-    //grunt.loadTasks("./ts-plugin/tasks");
 
     grunt.registerTask("ts_plugin", [ "ts:ts_plugin" ]);
     grunt.registerTask("shared_utils", [ "ts:shared_utils" ]);
