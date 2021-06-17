@@ -714,7 +714,7 @@
     "node_modules/@rush-temp/grunt-ts-plugin": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-ts-plugin.tgz",
-      "integrity": "sha512-Q+Qfi81hgAe9+KoFCsEn4XzU6HV1xzWqcdcszgLelWNSo/jLSOLnxR3b8VBEw/+AQ0C0ZCOy+BKEjetUBEzBVA==",
+      "integrity": "sha512-J0YqTPWdQxTdu9faO8pLu4WVr6fLDqLBKCD9bCb/OJomGyhzX9YkqW2JO5pPWihMtPBiFetaV82T4bwKYkZUZg==",
       "dependencies": {
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
@@ -3209,9 +3209,9 @@
       }
     },
     "node_modules/rollup": {
-      "version": "2.52.0",
-      "resolved": "https://registry.npmjs.org/rollup/-/rollup-2.52.0.tgz",
-      "integrity": "sha512-lSkBDGsVoXjqaBf7dsHwxBJz+p+hJEP72P+LOitA0yVs+Nzxj76FidkZE2thrmhjwGqLYiJo39opi7mAfaQ/Vg==",
+      "version": "2.52.1",
+      "resolved": "https://registry.npmjs.org/rollup/-/rollup-2.52.1.tgz",
+      "integrity": "sha512-/SPqz8UGnp4P1hq6wc9gdTqA2bXQXGx13TtoL03GBm6qGRI6Hm3p4Io7GeiHNLl0BsQAne1JNYY+q/apcY933w==",
       "bin": {
         "rollup": "dist/bin/rollup"
       },
@@ -4501,7 +4501,7 @@
     },
     "@rush-temp/grunt-ts-plugin": {
       "version": "file:projects\\grunt-ts-plugin.tgz",
-      "integrity": "sha512-Q+Qfi81hgAe9+KoFCsEn4XzU6HV1xzWqcdcszgLelWNSo/jLSOLnxR3b8VBEw/+AQ0C0ZCOy+BKEjetUBEzBVA==",
+      "integrity": "sha512-J0YqTPWdQxTdu9faO8pLu4WVr6fLDqLBKCD9bCb/OJomGyhzX9YkqW2JO5pPWihMtPBiFetaV82T4bwKYkZUZg==",
       "requires": {
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
@@ -6440,9 +6440,9 @@
       }
     },
     "rollup": {
-      "version": "2.52.0",
-      "resolved": "https://registry.npmjs.org/rollup/-/rollup-2.52.0.tgz",
-      "integrity": "sha512-lSkBDGsVoXjqaBf7dsHwxBJz+p+hJEP72P+LOitA0yVs+Nzxj76FidkZE2thrmhjwGqLYiJo39opi7mAfaQ/Vg==",
+      "version": "2.52.1",
+      "resolved": "https://registry.npmjs.org/rollup/-/rollup-2.52.1.tgz",
+      "integrity": "sha512-/SPqz8UGnp4P1hq6wc9gdTqA2bXQXGx13TtoL03GBm6qGRI6Hm3p4Io7GeiHNLl0BsQAne1JNYY+q/apcY933w==",
       "requires": {
         "fsevents": "~2.3.2"
       },

@@ -1,7 +1,7 @@
 {
     "name": "@nevware21/grunt-ts-plugin",
     "description": "TypeScript Compilation Plugin for GruntJS",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "homepage": "https://github.com/nevware21/grunt-plugins",
     "author": {
         "name": "Nevware21",
@@ -43,7 +43,7 @@
     },
     "devDependencies": {
         "@types/grunt": "0.4.25",
-        "@nevware21/grunt-plugins-shared-utils": "0.2.0",
+        "@nevware21/grunt-plugins-shared-utils": "0.2.1",
         "grunt": "^1.4.0",
         "grunt-cli": "^1.4.3",
         "typescript": "^4.2.0",
