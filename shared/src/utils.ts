@@ -23,6 +23,10 @@ export function isPromise<T>(value: any): value is Promise<T> {
     return isPromiseLike(value) && typeof (value as any).catch === "function";
 }
 
+export function isString(value: any): value is string {
+    return typeof value === "string";
+}
+
 /**
  * Get a unique temporary file
  *

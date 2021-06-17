@@ -52,6 +52,10 @@ export interface ITsCommonOptions {
  }
 
 export interface ITsPluginOptions extends ITsCommonOptions {
+    /**
+     * An array of source files to be "added" to all tasks as either files or include for each task tsconfig
+     */
+     src?: string | string[];
 }
 
 export interface ITsPluginTaskOptions extends ITsCommonOptions {
@@ -63,13 +67,13 @@ export interface ITsPluginTaskOptions extends ITsCommonOptions {
     /**
      * An array of source files to be "added" to the tsconfig as either files or include
      */
-    src?: string[],
+    src?: string | string[];
 
     /**
      * Concatenate the output into a single file using the tsc --out parameter.
      * If the tscConfig also includes an ```outDir``` this value will be ignored
      */
-    out?: string
+    out?: string;
 }
 
  

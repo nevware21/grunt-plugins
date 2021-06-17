@@ -8,7 +8,7 @@
  * Licensed under the MIT license.
  */
 
-import { getGruntMultiTaskOptions, resolveValue } from "@nevware21/grunt-plugins-shared-utils";
+import { getGruntMultiTaskOptions, resolveValue, isString } from "@nevware21/grunt-plugins-shared-utils";
 import { ErrorHandlerResponse } from "./interfaces/IErrorHandler";
 import { ITsPluginOptions, ITsPluginTaskOptions } from "./interfaces/ITsPluginOptions";
 import { ITypeScriptCompilerOptions, TypeScriptCompiler } from "./TypeScript";
@@ -21,6 +21,18 @@ const buildFailingErrors = [
     "6059",
     "6082"
 ];
+
+function _addFiles(files: string[], src: string | string[]) {
+    if (src) {
+        if (isString(src)) {
+            files.push(src);
+        } else if (Array.isArray(src)) {
+            files = files.concat(src);
+        }
+    }
+
+    return files;
+}
 
 export function pluginFn (grunt: IGrunt) {
     grunt.registerMultiTask("ts", "Compile TypeScript project", function () {
@@ -79,8 +91,10 @@ export function pluginFn (grunt: IGrunt) {
 
         (async function () {
             let ts = new TypeScriptCompiler(grunt, tsOptions);
-
-            let response = await ts.compile(taskOptions.src || []);
+            let srcFiles: string[] = [];
+            srcFiles = _addFiles(srcFiles, resolveValue(taskOptions.src, options.src));
+            
+            let response = await ts.compile(srcFiles);
             if (!response.isSuccess && response.errors) {
                 response.errors.forEach((value) => {
                     grunt.log.error(value);
