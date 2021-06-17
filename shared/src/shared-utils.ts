@@ -12,6 +12,6 @@ export { IExecuteResponse } from "./interfaces/IExecuteResponse";
 export { doExecute } from "./execute";
 export { getRandomHex } from "./random";
 export {
-    isUndefined, isPromiseLike, isPromise, 
+    isUndefined, isPromiseLike, isPromise, isString, 
     getTempFile, getGruntMultiTaskOptions, resolveValue, quoteIfRequired, findCommonRoot, findCommonPath, normalizePath
 } from "./utils";

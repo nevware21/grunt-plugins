@@ -63,13 +63,14 @@ The options can be specified at the global ```options``` or ```task``` level, wi
 | Name | Type | Description
 |------|------|------------
 | tsconfig | string | The path to the tsConfig file to use, when specified
-| src | string[] | An array of source files to be "added" to the tsconfig as either files or include
+| src | string | string[] | A single string or an array of source files to be "added" to the tsconfig as either files or include. When a string it assumes a single entry, there is not encoded list etc.
 | out | string |  Concatenate the output into a single file using the tsc --out parameter. If the tscConfig also includes an ```outDir``` this value will be ignored
 
 #### __Common options:__ Global and Task
 
 | Name | Type | Description
 |------|------|------------
+| src | string | string[] | A single string or an array of source files to included in each task.
 | additionalFlags | String<br />Default: Empty String | Pass in additional flags to the tsc compiler (added to the end of the command line)
 | failOnTypeErrors | Boolean<br/>Defaults: false | Should the compile run fail when type errors are identified
 | tscPath | String<br>Defaults: reverse scan from project path for node_modules/typescript/bin folder | Identify the root path of the version of the TypeScript is installed, this may include be either the root folder of where the node_modules/typescript/bin folder is located or the location of the command-line version of tsc.
