@@ -83,6 +83,7 @@ export class TypeScriptCompiler {
                 tsConfig = _readTsConfig(tsConfigFile)
                 compilerOptions = tsConfig.compilerOptions || compilerOptions;
                 let tsConfigRoot = path.resolve(findCommonPath([tsConfigFile]));
+                let rootDir = null;
 
                 if (compilerOptions.rootDir) {
                     let projectRootDir = path.resolve(findCommonPath([tsConfigFile]), compilerOptions.rootDir);
@@ -93,7 +94,7 @@ export class TypeScriptCompiler {
                     }
 
                     if (!fs.existsSync(path.resolve(projectRootDir))) {
-                        let rootDir = path.resolve(compilerOptions.rootDir);
+                        rootDir = path.resolve(compilerOptions.rootDir);
 
                         if (rootDir !== tsConfigRoot && fs.existsSync(rootDir)) {
                             grunt.log.warn(("The rootDir specified in your project file [" + tsConfigFile + "] is invalid as it assumes the current working directory.\n - [" + compilerOptions.rootDir + "] resolves to [" + projectRootDir + "]\n - Overridding to use: [" + rootDir + "]").yellow);
@@ -124,16 +125,14 @@ export class TypeScriptCompiler {
                 }
 
                 let outParam = options.out;
-                if (outParam && compilerOptions.outDir) {
-                    grunt.log.warn(("The 'out' parameter is not compatible usage of 'outDir' within the TsConfig project file -- ignoring the out parameter").magenta);
-                    outParam = undefined;
-                }
-
-                let outFile = resolveValue(outParam, compilerOptions.out, compilerOptions.outFile);
-                if (outFile) {
-                    outFile = path.resolve(outFile);
-
-                    args.push("--out " + quoteIfRequired(outFile));
+                if (outParam) {
+                    if (compilerOptions.outDir) {
+                        grunt.log.warn(("The 'out' parameter is not compatible usage of 'outDir' within the TsConfig project file -- ignoring the out parameter").magenta);
+                        outParam = undefined;
+                    } else if (!compilerOptions.outFile && !compilerOptions.out) {
+                        let outFile = rootDir ? path.resolve(rootDir, outParam) : path.resolve(outParam);
+                        args.push("--out " + quoteIfRequired(outFile));
+                    }
                 }
 
                 if (tsFiles && tsFiles.length > 0) {
