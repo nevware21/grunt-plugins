@@ -14,7 +14,7 @@ Note: These plugins have currently only been tested with the Grunt `1.4.0`.
 
 # Quickstart
 
-## grunt-ts-plugin
+## [grunt-ts-plugin](./ts-plugin/README.md)
 
 `npm install @nevware21/grunt-ts-plugin --save-dev`
 
@@ -32,7 +32,29 @@ module.exports = function(grunt) {
   grunt.initConfig({
     ts: {
       default : {
-        tsconfig: './tsconfig.json'
+        debug: false
+      },
+      task1: {
+        // Just use the tsconfig
+        tsconfig: './task1/tsconfig.json'
+      },
+      task2: {
+        // Use the tsconfig and add the additional src files, you *could* call a function to return
+        // a dynamic array with the src files. The task doesn't call the function it expects a string[].
+        tsconfig: './task1/tsconfig.json',
+        src: [
+          './src/**/*.ts'
+        ]
+      },
+      task3: {
+        // As with task2, but also concatenate the output into a single file, this is the same as defining
+        // the out or outFile paramater in the compileOptions within the tsconfig.json.
+        // If you have both outDir in the tsConfig.json and this parameter -- this value will be ignored.
+        tsconfig: './task1/tsconfig.json',
+        src: [
+          './src/**/*.ts'
+        ],
+        out: './out/task1-dist.js'
       }
     }
   });

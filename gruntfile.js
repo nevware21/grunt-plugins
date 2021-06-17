@@ -55,6 +55,7 @@ module.exports = function (grunt) {
         ts: {
             options: {
                 debug: true,
+                logOutput: false,
                 comments: true
             },
             "shared_utils": {
@@ -65,9 +66,9 @@ module.exports = function (grunt) {
             },
             "ts_plugin": {
                 tsconfig: "./ts-plugin/tsconfig.json",
-                src: [
-                    './ts-plugin/src/**/*.ts'
-                ],
+                // src: [
+                //     './ts-plugin/src/**/*.ts'
+                // ],
                 //out: "ts-plugin/tasks/ts.js"
             }
         }

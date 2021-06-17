@@ -58,9 +58,9 @@
       "integrity": "sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg=="
     },
     "node_modules/@azure/core-http": {
-      "version": "1.2.5",
-      "resolved": "https://registry.npmjs.org/@azure/core-http/-/core-http-1.2.5.tgz",
-      "integrity": "sha512-SjjjqaO9emyn+XM0Qyzt5RsgddOIpGAfhWH6+d8X6/HbhFrtvXLJIz85EMoIO+T4rX3ISStik9MD5LMW9IZg4A==",
+      "version": "1.2.6",
+      "resolved": "https://registry.npmjs.org/@azure/core-http/-/core-http-1.2.6.tgz",
+      "integrity": "sha512-odtH7UMKtekc5YQ86xg9GlVHNXR6pq2JgJ5FBo7/jbOjNGdBqcrIVrZx2bevXVJz/uUTSx6vUf62gzTXTfqYSQ==",
       "dependencies": {
         "@azure/abort-controller": "^1.0.0",
         "@azure/core-asynciterator-polyfill": "^1.0.0",
@@ -73,7 +73,7 @@
         "node-fetch": "^2.6.0",
         "process": "^0.11.10",
         "tough-cookie": "^4.0.0",
-        "tslib": "^2.0.0",
+        "tslib": "^2.2.0",
         "tunnel": "^0.0.6",
         "uuid": "^8.3.0",
         "xml2js": "^0.4.19"
@@ -714,7 +714,7 @@
     "node_modules/@rush-temp/grunt-ts-plugin": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-ts-plugin.tgz",
-      "integrity": "sha512-DO+NulZj1taOjTqZr4DSHn5E9OWSyYFSv8RnnEPq1DcVlZL3aFzzuu5beKCGl0u16vAv0eCMoYTyxVt1bgltQw==",
+      "integrity": "sha512-Q+Qfi81hgAe9+KoFCsEn4XzU6HV1xzWqcdcszgLelWNSo/jLSOLnxR3b8VBEw/+AQ0C0ZCOy+BKEjetUBEzBVA==",
       "dependencies": {
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
@@ -3209,9 +3209,9 @@
       }
     },
     "node_modules/rollup": {
-      "version": "2.51.2",
-      "resolved": "https://registry.npmjs.org/rollup/-/rollup-2.51.2.tgz",
-      "integrity": "sha512-ReV2eGEadA7hmXSzjxdDKs10neqH2QURf2RxJ6ayAlq93ugy6qIvXMmbc5cWMGCDh1h5T4thuWO1e2VNbMq8FA==",
+      "version": "2.52.0",
+      "resolved": "https://registry.npmjs.org/rollup/-/rollup-2.52.0.tgz",
+      "integrity": "sha512-lSkBDGsVoXjqaBf7dsHwxBJz+p+hJEP72P+LOitA0yVs+Nzxj76FidkZE2thrmhjwGqLYiJo39opi7mAfaQ/Vg==",
       "bin": {
         "rollup": "dist/bin/rollup"
       },
@@ -3219,7 +3219,7 @@
         "node": ">=10.0.0"
       },
       "optionalDependencies": {
-        "fsevents": "~2.3.1"
+        "fsevents": "~2.3.2"
       }
     },
     "node_modules/rollup/node_modules/fsevents": {
@@ -3664,16 +3664,16 @@
       }
     },
     "node_modules/typedoc": {
-      "version": "0.20.36",
-      "resolved": "https://registry.npmjs.org/typedoc/-/typedoc-0.20.36.tgz",
-      "integrity": "sha512-qFU+DWMV/hifQ9ZAlTjdFO9wbUIHuUBpNXzv68ZyURAP9pInjZiO4+jCPeAzHVcaBCHER9WL/+YzzTt6ZlN/Nw==",
+      "version": "0.20.37",
+      "resolved": "https://registry.npmjs.org/typedoc/-/typedoc-0.20.37.tgz",
+      "integrity": "sha512-9+qDhdc4X00qTNOtii6QX2z7ndAeWVOso7w3MPSoSJdXlVhpwPfm1yEp4ooKuWA9fiQILR8FKkyjmeqa13hBbw==",
       "dependencies": {
         "colors": "^1.4.0",
         "fs-extra": "^9.1.0",
         "handlebars": "^4.7.7",
         "lodash": "^4.17.21",
         "lunr": "^2.3.9",
-        "marked": "^2.0.3",
+        "marked": "~2.0.3",
         "minimatch": "^3.0.0",
         "progress": "^2.0.3",
         "shelljs": "^0.8.4",
@@ -3989,9 +3989,9 @@
       }
     },
     "@azure/core-http": {
-      "version": "1.2.5",
-      "resolved": "https://registry.npmjs.org/@azure/core-http/-/core-http-1.2.5.tgz",
-      "integrity": "sha512-SjjjqaO9emyn+XM0Qyzt5RsgddOIpGAfhWH6+d8X6/HbhFrtvXLJIz85EMoIO+T4rX3ISStik9MD5LMW9IZg4A==",
+      "version": "1.2.6",
+      "resolved": "https://registry.npmjs.org/@azure/core-http/-/core-http-1.2.6.tgz",
+      "integrity": "sha512-odtH7UMKtekc5YQ86xg9GlVHNXR6pq2JgJ5FBo7/jbOjNGdBqcrIVrZx2bevXVJz/uUTSx6vUf62gzTXTfqYSQ==",
       "requires": {
         "@azure/abort-controller": "^1.0.0",
         "@azure/core-asynciterator-polyfill": "^1.0.0",
@@ -4004,7 +4004,7 @@
         "node-fetch": "^2.6.0",
         "process": "^0.11.10",
         "tough-cookie": "^4.0.0",
-        "tslib": "^2.0.0",
+        "tslib": "^2.2.0",
         "tunnel": "^0.0.6",
         "uuid": "^8.3.0",
         "xml2js": "^0.4.19"
@@ -4501,7 +4501,7 @@
     },
     "@rush-temp/grunt-ts-plugin": {
       "version": "file:projects\\grunt-ts-plugin.tgz",
-      "integrity": "sha512-DO+NulZj1taOjTqZr4DSHn5E9OWSyYFSv8RnnEPq1DcVlZL3aFzzuu5beKCGl0u16vAv0eCMoYTyxVt1bgltQw==",
+      "integrity": "sha512-Q+Qfi81hgAe9+KoFCsEn4XzU6HV1xzWqcdcszgLelWNSo/jLSOLnxR3b8VBEw/+AQ0C0ZCOy+BKEjetUBEzBVA==",
       "requires": {
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
@@ -6440,11 +6440,11 @@
       }
     },
     "rollup": {
-      "version": "2.51.2",
-      "resolved": "https://registry.npmjs.org/rollup/-/rollup-2.51.2.tgz",
-      "integrity": "sha512-ReV2eGEadA7hmXSzjxdDKs10neqH2QURf2RxJ6ayAlq93ugy6qIvXMmbc5cWMGCDh1h5T4thuWO1e2VNbMq8FA==",
+      "version": "2.52.0",
+      "resolved": "https://registry.npmjs.org/rollup/-/rollup-2.52.0.tgz",
+      "integrity": "sha512-lSkBDGsVoXjqaBf7dsHwxBJz+p+hJEP72P+LOitA0yVs+Nzxj76FidkZE2thrmhjwGqLYiJo39opi7mAfaQ/Vg==",
       "requires": {
-        "fsevents": "~2.3.1"
+        "fsevents": "~2.3.2"
       },
       "dependencies": {
         "fsevents": {
@@ -6772,16 +6772,16 @@
       }
     },
     "typedoc": {
-      "version": "0.20.36",
-      "resolved": "https://registry.npmjs.org/typedoc/-/typedoc-0.20.36.tgz",
-      "integrity": "sha512-qFU+DWMV/hifQ9ZAlTjdFO9wbUIHuUBpNXzv68ZyURAP9pInjZiO4+jCPeAzHVcaBCHER9WL/+YzzTt6ZlN/Nw==",
+      "version": "0.20.37",
+      "resolved": "https://registry.npmjs.org/typedoc/-/typedoc-0.20.37.tgz",
+      "integrity": "sha512-9+qDhdc4X00qTNOtii6QX2z7ndAeWVOso7w3MPSoSJdXlVhpwPfm1yEp4ooKuWA9fiQILR8FKkyjmeqa13hBbw==",
       "requires": {
         "colors": "^1.4.0",
         "fs-extra": "^9.1.0",
         "handlebars": "^4.7.7",
         "lodash": "^4.17.21",
         "lunr": "^2.3.9",
-        "marked": "^2.0.3",
+        "marked": "~2.0.3",
         "minimatch": "^3.0.0",
         "progress": "^2.0.3",
         "shelljs": "^0.8.4",

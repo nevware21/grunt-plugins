@@ -15,6 +15,14 @@ export function isUndefined(value: any) {
     return value === undefined || typeof value === 'undefined';
 }
 
+export function isPromiseLike<T>(value: any): value is PromiseLike<T> {
+    return value && typeof value.then === "function";
+}
+
+export function isPromise<T>(value: any): value is Promise<T> {
+    return isPromiseLike(value) && typeof (value as any).catch === "function";
+}
+
 /**
  * Get a unique temporary file
  *
@@ -91,7 +99,7 @@ export function findCommonRoot(values: string[]) {
     }
 
     let sorted = values.slice(0).sort();
-    let firstValue = sorted[0];
+    let firstValue = sorted[0] as string;
     let lastValue = sorted[sorted.length - 1];
     let len = firstValue.length;
     let idx = 0;
@@ -103,7 +111,7 @@ export function findCommonRoot(values: string[]) {
 }
 
 export function findCommonPath(paths: string[], seperator?: string) {
-    let commonPath = findCommonRoot(paths);
+    let commonPath = findCommonRoot(paths.map((value) => normalizePath(value)));
     let endIdx = -1;
 
     if (commonPath) {
@@ -119,4 +127,12 @@ export function findCommonPath(paths: string[], seperator?: string) {
     }
 
     return commonPath.substring(0, endIdx);
+}
+
+export function normalizePath(path: string) {
+    if (path) {
+        return path.replace(/\\/g, "/");
+    }
+
+    return path || "";
 }

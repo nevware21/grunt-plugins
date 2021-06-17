@@ -1,7 +1,7 @@
 {
     "name": "@nevware21/grunt-ts-plugin",
     "description": "TypeScript Compilation Plugin for GruntJS",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "homepage": "https://github.com/nevware21/grunt-plugins",
     "author": {
         "name": "Nevware21",
@@ -11,11 +11,13 @@
         "grunt",
         "gruntplugin",
         "typescript",
-        "task"
+        "task",
+        "compiler",
+        "build"
     ],
     "scripts": {
         "clean": "grunt clean",
-        "build": "grunt ts_plugin && npm run package",
+        "build": "grunt ts_plugin --verbose && npm run package",
         "rebuild": "npm run build",
         "package": "rollup -c rollup.config.js",
         "test": "grunt ts_plugin_test",
@@ -31,7 +33,7 @@
     "licenses": [
         {
             "type": "MIT",
-            "url": "https://github.com/nevware21/grunt-plugins/blob/master/LICENSE-MIT"
+            "url": "https://github.com/nevware21/grunt-plugins/blob/master/LICENSE"
         }
     ],
     "engines": {
@@ -41,7 +43,7 @@
     },
     "devDependencies": {
         "@types/grunt": "0.4.25",
-        "@nevware21/grunt-plugins-shared-utils": "0.0.1",
+        "@nevware21/grunt-plugins-shared-utils": "0.2.0",
         "grunt": "^1.4.0",
         "grunt-cli": "^1.4.3",
         "typescript": "^4.2.0",
