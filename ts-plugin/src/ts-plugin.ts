@@ -29,7 +29,7 @@ export function pluginFn (grunt: IGrunt) {
         });
 
         let taskOptions = getGruntMultiTaskOptions<ITsPluginTaskOptions>(grunt, this);
-        let taskFiles = this.files || [];
+        //let taskFiles = this.files || [];
 
         if (options.debug) {
             grunt.log.verbose.writeln((" Options: [" + JSON.stringify(options) + "]").cyan);
@@ -79,7 +79,6 @@ export function pluginFn (grunt: IGrunt) {
 
         (async function () {
             let ts = new TypeScriptCompiler(grunt, tsOptions);
-            if (files )
 
             let response = await ts.compile(taskOptions.src || []);
             if (!response.isSuccess && response.errors) {
