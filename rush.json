@@ -2,19 +2,36 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
   
-    "npmVersion": "7.17.0",
+    "npmVersion": "7.18.1",
     "rushVersion": "5.47.0",
     "projectFolderMaxDepth": 4,
     "projects": [
       {
         "packageName": "@nevware21/grunt-plugins-shared-utils",
         "projectFolder": "shared",
-        "shouldPublish": false
+        "shouldPublish": false,
+        "cyclicDependencyProjects": [
+          "@nevware21/grunt-ts-plugin",
+          "@nevware21/grunt-eslint-ts"
+        ]
       },
       {
         "packageName": "@nevware21/grunt-ts-plugin",
         "projectFolder": "ts-plugin",
-        "shouldPublish": true
+        "shouldPublish": true,
+        "cyclicDependencyProjects": [
+          "@nevware21/grunt-ts-plugin",
+          "@nevware21/grunt-eslint-ts"
+        ]
+      },
+      {
+        "packageName": "@nevware21/grunt-eslint-ts",
+        "projectFolder": "eslint-ts-plugin",
+        "shouldPublish": true,
+        "cyclicDependencyProjects": [
+          "@nevware21/grunt-ts-plugin",
+          "@nevware21/grunt-eslint-ts"
+        ]
       }
     ]
   }

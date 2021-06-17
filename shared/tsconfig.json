@@ -15,7 +15,8 @@
       "outDir": "./dist-esm",
       "suppressImplicitAnyIndexErrors": true,
       "allowSyntheticDefaultImports": true,
-      "rootDir": "./src"
+      "rootDir": "./src",
+      "removeComments": true
     },
     "exclude": [
         "node_modules/"

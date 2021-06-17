@@ -217,7 +217,7 @@ This plugin does not support all of the features of `grunt-ts` but it does provi
 
 The primary difference in the way `grunt-ts` compiles `*.ts` files and this plugin, is that `grunt-ts` compiles files by passing them on the command-line, while this plugin always uses the `--project` switch to pass the provided project or a temporary created version with additional files included as `files` or `include` extensions.
 
-### Suppoer Configuration / differences
+### Supported Configuration / differences
 
 | grunt-ts | @nevware21/<br/>grunt-ts-plugin | Type | Notes
 | ---------|----------------------------|------|-------
@@ -236,9 +236,7 @@ Most of the `grunt-ts` options are related to command-line switches used by `tsc
 
 ## Contributing
 
-Thank you for your interest in contributing!
-
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+Read our [contributing guide](https://github.com/nevware21/grunt-plugins/blob/main/CONTRIBUTING.md) to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes.
 
 ## Release History
 

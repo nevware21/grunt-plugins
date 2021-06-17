@@ -1,9 +1,8 @@
 {
-    "name": "@nevware21/grunt-ts-plugin",
-    "description": "TypeScript Compilation Plugin for GruntJS",
-    "version": "0.2.2",
+    "name": "@nevware21/grunt-eslint-ts",
+    "description": "ESLint TypeScript Validation Plugin for GruntJS",
+    "version": "0.0.1",
     "homepage": "https://github.com/nevware21/grunt-plugins",
-    "license": "MIT",
     "author": {
         "name": "Nevware21",
         "email": "github@nevware21.com"
@@ -11,21 +10,15 @@
     "keywords": [
         "grunt",
         "gruntplugin",
-        "grunt-plugin",
         "typescript",
-        "javascript",
-        "task",
-        "compiler",
-        "build",
-        "grunt-ts",
-        "grunt-task"
+        "task"
     ],
     "scripts": {
         "clean": "grunt clean",
-        "build": "grunt ts_plugin --verbose && npm run package",
+        "build": "grunt eslint_ts_plugin --verbose && npm run package",
         "rebuild": "npm run build",
         "package": "rollup -c rollup.config.js",
-        "test": "grunt ts_plugin_test",
+        "test": "grunt eslint_ts_plugin_test",
         "lint": "tslint -p tsconfig.json"
     },
     "repository": {
@@ -38,7 +31,7 @@
     "licenses": [
         {
             "type": "MIT",
-            "url": "https://github.com/nevware21/grunt-plugins/blob/main/ts-plugin/LICENSE"
+            "url": "https://github.com/nevware21/grunt-plugins/blob/master/LICENSE"
         }
     ],
     "engines": {
@@ -47,6 +40,8 @@
     "dependencies": {
     },
     "devDependencies": {
+        "@types/eslint": "^7.2.13",
+        "@types/estree": "^0.0.48",
         "@types/grunt": "0.4.25",
         "@nevware21/grunt-plugins-shared-utils": "0.2.2",
         "@nevware21/grunt-ts-plugin": "0.2.2",
@@ -54,12 +49,18 @@
         "grunt": "^1.4.0",
         "grunt-cli": "^1.4.3",
         "typescript": "^4.2.0",
+        "typedoc": "^0.20.36",
         "rollup": "^2.51.2",
         "@rollup/plugin-commonjs": "^19.0.0",
-        "@rollup/plugin-node-resolve": "^13.0.0"
+        "@rollup/plugin-node-resolve": "^13.0.0",
+        "@rollup/plugin-json": "^4.1.0"
     },
     "peerDependencies": {
         "grunt": ">=1",
-        "typescript": ">=1"
+        "typescript": ">=1",
+        "eslint": ">=7",
+        "@typescript-eslint/eslint-plugin": "*",
+        "@typescript-eslint/parser": "*",
+        "eslint-plugin-security": "*"
     }
 }

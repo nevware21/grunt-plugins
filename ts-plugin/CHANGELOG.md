@@ -1,3 +1,11 @@
+# v0.3.0
+
+## Changelog
+
+- Reworked options handling and logging
+- Fixed bug with failOnTypeErrors and additionalFlags not getting inherited from default options
+- Changed default for failOnTypeErrors to true
+
 # v0.2.2
 
 ## Changelog

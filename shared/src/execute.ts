@@ -1,4 +1,3 @@
-/// <reference types="grunt" />
 /*
  * @nevware21/grunt-ts-plugins
  * https://github.com/nevware21/grunt-plugins
@@ -8,11 +7,12 @@
  */
 
 import { IExecuteResponse } from "./interfaces/IExecuteResponse";
+import { IGruntWrapper } from "./interfaces/IGruntWrapper";
 
-export function doExecute(grunt: IGrunt, args: string[]): Promise<IExecuteResponse> {
-    return new Promise<IExecuteResponse>((resolve, reject) => {
+export function doExecute(grunt: IGruntWrapper, args: string[]): Promise<IExecuteResponse> {
+    return new Promise<IExecuteResponse>((resolve) => {
         // Log the complete running command line
-        grunt.log.verbose.writeln("Executing: [" + (args.join(" ")).cyan + "]")
+        grunt.logVerbose("Executing: [" + (args.join(" ")).cyan + "]")
         grunt.util.spawn({
             cmd: process.execPath,
             args: args
