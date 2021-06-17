@@ -9,4 +9,5 @@
 export interface ICompileResponse {
     time: number;
     isSuccess: boolean;
+    errors: string[];
 }

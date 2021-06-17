@@ -13,8 +13,10 @@ Unlike other plugins (such as [grunt-ts](https://www.npmjs.com/package/grunt-ts)
 
 ## Grunt-ts-plugin Features
 
- * Supports TypeScript Projects via [tsconfig.json](#tsconfig) via the ```tsc --project``` option.
+ * Supports TypeScript Projects via [tsconfig.json](#tsconfig) via the ```tsc --project``` option and therefore all features of the TypeScript ```tsc``` compiler.
  * Allows the developer to [select a custom TypeScript compiler version](#compiler) for their project, or even use a custom (in-house) version.
+ * Dynamically process the tsc errors to pass or fail the build
+ * Add "extra" files to an existing tsconfig.json via the ```src``` properties, these are dynamically added to the tsconfig.json ```files``` or ```include``` properties.
 
 ### Unsupported Grunt features
 
@@ -54,13 +56,28 @@ module.exports = function(grunt) {
 
 ### Options
 
+The options can be specified at the global ```options``` or ```task``` level, with the task level values overridding any value defined in the global options
+
+#### __Task only level options__
+
 | Name | Type | Description
 |------|------|------------
-| debug | Boolean<br/>Defaults: False | Log additional debug messages as verbose grunt messages
+| tsconfig | string | The path to the tsConfig file to use, when specified
+| src | string[] | An array of source files to be "added" to the tsconfig as either files or include
+| out | string |  Concatenate the output into a single file using the tsc --out parameter. If the tscConfig also includes an ```outDir``` this value will be ignored
+
+#### __Common options:__ Global and Task
+
+| Name | Type | Description
+|------|------|------------
 | additionalFlags | String<br />Default: Empty String | Pass in additional flags to the tsc compiler (added to the end of the command line)
-| failOnTypeErrors | Boolean<br/>Defaults: False | Should the compile run fail when type errors are identified
+| failOnTypeErrors | Boolean<br/>Defaults: false | Should the compile run fail when type errors are identified
 | tscPath | String<br>Defaults: reverse scan from project path for node_modules/typescript/bin folder | Identify the root path of the version of the TypeScript is installed, this may include be either the root folder of where the node_modules/typescript/bin folder is located or the location of the command-line version of tsc.
-| [compiler](#compiler) | String<br/ >Defaults: to "tsc" within the located or defined tscPath | Identify the complete path to the command line version of tsc
+| compiler | String<br/ >Defaults: to "tsc" within the located or defined tscPath | Identify the complete path to the command line version of tsc
+| onError | ErrorHandlerResponse<br />| This callback function will be called when an error matching "error: TS\d+:" is found, the errorNumber is the detected value and line is the entire line containing the error message.
+| debug | Boolean<br/>Defaults: false | Log additional debug messages as verbose grunt messages
+| logOutput | Boolean<br/>Defaults: false | Log the output of the execute response
+
 
 
 ```js
@@ -70,6 +87,72 @@ module.exports = function(grunt) {
         options: { // Shared options for all projects
             debug: true,
             comments: true
+        },
+        "shared_utils": {
+            tsconfig: "./shared/tsconfig.json"
+        },
+        "ts_plugin": {
+            debug: false,   // Override the default defined in the options
+            tsconfig: "./ts-plugin/tsconfig.json"
+        }
+    }
+  });
+
+  grunt.loadNpmTasks("@nevware21/grunt-ts-plugin");
+  grunt.registerTask("ts_plugin", [ "ts:ts_plugin" ]);
+  grunt.registerTask("shared_utils", [ "ts:shared_utils" ]);
+};
+```
+
+### OnErrorHandler
+
+The onError callback allows you to re-classify errors that are emitted by the tsc compiler to cause them to be Ignored, just logged or cause a build failure.
+
+
+This error handler is called for every tsc output line that contains an error matching the ```error: TS(\d+):``` regular expression where the (\d+) group identifies the error number.
+
+```OnErrorHandler = (errorNumber: string, line?: string) => ErrorHandlerResponse;```
+
+| Param | Description
+|-------|-------------------
+| errorNumber | The identified error number
+| line | The full line containing the error
+
+Example Error line: ```error TS6059: File 'xxxx' is not under 'rootDir' 'xxx'. 'rootDir' is expected to contain all source files.```
+
+> Note:
+>
+> Even if you qualify an error to be ignored, if the tsc compiler returns a non-zero value this will still be treated as a failure. To "avoid" that scenario you will need to provide a compiler option and wrap the tsc compiler to change any returned value.
+
+#### ErrorHandlerResponse
+
+| Name | Value | Description
+|------|-------|------------
+| Undefined | 0 | The handler did not identify whether this should be treated as an error, warning or ignore. So follow normal built in handling. Null and undefined responses are treated the same as this value.
+| Ignore | 1 | Ignore this error with no logging
+| Silent | 2 | Include the error in the log, but don't treat as an error or warning
+| Error | 3 | Treat as an error and fail the build
+
+
+
+```js
+module.exports = function(grunt) {
+
+  // A simple onError handler which ignores error 6082
+  function tsErrorHandler(errorNo, line) {
+    if (errorNo === "6082") {
+      return 2;
+    }
+
+    return 0;
+  }
+
+  grunt.initConfig({
+    ts: {
+        options: { // Shared options for all projects
+            debug: true,
+            comments: true,
+            onError: tsErrorHandler
         },
         "shared_utils": {
             tsconfig: "./shared/tsconfig.json"

@@ -6,20 +6,27 @@
  * Licensed under the MIT license.
  */
 
-export interface ITsPluginOptions {
+import { OnErrorHandler } from "./IErrorHandler";
+
+export interface ITsCommonOptions {
     /**
      * Log additional debug messages as verbose grunt messages
      */
     debug?: boolean;
 
-    /**
+     /**
+     * Log the output of the execute response
+     */
+    logOutput?: boolean;
+ 
+     /**
      * Pass in additional flags to the tsc compiler (added to the end of the command line)
      */
     additionalFlags?: string | string[];
 
     /**
-     * Should the compile run fail when type errors are identified
-     */
+    * Should the compile run fail when type errors are identified
+    */
     failOnTypeErrors?: boolean;
  
     /**
@@ -37,52 +44,31 @@ export interface ITsPluginOptions {
     compiler?: string;
 
     /**
-     * If specified, outDir files are located relative to this location
+     * This callback function will be called when an error matching "error: TS\d+:" is found, the errorNumber is the
+     * detected value and line is the entire line containing the error message.
+     * @returns ErrorHandlerResponse value
      */
-    baseDir?: string;
+     onError?: OnErrorHandler;
+ }
+
+export interface ITsPluginOptions extends ITsCommonOptions {
 }
 
-export interface ITsPluginTaskOptions {
+export interface ITsPluginTaskOptions extends ITsCommonOptions {
     /**
-     * Log additional debug messages as verbose grunt messages
-     */
-     debug?: boolean;
-
-     /**
      * The path to the tsConfig file to use
      */
     tsconfig?: string;
 
     /**
-     * Pass in additional flags to the tsc compiler (added to the end of the command line)
+     * An array of source files to be "added" to the tsconfig as either files or include
      */
-    additionalFlags?: string | string[];
-
-    /**
-     * Should the compile run fail when type errors are identified
-     */
-    failOnTypeErrors?: boolean;
-
-    /**
-     * Identify the root path of the version of the TypeScript is installed, this may include be either
-     * the root folder of where the node_modules/typescript/bin folder is located or the location of
-     * the command-line version of tsc.
-     * Defaults to scanning the file system path to locate the node_modules/typescript/bin folder
-     */
-    tscPath?: string;
- 
-    /**
-     * Identify the complete path to the command line version of tsc
-     * Defaults to "tsc" within the located or defined tscPath
-     */
-    compiler?: string;
-
-    /**
-     * If specified, outDir files are located relative to this location
-     */
-    baseDir?: string;
-
     src?: string[],
+
+    /**
+     * Concatenate the output into a single file using the tsc --out parameter.
+     * If the tscConfig also includes an ```outDir``` this value will be ignored
+     */
     out?: string
 }
 

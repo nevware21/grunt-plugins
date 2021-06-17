@@ -1,3 +1,11 @@
+# v0.2.0
+
+## Changelog
+
+- Add additional features
+  - Support for ```src``` and ```out``` properties on the task to assist with migrating from [grunt-ts](https://www.npmjs.com/package/grunt-ts). Note: Not all of the grunt-ts features are supported and the generation approach is slightly different.
+  - Add an ```onError``` task callback to allow project driven pass / fail based on specific TypeScript errors.
+  
 # v0.1.0
 
 ## Changelog
