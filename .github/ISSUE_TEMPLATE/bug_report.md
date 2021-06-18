@@ -14,6 +14,10 @@ assignees: ''
  - Grunt Version
  - NPM Version
  - TypeScript Version
+ - Enable the ```debug``` option and include
+   - The grunt definition config 
+   - A copy of the source tsconfig.json
+   - The log entries which include the tsc version, temp tsConfig.json (if used) and the Invokiing line.
 
 **Expected behavior**
 

@@ -76,7 +76,7 @@ The options can be specified at the global ```options``` or ```task``` level, wi
 | tscPath | String<br>Defaults: reverse scan from project path for node_modules/typescript/bin folder | Identify the root path of the version of the TypeScript is installed, this may include be either the root folder of where the node_modules/typescript/bin folder is located or the location of the command-line version of tsc.
 | compiler | String<br/ >Defaults: to "tsc" within the located or defined tscPath | Identify the complete path to the command line version of tsc
 | onError | ErrorHandlerResponse<br />| This callback function will be called when an error matching "error: TS\d+:" is found, the errorNumber is the detected value and line is the entire line containing the error message.
-| debug | Boolean<br/>Defaults: false | Log additional debug messages as verbose grunt messages
+| debug | Boolean<br/>Defaults: false | Log additional debug messages during the build, you can also enable grunt --verbose mode.
 | logOutput | Boolean<br/>Defaults: false | Log the output of the execute response
 
 

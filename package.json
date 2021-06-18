@@ -6,8 +6,14 @@
     "keywords": [
         "grunt",
         "gruntplugin",
+        "grunt-plugin",
         "typescript",
-        "task"
+        "javascript",
+        "task",
+        "compiler",
+        "build",
+        "grunt-ts",
+        "grunt-task"
     ],
     "author": {
         "name": "Nevware21",
@@ -18,7 +24,8 @@
         "build": "node common/scripts/install-run-rush.js rebuild --verbose",
         "test": "node common/scripts/install-run-rush.js test --verbose",
         "lint": "node common/scripts/install-run-rush.js lint --verbose",
-        "rupdate": "node common/scripts/install-run-rush.js update --recheck --purge --full"
+        "rupdate": "rush update --recheck --purge --full",
+        "clean": "git clean -xdf && npm run rupdate && npm install"
     },
     "repository": {
         "type": "git",
