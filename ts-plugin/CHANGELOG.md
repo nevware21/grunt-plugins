@@ -1,3 +1,13 @@
+# v0.2.2
+
+## Changelog
+
+- #5 [BUG] ts-plugin v0.2.1 throws with the 'src' property passed from grunt is a string
+- #10 [BUG] v0.2.1 - rootDir and temp tsconfig are not being calculated correctly
+  - Reworked the way files are include into the tsconfig.json file -- now using relative paths
+- Updated additionalArgs logic to ensure that any passed arguments take precedence over the internally calculated versions '--out', '--outFile' etc
+- Added some version checks
+
 # v0.2.1
 
 ## Changelog

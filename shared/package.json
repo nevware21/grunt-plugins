@@ -1,7 +1,7 @@
 {
     "name": "@nevware21/grunt-plugins-shared-utils",
     "description": "Shared Utils GruntJS Plugins",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "homepage": "https://github.com/nevware21/grunt-plugins",
     "keywords": [
         "grunt",
@@ -45,7 +45,6 @@
         "grunt-cli": "^1.4.3",
         "@types/grunt": "0.4.25",
         "typescript": "^4.2.0",
-        "typedoc": "^0.20.36",
         "@microsoft/rush": "5.47.0",
         "rollup": "^2.51.2",
         "@rollup/plugin-commonjs": "^19.0.0",
