@@ -10,10 +10,14 @@
     "keywords": [
         "grunt",
         "gruntplugin",
+        "grunt-plugin",
         "typescript",
+        "javascript",
         "task",
         "compiler",
-        "build"
+        "build",
+        "grunt-ts",
+        "grunt-task"
     ],
     "scripts": {
         "clean": "grunt clean",

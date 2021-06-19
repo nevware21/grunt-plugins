@@ -8,10 +8,12 @@
  * Licensed under the MIT license.
  */
 
-import { getGruntMultiTaskOptions, resolveValue, isString } from "@nevware21/grunt-plugins-shared-utils";
+import { getGruntMultiTaskOptions, resolveValue, isString, dumpObj } from "@nevware21/grunt-plugins-shared-utils";
 import { ErrorHandlerResponse } from "./interfaces/IErrorHandler";
 import { ITsPluginOptions, ITsPluginTaskOptions } from "./interfaces/ITsPluginOptions";
 import { ITypeScriptCompilerOptions, TypeScriptCompiler } from "./TypeScript";
+import * as path from "path";
+import * as fs from "fs";
 
 const buildFailingErrors = [
     "6050",
@@ -44,8 +46,8 @@ export function pluginFn (grunt: IGrunt) {
         //let taskFiles = this.files || [];
 
         if (options.debug) {
-            grunt.log.verbose.writeln((" Options: [" + JSON.stringify(options) + "]").cyan);
-            grunt.log.verbose.writeln((" Config : [" + JSON.stringify(this.data) + "]").cyan);
+            grunt.log.verbose.writeln((" Options: [" + dumpObj(options) + "]").cyan);
+            grunt.log.verbose.writeln((" Config : [" + dumpObj(this.data) + "]").cyan);
         }
 
         if (!grunt.file.exists(taskOptions.tsconfig)) {
@@ -102,12 +104,12 @@ export function pluginFn (grunt: IGrunt) {
             }
 
             if (options.debug) {
-                grunt.log.writeln("Response: " + JSON.stringify(response));
+                grunt.log.verbose.writeln("Response:\n" + JSON.stringify(response, null, 4));
             }
 
             done(response.isSuccess ? true : false);
         })().catch((error) => {
-            grunt.log.error(JSON.stringify(error));
+            grunt.log.error(dumpObj(error));
             done(error);
         });
     });
