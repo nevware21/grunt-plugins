@@ -16,14 +16,15 @@ Note: These plugins have currently only been tested with the Grunt `1.4.0`.
 
 ## [grunt-ts-plugin](./ts-plugin/README.md)
 
-`npm install @nevware21/grunt-ts-plugin --save-dev`
+Install the npm packare: `npm install @nevware21/grunt-ts-plugin --save-dev`
 
-As this is a development only tool if only needs to be intalled into your root project (if you have a mono-repo) and only as a ```devDependency```
+### Required packages
 
-To install `@nevware21/grunt-ts-plugin`, you must already have installed TypeScript and GruntJS.
- * If you don't have TypeScript installed in your project, run `npm install typescript --save-dev`.
- * If you don't have GruntJS installed in your project, run `npm install grunt --save-dev`.
- * If you have never used Grunt on your system, install the grunt-cli: `npm install grunt-cli`.
+| Package | Descriptpion
+|---------|----------------------
+| TypeScript | `npm install typescript --save-dev` - if you don't have TypeScript installed in your project, run
+| GruntJS | `npm install grunt --save-dev` - if you don't have GruntJS installed in your project
+| Grunt-Cli | `npm install grunt-cli --save-dev` - Suggested, if you have never used Grunt on your system
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
@@ -31,8 +32,11 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 module.exports = function(grunt) {
   grunt.initConfig({
     ts: {
-      default : {
+      options : {
         debug: false
+      },
+      default: {
+        tsconfig: './default/tsconfig.json'
       },
       task1: {
         // Just use the tsconfig
@@ -60,6 +64,9 @@ module.exports = function(grunt) {
   });
   grunt.loadNpmTasks("@nevware21/grunt-ts-plugin");
   grunt.registerTask("default", ["ts"]);
+  grunt.registerTask("task1", ["ts:task1"]);
+  grunt.registerTask("task2", ["ts:task2"]);
+  grunt.registerTask("task3", ["ts:task3"]);
 };
 ```
 
