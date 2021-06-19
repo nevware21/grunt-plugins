@@ -69,9 +69,7 @@ module.exports = function(grunt) {
 
 ## Contributing
 
-Thank you for your interest in contributing!
-
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+Read our [contributing guide](./CONTRIBUTING.md) to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes.
 
 ## Release History
 
