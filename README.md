@@ -2,13 +2,14 @@
 
 <p align="center">This Monorepo is aimed at providing additional GruntTS support tasks for TypeScript</p>
 
+![GitHub Workflow Status (main)](https://img.shields.io/github/workflow/status/nevware21/grunt-plugins/NodeCI/main)
+
 # Current Plugins
 
-| Plugin | Description
-|--------|------------------
-| [grunt-ts-plugin](https://github.com/nevware21/grunt-plugins/tree/main/ts-plugin) | Grunt-ts-plugin is an npm package that provides a TypeScript compilation task for GruntJS build scripts.
-| grunt-eslint-ts-plugin | Coming soon
-
+| Plugin | Version | Description
+|--------|---------|------------------
+| [grunt-ts-plugin](https://github.com/nevware21/grunt-plugins/tree/main/ts-plugin) | [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin) <br /> [![downloads](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin.svg)](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin) | Grunt-ts-plugin is an npm package that provides a TypeScript compilation task for GruntJS build scripts.
+| grunt-eslint-ts-plugin | [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-eslint-ts.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-eslint-ts) | Coming soon
 
 Note: These plugins have currently only been tested with the Grunt `1.4.0`.
 
