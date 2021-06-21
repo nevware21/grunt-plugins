@@ -6,10 +6,10 @@
 
 # Current Plugins
 
-| Plugin | Version | Description
+| Plugin <img width=90 />| Description | Version <img width=150 />
 |--------|---------|------------------
-| [grunt-ts-plugin](https://github.com/nevware21/grunt-plugins/tree/main/ts-plugin) | [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin) <br /> [![downloads](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin.svg)](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin) | Grunt-ts-plugin is an npm package that provides a TypeScript compilation task for GruntJS build scripts.
-| grunt-eslint-ts-plugin | [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-eslint-ts.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-eslint-ts) | Coming soon
+| [grunt-ts-plugin](./ts-plugin) | Grunt-ts-plugin is an npm package that provides a TypeScript compilation task for GruntJS build scripts. | [Changelog](./ts-plugin/CHANGELOG.md) <br /> [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin) <br /> [![downloads](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin.svg)](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin)
+| [grunt-eslint-ts](./eslint-ts-plugin) | Coming soon -- grunt-eslint-ts |  [Changelog](./eslint-ts-plugin/CHANGELOG.md)  <br /> [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-eslint-ts.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-eslint-ts) <br /> [![downloads](https://img.shields.io/npm/dm/%40nevware21/grunt-eslint-ts.svg)](https://img.shields.io/npm/dm/%40nevware21/grunt-eslint-ts)
 
 Note: These plugins have currently only been tested with the Grunt `1.4.0`.
 
@@ -71,14 +71,10 @@ module.exports = function(grunt) {
 };
 ```
 
-## grunt-eslint-ts-plugin
+## [grunt-eslint-ts](./eslint-ts-plugin/README.md)
 
 ... Coming Soon ...
 
 ## Contributing
 
 Read our [contributing guide](./CONTRIBUTING.md) to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes.
-
-## Release History
-
-_(Nothing yet)_

@@ -3,6 +3,7 @@
 ![GitHub Workflow Status (main)](https://img.shields.io/github/workflow/status/nevware21/grunt-plugins/NodeCI/main)
 [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin)
 [![downloads](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin.svg)](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin)
+
 Grunt-ts-plugin is an npm package that handles TypeScript compilation work in GruntJS build scripts.
 
 Grunt-ts-plugin provides a Grunt-compatible wrapper for the `tsc` command-line compiler using the ```--project``` switch to compile existing TypeScript projects files (tsconfig.json), and provides some [additional options](#options) that improves the TypeScript development workflow.
