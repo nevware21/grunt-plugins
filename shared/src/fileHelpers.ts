@@ -159,7 +159,7 @@ export function findModulePath(moduleFolder: string, logDebug?: (message: string
     return normalizePath(modulePath);
 }
 
-function _removeComments(value: string): string {
+function _removeComments(value: string, removeTrailingComma: boolean = false): string {
     let idx = value.indexOf("/*");
     if (idx === -1) {
         // nothing to do
@@ -171,7 +171,10 @@ function _removeComments(value: string): string {
     let pos = 0;
     let inQuote: any = 0;
     let escaped = false;
+    let lastComma = -1;
     while (pos < value.length) {
+        let prevCommaPos = lastComma;
+        lastComma = -1;
         let ch = value.charAt(pos++);
 
         if (commentStart != -1) {
@@ -220,6 +223,17 @@ function _removeComments(value: string): string {
                 multi = false;
                 commentStart = pos - 2;
             }
+        } else if (ch === "}" && prevCommaPos !== -1) {
+            // We have a trailing comment that should be removed
+            value = value.substring(0, prevCommaPos) + value.substring(prevCommaPos + 1);
+            pos--;
+        } else if (ch === "," && removeTrailingComma) {
+            lastComma = pos - 1;
+        } else if (ch === " " || ch === "\t" || ch === "\n" || ch === "\r") {
+            if (prevCommaPos != -1) {
+                // Remember the last comma before the current whitespace
+                lastComma = prevCommaPos;
+            }
         }
     }
 
@@ -236,7 +250,13 @@ export function readJsonFile<T>(filePath: string, stripComments = true): T {
             fileContent = _removeComments(fileContent);
         }
 
-        return JSON.parse(fileContent);
+        try {
+            return JSON.parse(fileContent);
+        } catch (ex) {
+            // Try with removed comments and any trailing commas
+            return JSON.parse(_removeComments(fileContent, true));
+        }
+
     }
 
     return {} as T;

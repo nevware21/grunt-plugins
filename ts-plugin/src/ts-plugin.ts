@@ -79,22 +79,8 @@ export function pluginFn (inst: IGrunt) {
             return response;
         }
         
-        let tsOptions:ITypeScriptCompilerOptions = {
-            tsconfig: taskOptions.tsconfig,
-            tscPath: resolveValue(taskOptions.tscPath, options.tscPath),
-            compiler: resolveValue(taskOptions.compiler, options.compiler),
-            additionalFlags: resolveValue(taskOptions.additionalFlags, options.additionalFlags),
-            logOutput: resolveValue(taskOptions.logOutput, options.logOutput),
-            failOnTypeErrors: resolveValue(taskOptions.failOnTypeErrors, options.failOnTypeErrors, true),
-            failOnExternalTypeErrors: resolveValue(taskOptions.failOnExternalTypeErrors, options.failOnExternalTypeErrors, false),
-            out: taskOptions.out,
-            onError: resolveValue(taskOptions.onError, options.onError, handleDefaultTsErrors)
-        };
-
-        let done = this.async();
-
-        (async function () {
-            let ts = new TypeScriptCompiler(grunt, tsOptions);
+        async function _processSingleTsConfig(theOptions: ITypeScriptCompilerOptions) {
+            let ts = new TypeScriptCompiler(grunt, theOptions);
             let srcFiles: string[] = [];
             srcFiles = _addFiles(srcFiles, options.src);
             srcFiles = _addFiles(srcFiles, taskOptions.src);
@@ -106,10 +92,31 @@ export function pluginFn (inst: IGrunt) {
                 });
             }
 
-            if (grunt.isDebug) {
+            if (options.debug) {
                 grunt.logVerbose("Response:\n" + JSON.stringify(response, null, 4));
             }
 
+            return response;
+        }
+
+        let tsOptions:ITypeScriptCompilerOptions = {
+            tsconfig: taskOptions.tsconfig,
+            tscPath: resolveValue(taskOptions.tscPath, options.tscPath),
+            compiler: resolveValue(taskOptions.compiler, options.compiler),
+            additionalFlags: resolveValue(taskOptions.additionalFlags, options.additionalFlags),
+            logOutput: resolveValue(taskOptions.logOutput, options.logOutput),
+            failOnTypeErrors: resolveValue(taskOptions.failOnTypeErrors, options.failOnTypeErrors, true),
+            failOnExternalTypeErrors: resolveValue(taskOptions.failOnExternalTypeErrors, options.failOnExternalTypeErrors, false),
+            out: taskOptions.out,
+            outDir: resolveValue(taskOptions.outDir, options.outDir),
+            onError: resolveValue(taskOptions.onError, options.onError, handleDefaultTsErrors),
+            keepTemp: resolveValue(taskOptions.keepTemp, options.keepTemp)
+        };
+
+        let done = this.async();
+
+        (async function () {
+            let response = await _processSingleTsConfig(tsOptions);
             done(response.isSuccess ? true : false);
         })().catch((error) => {
             grunt.logError(dumpObj(error));

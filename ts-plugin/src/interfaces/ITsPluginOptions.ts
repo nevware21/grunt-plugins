@@ -63,6 +63,16 @@ export interface ITsPluginOptions extends ITsCommonOptions {
      * An array of source files to be "added" to all tasks as either files or include for each task tsconfig
      */
      src?: string | string[];
+
+    /** 
+     * Specify the output directory
+     */
+    outDir?: string;
+
+    /**
+     * Keep the generated temporary files (don't delete them)
+     */
+    keepTemp?: boolean;
 }
 
 export interface ITsPluginTaskOptions extends ITsCommonOptions {
@@ -86,6 +96,14 @@ export interface ITsPluginTaskOptions extends ITsCommonOptions {
      * If the tscConfig also includes an ```outDir``` this value will be ignored
      */
     out?: string;
+
+    /** Specify the output directory */
+    outDir?: string;
+
+    /**
+     * Keep the generated temporary files (don't delete them)
+     */
+     keepTemp?: boolean;
 }
 
  
