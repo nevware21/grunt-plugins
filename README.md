@@ -9,7 +9,7 @@
 | Plugin | Description | Version
 |--------|---------|------------------
 | [grunt-ts-plugin](./ts-plugin) | Grunt-ts-plugin is an npm package that provides a TypeScript compilation task for GruntJS build scripts. | [Changelog](./ts-plugin/CHANGELOG.md) <br /> [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin) <br /> [![downloads](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin.svg)](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin)
-| [grunt-eslint-ts](./eslint-ts-plugin) | Coming soon -- grunt-eslint-ts |  [Changelog](./eslint-ts-plugin/CHANGELOG.md)  <br /> [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-eslint-ts.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-eslint-ts) <br /> [![downloads](https://img.shields.io/npm/dm/%40nevware21/grunt-eslint-ts.svg)](https://img.shields.io/npm/dm/%40nevware21/grunt-eslint-ts)
+| [grunt-eslint-ts](./eslint-ts-plugin) | Grunt-eslint-ts provides a wrapper for running `eslint` using the `@typescript-eslint` parser for processing TypeScript files. |  [Changelog](./eslint-ts-plugin/CHANGELOG.md)  <br /> [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-eslint-ts.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-eslint-ts) <br /> [![downloads](https://img.shields.io/npm/dm/%40nevware21/grunt-eslint-ts.svg)](https://img.shields.io/npm/dm/%40nevware21/grunt-eslint-ts)
 
 Note: These plugins have currently only been tested with the Grunt `1.4.0`.
 
@@ -73,7 +73,75 @@ module.exports = function(grunt) {
 
 ## [grunt-eslint-ts](./eslint-ts-plugin/README.md)
 
-... Coming Soon ...
+Install the npm packare: `npm install @nevware21/grunt-eslint-ts --save-dev`
+
+| Package | Descriptpion
+|---------|----------------------
+| ESLint | `npm install eslint --save-dev` - if you don't have ESLint installed in your project, run
+| @typescript-eslint/eslint-plugin | `npm install @typescript-eslint/eslint-plugin --save-dev` - if you don't have the @typescript plugin installed
+| @typescript-eslint/parser | `npm install @typescript-eslint/parser --save-dev` - if you dont have the parser installed
+| eslint-plugin-security (Optional) | `npm install eslint-plugin-security --save-dev` - If you want to auto inject the extra security plugin
+| TypeScript | `npm install typescript --save-dev` - if you don't have TypeScript installed in your project, run
+| GruntJS | `npm install grunt --save-dev` - if you don't have GruntJS installed in your project
+| Grunt-Cli | `npm install grunt-cli --save-dev` - Suggested, if you have never used Grunt on your system
+
+Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
+
+```js
+module.exports = function(grunt) {
+  grunt.initConfig({
+    "eslint-ts": {
+        options: {
+            format: "codeframe",
+            suppressWarnings: false
+        },
+        "shared": {
+            tsconfig: "./shared/tsconfig.json",
+            ignoreFailures: true,
+            src: [
+                // Adds extra source files above those listed in the tsconfig.json
+                './shared/src/**/*.ts'
+            ]
+        },
+        "ts_plugin": {
+            tsconfig: "./ts-plugin/tsconfig.json",
+            ignoreFailures: true
+        },
+        "eslint_ts": {
+            tsconfig: "./eslint-ts-plugin/tsconfig.json",
+            ignoreFailures: true
+        },
+        "shared-fix": {
+            // You can specify the options, either in an options object like there or directly in the task
+            // definition like those above
+            options: {
+                tsconfig: "./shared/tsconfig.json",
+                fix: true,
+                src: [
+                    './shared/src/**/*.ts'
+                ]                
+            }
+        },
+        "ts_plugin-fix": {
+            options: {
+                tsconfig: "./ts-plugin/tsconfig.json",
+                fix: true
+            }
+        },
+        "eslint_ts-fix": {
+            options: {
+                tsconfig: "./eslint-ts-plugin/tsconfig.json",
+                fix: true,
+            }
+        }
+    }
+  });
+
+  grunt.loadNpmTasks("@nevware21/grunt-eslint-ts");
+  grunt.registerTask("lint", [ "eslint-ts:shared", "eslint-ts:ts_plugin", "eslint-ts:eslint_ts" ]);
+  grunt.registerTask("lint-fix", [ "eslint-ts:shared-fix", "eslint-ts:ts_plugin-fix", "eslint-ts:eslint_ts-fix" ]);
+};
+```
 
 ## Contributing
 
