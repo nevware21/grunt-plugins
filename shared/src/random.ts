@@ -7,15 +7,14 @@
  */
 
 const UInt32Mask = 0x100000000;
-const MaxUInt32 = 0xffffffff;
 
 /**
  * Get a random hex value
  *
  * @returns {string} hex string
  */
-export function getRandomHex(length: number = 8): string {
-    var randomValue: string = "";
+export function getRandomHex(length = 8): string {
+    let randomValue = "";
 
     do {
         // Make sure the number is converted into the specified range (0x00000000..0xFFFFFFFF)

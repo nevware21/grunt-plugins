@@ -9,23 +9,28 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [ContribGuide]: https://github.com/nevware21/grunt-plugins/blob/main/CONTRIBUTING.md
 [GitHubIssue]: https://github.com/nevware21/grunt-plugins/issues
 
-
 ## Clone and setup
+
 1. Clone the repository and create a new branch
 2. Install all dependencies
 	```
-	npm install
 	npm install -g @microsoft/rush
+	npm install
 	```
+    > Note: The initial ```npm install``` may fail due to SHA-256 signatures, this is because the shrink-wrap is reference local versions that got checked in, to resolve run ```rush update --recheck --purge --full``` to cause the re-linking of the local build -- future ```npm install``` should now work.
+
 3. Navigate to the root folder and update rush dependencies
 	```
 	rush update
 	```
-4. Build and test
+4. Build
 	```
 	rush build
-	npm run test
 	```
+5. Run Tests  (Currently not working)
+    ```
+	npm run test
+    ```
 
 ## Build and test
 

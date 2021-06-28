@@ -8,12 +8,10 @@
  * Licensed under the MIT license.
  */
 
-import { getGruntMultiTaskOptions, resolveValue, isString, dumpObj } from "@nevware21/grunt-plugins-shared-utils";
+import { getGruntMultiTaskOptions, resolveValue, isString, dumpObj, GruntWrapper, IGruntWrapperOptions } from "@nevware21/grunt-plugins-shared-utils";
 import { ErrorHandlerResponse } from "./interfaces/IErrorHandler";
 import { ITsPluginOptions, ITsPluginTaskOptions } from "./interfaces/ITsPluginOptions";
 import { ITypeScriptCompilerOptions, TypeScriptCompiler } from "./TypeScript";
-import * as path from "path";
-import * as fs from "fs";
 
 const buildFailingErrors = [
     "6050",
@@ -36,22 +34,28 @@ function _addFiles(files: string[], src: string | string[]) {
     return files;
 }
 
-export function pluginFn (grunt: IGrunt) {
-    grunt.registerMultiTask("ts", "Compile TypeScript project", function () {
+export function pluginFn (inst: IGrunt) {
+    inst.registerMultiTask("ts", "Compile TypeScript project", function () {
         // Merge task-specific and/or target-specific options with these defaults.
         let options = this.options<ITsPluginOptions>({
         });
 
-        let taskOptions = getGruntMultiTaskOptions<ITsPluginTaskOptions>(grunt, this);
+        let taskOptions = getGruntMultiTaskOptions<ITsPluginTaskOptions>(inst, this);
         //let taskFiles = this.files || [];
 
-        if (options.debug) {
-            grunt.log.verbose.writeln((" Options: [" + dumpObj(options) + "]").cyan);
-            grunt.log.verbose.writeln((" Config : [" + dumpObj(this.data) + "]").cyan);
+        const loggerOptions: IGruntWrapperOptions = {
+            debug: resolveValue(taskOptions.debug, options.debug, false)
         }
 
-        if (!grunt.file.exists(taskOptions.tsconfig)) {
-            grunt.log.error("The TSConfig project file [" + taskOptions.tsconfig + "] does not exist");
+        let grunt = new GruntWrapper(inst, loggerOptions);
+
+        if (grunt.isDebug) {
+            grunt.logVerbose((" Options: [" + dumpObj(options) + "]").cyan);
+            grunt.logVerbose((" Config : [" + dumpObj(taskOptions) + "]").cyan);
+        }
+
+        if (!taskOptions.tsconfig || !grunt.file.exists(taskOptions.tsconfig)) {
+            grunt.logError("The TSConfig project file [" + taskOptions.tsconfig + "] does not exist");
             return false;
         }
 
@@ -77,39 +81,37 @@ export function pluginFn (grunt: IGrunt) {
         
         let tsOptions:ITypeScriptCompilerOptions = {
             tsconfig: taskOptions.tsconfig,
-            tscPath: resolveValue(taskOptions.tscPath, options.tscPath, null),
-            compiler: resolveValue(taskOptions.compiler, options.compiler, null),
-            additionalFlags: resolveValue(taskOptions.additionalFlags, taskOptions.additionalFlags, null),
-            debug: resolveValue(taskOptions.debug, options.debug, false),
-            logOutput: resolveValue(taskOptions.logOutput, options.logOutput, false),
-            failOnTypeErrors: resolveValue(taskOptions.failOnTypeErrors, taskOptions.failOnTypeErrors, false),
+            tscPath: resolveValue(taskOptions.tscPath, options.tscPath),
+            compiler: resolveValue(taskOptions.compiler, options.compiler),
+            additionalFlags: resolveValue(taskOptions.additionalFlags, options.additionalFlags),
+            logOutput: resolveValue(taskOptions.logOutput, options.logOutput),
+            failOnTypeErrors: resolveValue(taskOptions.failOnTypeErrors, options.failOnTypeErrors, false),
             out: taskOptions.out,
             onError: resolveValue(taskOptions.onError, options.onError, handleDefaultTsErrors)
         };
-
-        //let tsConfig = require(options.tsconfig);
 
         let done = this.async();
 
         (async function () {
             let ts = new TypeScriptCompiler(grunt, tsOptions);
             let srcFiles: string[] = [];
-            srcFiles = _addFiles(srcFiles, resolveValue(taskOptions.src, options.src));
+            srcFiles = _addFiles(srcFiles, options.src);
+            srcFiles = _addFiles(srcFiles, taskOptions.src);
             
             let response = await ts.compile(srcFiles);
             if (!response.isSuccess && response.errors) {
                 response.errors.forEach((value) => {
-                    grunt.log.error(value);
+                    grunt.logError(value);
                 });
             }
 
-            if (options.debug) {
-                grunt.log.verbose.writeln("Response:\n" + JSON.stringify(response, null, 4));
+            if (grunt.isDebug) {
+                grunt.logVerbose("Response:\n" + JSON.stringify(response, null, 4));
             }
 
             done(response.isSuccess ? true : false);
         })().catch((error) => {
-            grunt.log.error(dumpObj(error));
+            grunt.logError(dumpObj(error));
             done(error);
         });
     });

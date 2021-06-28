@@ -1,4 +1,3 @@
-/// <reference types="grunt" />
 /*
  * @nevware21/grunt-ts-plugins
  * https://github.com/nevware21/grunt-plugins
@@ -7,10 +6,10 @@
  * Licensed under the MIT license.
  */
 
-import * as fs from "fs";
-import * as path from "path";
 import { getRandomHex } from "./random";
 import { isUndefined } from "./utils";
+import * as fs from "fs";
+import * as path from "path";
 
 /**
  * Get a unique temporary file
@@ -21,9 +20,10 @@ import { isUndefined } from "./utils";
     let attempt = 0;
     
     while (attempt < 100) {
-        var name: string = filename + "-" + getRandomHex(8) + extension;
-        var dest: string = path.join(thePath, name);
+        let name: string = filename + "-" + getRandomHex(8) + extension;
+        let dest: string = path.join(thePath, name);
 
+        // eslint-disable-next-line security/detect-non-literal-fs-filename
         if (!fs.existsSync(dest)) {
             return dest;
         }
@@ -118,12 +118,13 @@ export function makeRelativeTo(rootPath: string, thePath: string) {
     return normalizePath(path.relative(rootPath, path.resolve(thePath)));
 }
 
-
 function _findPath(rootPath: string, moduleFolder: string, logDebug?: (message: string) => void) {
     let currentPath = rootPath;
     while (currentPath && currentPath.length > 3) {
         let thePath = path.join(currentPath, moduleFolder);
         logDebug && logDebug("  - Checking [" + thePath + "]");
+
+        // eslint-disable-next-line security/detect-non-literal-fs-filename
         if (fs.existsSync(path.join(currentPath, moduleFolder))) {
             return thePath;
         }
@@ -134,7 +135,7 @@ function _findPath(rootPath: string, moduleFolder: string, logDebug?: (message: 
     return null;
 }
 
-export function findModulePath(moduleFolder: string, logDebug?: (message: string) => void) {
+export function locateModulePath(moduleFolder: string, logDebug?: (message: string) => void) {
     // Try finding pased on the current working path
     let modulePath = _findPath(path.resolve("."), moduleFolder, logDebug);
     if (!modulePath) {
@@ -142,10 +143,101 @@ export function findModulePath(moduleFolder: string, logDebug?: (message: string
         modulePath = _findPath(path.resolve(path.dirname(module.filename), ".."), moduleFolder, logDebug);
     }
 
+    logDebug && logDebug("Found [" + moduleFolder + "] => " + modulePath);
+
+    return normalizePath(modulePath);
+}
+
+export function findModulePath(moduleFolder: string, logDebug?: (message: string) => void) {
+    // Try finding pased on the current working path
+    let modulePath = locateModulePath(moduleFolder, logDebug);
     if (!modulePath) {
         logDebug && logDebug("Module [" + moduleFolder + "] path not found -- defaulting to cwd");
         modulePath = path.join(".", moduleFolder)
     }
     
     return normalizePath(modulePath);
+}
+
+function _removeComments(value: string): string {
+    let idx = value.indexOf("/*");
+    if (idx === -1) {
+        // nothing to do
+        return value;
+    }
+
+    let commentStart = -1;
+    let multi = false;
+    let pos = 0;
+    let inQuote: any = 0;
+    let escaped = false;
+    while (pos < value.length) {
+        let ch = value.charAt(pos++);
+
+        if (commentStart != -1) {
+            if (multi) {
+                if (ch !== "*") {
+                    continue;
+                }
+
+                let nextCh = value.charAt(pos++);
+                if (nextCh !== "/") {
+                    continue;
+                }
+            } else {
+                if (ch !== "\r" && ch !== "\n") {
+                    continue;
+                }
+            }
+
+            value = value.substring(0, commentStart) + value.substring(pos);
+
+            // rewind back to the start of the original comment
+            pos = commentStart;
+            commentStart = -1
+            continue;
+        }
+
+        if (escaped) {
+            escaped = false;
+            continue;
+        }
+
+        if (inQuote) {
+            if (ch == inQuote) {
+                inQuote = 0;
+            } else if (ch === "\\") {
+                escaped = true;
+            }
+        } else if (ch === "'" || ch === "\"") {
+            inQuote = ch;
+        } else if (ch === "/") {
+            let nextCh = value.charAt(pos++);
+            if (nextCh === "*") {
+                multi = true;
+                commentStart = pos - 2;
+            } else if (nextCh === "/") {
+                multi = false;
+                commentStart = pos - 2;
+            }
+        }
+    }
+
+    return value;
+}
+
+export function readJsonFile<T>(filePath: string, stripComments = true): T {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
+    if (filePath && fs.existsSync(filePath)) {
+
+        // eslint-disable-next-line security/detect-non-literal-fs-filename
+        let fileContent = fs.readFileSync(filePath, "utf8").toString();
+        if (stripComments) {
+            fileContent = _removeComments(fileContent);
+        }
+
+        return JSON.parse(fileContent);
+    }
+
+    return {} as T;
 }

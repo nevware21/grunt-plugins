@@ -14,7 +14,8 @@
     "declarationDir": "./types",
     "outDir": "./dist-esm",
     "suppressImplicitAnyIndexErrors": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "removeComments": true
   },
   "include": [
     "./src/**/*.ts"

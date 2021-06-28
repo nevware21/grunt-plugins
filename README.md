@@ -6,7 +6,7 @@
 
 # Current Plugins
 
-| Plugin <img width=90 />| Description | Version <img width=150 />
+| Plugin | Description | Version
 |--------|---------|------------------
 | [grunt-ts-plugin](./ts-plugin) | Grunt-ts-plugin is an npm package that provides a TypeScript compilation task for GruntJS build scripts. | [Changelog](./ts-plugin/CHANGELOG.md) <br /> [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin) <br /> [![downloads](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin.svg)](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin)
 | [grunt-eslint-ts](./eslint-ts-plugin) | Coming soon -- grunt-eslint-ts |  [Changelog](./eslint-ts-plugin/CHANGELOG.md)  <br /> [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-eslint-ts.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-eslint-ts) <br /> [![downloads](https://img.shields.io/npm/dm/%40nevware21/grunt-eslint-ts.svg)](https://img.shields.io/npm/dm/%40nevware21/grunt-eslint-ts)

@@ -9,11 +9,6 @@
 import { OnErrorHandler } from "./IErrorHandler";
 
 export interface ITsCommonOptions {
-    /**
-     * Log additional debug messages as verbose grunt messages
-     */
-    debug?: boolean;
-
      /**
      * Log the output of the execute response
      */
@@ -48,11 +43,16 @@ export interface ITsCommonOptions {
      * detected value and line is the entire line containing the error message.
      * @returns ErrorHandlerResponse value
      */
-     onError?: OnErrorHandler;
+    onError?: OnErrorHandler;
  }
 
 export interface ITsPluginOptions extends ITsCommonOptions {
     /**
+     * Log additional debug messages as verbose grunt messages
+     */
+     debug?: boolean;
+
+     /**
      * An array of source files to be "added" to all tasks as either files or include for each task tsconfig
      */
      src?: string | string[];
@@ -60,6 +60,11 @@ export interface ITsPluginOptions extends ITsCommonOptions {
 
 export interface ITsPluginTaskOptions extends ITsCommonOptions {
     /**
+     * Log additional debug messages as verbose grunt messages
+     */
+     debug?: boolean;
+
+     /**
      * The path to the tsConfig file to use
      */
     tsconfig?: string;
