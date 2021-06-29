@@ -7,8 +7,7 @@
  */
 
 import {
-    ITsConfig, ITsCompilerOptions,
-    doExecute, getTempFile, IExecuteResponse, quoteIfRequired, findCommonPath, normalizePath, findModulePath, makeRelative, makeRelativeTo, readJsonFile, dumpObj, IGruntWrapper, getTsConfigDetails, ITsConfigDetails
+    doExecute, getTempFile, IExecuteResponse, quoteIfRequired, findModulePath, dumpObj, IGruntWrapper, getTsConfigDetails, ITsConfigDetails
 } from "@nevware21/grunt-plugins-shared-utils";
 import { ICompileResponse } from "./interfaces/ICompileResponse";
 import * as fs from "fs";
