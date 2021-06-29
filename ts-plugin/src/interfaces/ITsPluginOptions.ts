@@ -21,9 +21,16 @@ export interface ITsCommonOptions {
 
     /**
     * Should the compile run fail when type errors are identified
+     * Defaults: true
     */
     failOnTypeErrors?: boolean;
  
+    /**
+     * Shoule the compile run fail when type errors are identified from an external module (in the node_modules/) path
+     * Defaults: false
+     */
+    failOnExternalTypeErrors?: boolean;
+
     /**
      * Identify the root path of the version of the TypeScript is installed, this may include be either
      * the root folder of where the node_modules/typescript/bin folder is located or the location of

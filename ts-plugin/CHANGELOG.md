@@ -2,9 +2,16 @@
 
 ## Changelog
 
+- Rework TSConfig.Json handling
+  - Add support for project containing single and multiline comments
+  - Use common (Shared) handling for processing tsconfig.json for eslint-ts and ts-plugin
+- Fixed bug with ```failOnTypeErrors``` and ```additionalFlags``` not getting inherited from default options
+- Changed default for ```failOnTypeErrors``` to true and added exclusion for external (node_modules/) packages
+- Added ```failOnExternalTypeErrors``` to handle type failures from external (node_modules/) packages, defaulting to false.
+- Add ESLint tasks
+- Fix linting issues
 - Reworked options handling and logging
-- Fixed bug with failOnTypeErrors and additionalFlags not getting inherited from default options
-- Changed default for failOnTypeErrors to true
+- Wrap grunt and provide common logging handling
 
 # v0.2.2
 
