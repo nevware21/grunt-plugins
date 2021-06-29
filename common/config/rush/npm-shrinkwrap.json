@@ -9,8 +9,8 @@
       "version": "0.0.0",
       "dependencies": {
         "@microsoft/rush": "5.47.0",
-        "@nevware21/grunt-eslint-ts": "0.0.1",
-        "@nevware21/grunt-ts-plugin": "0.2.2",
+        "@nevware21/grunt-eslint-ts": "^0.1.0",
+        "@nevware21/grunt-ts-plugin": "^0.2.2",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
@@ -440,18 +440,17 @@
       }
     },
     "node_modules/@nevware21/grunt-eslint-ts": {
-      "version": "0.0.1",
-      "resolved": "https://registry.npmjs.org/@nevware21/grunt-eslint-ts/-/grunt-eslint-ts-0.0.1.tgz",
-      "integrity": "sha512-xSOARtaU9tkQpkCqGPFxfZ+AD5Eh0w6hTjjabahFPEEVhVbX0W5sWoU8X/VUIqmtBbjvcAUKbbnGzrzApqdwGA==",
-      "dependencies": {
-        "@typescript-eslint/eslint-plugin": "^4.26.1",
-        "@typescript-eslint/parser": "^4.26.1",
-        "eslint": "^7.29.0"
-      },
+      "version": "0.1.0",
+      "resolved": "https://registry.npmjs.org/@nevware21/grunt-eslint-ts/-/grunt-eslint-ts-0.1.0.tgz",
+      "integrity": "sha512-HMzMQbBpanwiWtB227JkCwIL+Pgk5tRYDME0Vs4wwje30B/Nji1+Xx7fkrc01w3JTyXf5hz7XkrCTx18ORtjVQ==",
       "engines": {
         "node": ">= 0.8.0"
       },
       "peerDependencies": {
+        "@typescript-eslint/eslint-plugin": "*",
+        "@typescript-eslint/parser": "*",
+        "eslint": ">=7",
+        "eslint-plugin-security": "*",
         "grunt": ">=1",
         "typescript": ">=1"
       }
@@ -784,10 +783,10 @@
     "node_modules/@rush-temp/grunt-eslint-ts": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-eslint-ts.tgz",
-      "integrity": "sha512-99NdZUqq4twzW423gAmw9hBmp1VyB+mg6ZAPX5pj0kilQ6nAT5oICp0g9KkZUgvQyr3QO1vnwV0K487Q98GavQ==",
+      "integrity": "sha512-XKzcmpO2dnrVsva7v5smNllc72e5naPXBUjascIRY52CYVBCIAgt0O5lI6VxPbWCiUKvzNosNDiaDUq0WTbjYA==",
       "dependencies": {
-        "@nevware21/grunt-eslint-ts": "0.0.1",
-        "@nevware21/grunt-ts-plugin": "0.2.2",
+        "@nevware21/grunt-eslint-ts": "^0.1.0",
+        "@nevware21/grunt-ts-plugin": "^0.2.2",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
@@ -824,10 +823,10 @@
     "node_modules/@rush-temp/grunt-ts-plugin": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-ts-plugin.tgz",
-      "integrity": "sha512-LT0iMLniHGu+kVIrMHpQmImtsnvni6GbTFMsXyjHpgfkU84AqYYNcP34cGGqx6EfpmkUUB+qklMV41k/W3U8Bw==",
+      "integrity": "sha512-cEYCBrXLGNs3zb+emcHml/T23F1TqKJ5l198KlGjcYW5S5QfakI8gBeUPZcQb/JJ8+/HNUqs2b6i3U4fNFFYPA==",
       "dependencies": {
-        "@nevware21/grunt-eslint-ts": "0.0.1",
-        "@nevware21/grunt-ts-plugin": "0.2.2",
+        "@nevware21/grunt-eslint-ts": "^0.1.0",
+        "@nevware21/grunt-ts-plugin": "^0.2.2",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
         "@types/grunt": "0.4.25",
@@ -5282,14 +5281,10 @@
       }
     },
     "@nevware21/grunt-eslint-ts": {
-      "version": "0.0.1",
-      "resolved": "https://registry.npmjs.org/@nevware21/grunt-eslint-ts/-/grunt-eslint-ts-0.0.1.tgz",
-      "integrity": "sha512-xSOARtaU9tkQpkCqGPFxfZ+AD5Eh0w6hTjjabahFPEEVhVbX0W5sWoU8X/VUIqmtBbjvcAUKbbnGzrzApqdwGA==",
-      "requires": {
-        "@typescript-eslint/eslint-plugin": "^4.26.1",
-        "@typescript-eslint/parser": "^4.26.1",
-        "eslint": "^7.29.0"
-      }
+      "version": "0.1.0",
+      "resolved": "https://registry.npmjs.org/@nevware21/grunt-eslint-ts/-/grunt-eslint-ts-0.1.0.tgz",
+      "integrity": "sha512-HMzMQbBpanwiWtB227JkCwIL+Pgk5tRYDME0Vs4wwje30B/Nji1+Xx7fkrc01w3JTyXf5hz7XkrCTx18ORtjVQ==",
+      "requires": {}
     },
     "@nevware21/grunt-ts-plugin": {
       "version": "0.2.2",
@@ -5518,10 +5513,10 @@
     },
     "@rush-temp/grunt-eslint-ts": {
       "version": "file:projects\\grunt-eslint-ts.tgz",
-      "integrity": "sha512-99NdZUqq4twzW423gAmw9hBmp1VyB+mg6ZAPX5pj0kilQ6nAT5oICp0g9KkZUgvQyr3QO1vnwV0K487Q98GavQ==",
+      "integrity": "sha512-XKzcmpO2dnrVsva7v5smNllc72e5naPXBUjascIRY52CYVBCIAgt0O5lI6VxPbWCiUKvzNosNDiaDUq0WTbjYA==",
       "requires": {
-        "@nevware21/grunt-eslint-ts": "0.0.1",
-        "@nevware21/grunt-ts-plugin": "0.2.2",
+        "@nevware21/grunt-eslint-ts": "^0.1.0",
+        "@nevware21/grunt-ts-plugin": "^0.2.2",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
@@ -5556,10 +5551,10 @@
     },
     "@rush-temp/grunt-ts-plugin": {
       "version": "file:projects\\grunt-ts-plugin.tgz",
-      "integrity": "sha512-LT0iMLniHGu+kVIrMHpQmImtsnvni6GbTFMsXyjHpgfkU84AqYYNcP34cGGqx6EfpmkUUB+qklMV41k/W3U8Bw==",
+      "integrity": "sha512-cEYCBrXLGNs3zb+emcHml/T23F1TqKJ5l198KlGjcYW5S5QfakI8gBeUPZcQb/JJ8+/HNUqs2b6i3U4fNFFYPA==",
       "requires": {
-        "@nevware21/grunt-eslint-ts": "0.0.1",
-        "@nevware21/grunt-ts-plugin": "0.2.2",
+        "@nevware21/grunt-eslint-ts": "^0.1.0",
+        "@nevware21/grunt-ts-plugin": "^0.2.2",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
         "@types/grunt": "0.4.25",

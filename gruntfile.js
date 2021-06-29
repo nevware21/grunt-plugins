@@ -128,12 +128,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("@nevware21/grunt-ts-plugin");
     grunt.loadNpmTasks("@nevware21/grunt-eslint-ts");
 
-     grunt.registerTask("shared_utils", [ "ts:shared_utils" ]);
-     grunt.registerTask("ts_plugin", [ "ts:ts_plugin" ]);
-     grunt.registerTask("eslint_ts_plugin", [ "ts:eslint_ts_plugin" ]);
-    //grunt.registerTask("shared_utils", [ "eslint-ts:shared-fix", "ts:shared_utils" ]);
-    //grunt.registerTask("ts_plugin", [ "eslint-ts:ts_plugin-fix", "ts:ts_plugin" ]);
-    //grunt.registerTask("eslint_ts_plugin", [ "eslint-ts:eslint_ts-fix", "ts:eslint_ts_plugin" ]);
+    grunt.registerTask("shared_utils", [ "eslint-ts:shared-fix", "ts:shared_utils" ]);
+    grunt.registerTask("ts_plugin", [ "eslint-ts:ts_plugin-fix", "ts:ts_plugin" ]);
+    grunt.registerTask("eslint_ts_plugin", [ "eslint-ts:eslint_ts-fix", "ts:eslint_ts_plugin" ]);
     grunt.registerTask("lint", [ "eslint-ts:shared", "eslint-ts:ts_plugin", "eslint-ts:eslint_ts" ]);
     grunt.registerTask("lint-fix", [ "eslint-ts:shared-fix", "eslint-ts:ts_plugin-fix", "eslint-ts:eslint_ts-fix" ]);
 

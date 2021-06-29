@@ -34,6 +34,7 @@ export function esLintFn (inst: IGrunt) {
             }
     
             let tsconfig = resolveValue(taskOptions.tsconfig, options.tsconfig);
+            // eslint-disable-next-line security/detect-non-literal-fs-filename
             if (!tsconfig || !grunt.file.exists(tsconfig)) {
                 grunt.logError("The TSConfig project file [" + tsconfig + "] does not exist");
                 return false;
@@ -83,6 +84,7 @@ export function esLintFn (inst: IGrunt) {
                     linterConfig.rules = linterConfig.rules || {};
                     const keys = Object.keys(rules);
                     keys.forEach((key) => {
+                        // eslint-disable-next-line security/detect-object-injection
                         linterConfig.rules[key] = rules[key];
                     });
                 }

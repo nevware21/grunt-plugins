@@ -21,6 +21,7 @@ function _getESLint(grunt: IGruntWrapper) {
 
     grunt.log("Using ESLint from : " + eslintPath);
 
+    // eslint-disable-next-line security/detect-non-literal-require
     return require(eslintPath);
 }
 

@@ -14,6 +14,7 @@ const gruntTaskRollupConfigFactory = () => {
             sourcemap: true,
             exports: "default"
         },
+        external: [ "fs", "path" ],
         plugins: [
             json(),
             commonjs(),

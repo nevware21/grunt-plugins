@@ -45,7 +45,7 @@
     },
     "devDependencies": {
         "@microsoft/rush": "5.47.0",
-        "@nevware21/grunt-eslint-ts": "^0.0.1",
+        "@nevware21/grunt-eslint-ts": "^0.1.0",
         "@nevware21/grunt-ts-plugin": "^0.2.0",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
