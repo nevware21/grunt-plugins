@@ -85,7 +85,8 @@ export function pluginFn (inst: IGrunt) {
             compiler: resolveValue(taskOptions.compiler, options.compiler),
             additionalFlags: resolveValue(taskOptions.additionalFlags, options.additionalFlags),
             logOutput: resolveValue(taskOptions.logOutput, options.logOutput),
-            failOnTypeErrors: resolveValue(taskOptions.failOnTypeErrors, options.failOnTypeErrors, false),
+            failOnTypeErrors: resolveValue(taskOptions.failOnTypeErrors, options.failOnTypeErrors, true),
+            failOnExternalTypeErrors: resolveValue(taskOptions.failOnExternalTypeErrors, options.failOnExternalTypeErrors, false),
             out: taskOptions.out,
             onError: resolveValue(taskOptions.onError, options.onError, handleDefaultTsErrors)
         };

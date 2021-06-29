@@ -22,12 +22,14 @@ const enum CompileErrorType {
     Level5 = 1,
     TS7017 = 2,
     HandlerError = 3,
-    NonEmit = 4
+    NonEmit = 4,
+    ExternalNonEmit = 5
 }
 
 interface ICheckResponse {
     isError: boolean,
     isOnlyTypeErrors: boolean,
+    isExternalTypeErrors: boolean,
     errors:  { [type: number]: number }
     messages: string[];
 }
@@ -203,7 +205,7 @@ export class TypeScriptCompiler {
     
                 let response: ICompileResponse = {
                     time: (endTime - startTime) / 1000,
-                    isSuccess: !chkResponse.isError || (chkResponse.isOnlyTypeErrors && !options.failOnTypeErrors),
+                    isSuccess: !chkResponse.isError || (chkResponse.isOnlyTypeErrors && !options.failOnTypeErrors) || (chkResponse.isExternalTypeErrors && !options.failOnExternalTypeErrors),
                     errors: chkResponse.messages
                 }
         
@@ -296,10 +298,11 @@ export class TypeScriptCompiler {
             let level5 = errors[CompileErrorType.Level5];
             let handlerErrors = errors[CompileErrorType.HandlerError];
             let nonEmit = errors[CompileErrorType.NonEmit];
+            let externalNonEmit = errors[CompileErrorType.ExternalNonEmit];
 
             // Log error summary
-            if (level1 + level5 + nonEmit > 0) {
-                if ((level1 + level5 > 0) || options.failOnTypeErrors) {
+            if (level1 + level5 + nonEmit + externalNonEmit > 0) {
+                if ((level1 + level5 > 0) || options.failOnTypeErrors || options.failOnExternalTypeErrors) {
                     grunt.logWrite((">> ").red);
                 } else {
                     grunt.logWrite((">> ").green);
@@ -309,16 +312,23 @@ export class TypeScriptCompiler {
                     grunt.logWrite(level5.toString() + " compiler flag error" +
                         (level5 === 1 ? "" : "s") + "  ");
                 }
+
                 if (level1 > 0) {
                     grunt.logWrite(level1.toString() + " syntax error" +
                         (level1 === 1 ? "" : "s") + "  ");
                 }
+
                 if (handlerErrors > 0) {
                     grunt.logWrite(handlerErrors.toString() + " handler error" +
                         (handlerErrors === 1 ? "" : "s") + "  ");
                 }
+
                 if (nonEmit > 0) {
                     grunt.logWrite(nonEmit.toString() + " non-emit-preventing type warning" + (nonEmit === 1 ? "" : "s") + "  ");
+                }
+
+                if (externalNonEmit > 0) {
+                    grunt.logWrite(externalNonEmit.toString() + " external non-emit-preventing type warning" + (externalNonEmit === 1 ? "" : "s") + "  ");
                 }
 
                 grunt.log("");
@@ -327,6 +337,14 @@ export class TypeScriptCompiler {
                         grunt.log((">> ").green + "Type errors only.");
                     } else {
                         grunt.log((">> ").red + "Type only errors detected -- If you want to not fail the build on these type of errors set the 'failOnTypeErrors' option to false (defaults to true)");
+                    }
+                }
+
+                if (resp.isExternalTypeErrors) {
+                    if (!options.failOnExternalTypeErrors) {
+                        grunt.log((">> ").green + "External Type errors identified.");
+                    } else {
+                        grunt.log((">> ").red + "External Type errors detected -- If you want to not fail the build on these type of errors set the 'failOnExternalTypeErrors' option to false (defaults to false)");
                     }
                 }
             }
@@ -349,12 +367,14 @@ export class TypeScriptCompiler {
                 [CompileErrorType.Level1]: 0,
                 [CompileErrorType.Level5]: 0,
                 [CompileErrorType.TS7017]: 0,
-                [CompileErrorType.NonEmit]: 0
+                [CompileErrorType.NonEmit]: 0,
+                [CompileErrorType.ExternalNonEmit]: 0
             };
 
             let output: string = response.stdout || response.stderr;
             let lines = output.split("\n");
             let hasPreventEmitErrors = false;
+            let hasExternalTypeErrors = false;
             let theErrors: string[] = [];
 
             lines.forEach((value) => {
@@ -385,7 +405,13 @@ export class TypeScriptCompiler {
                             errors[CompileErrorType.Level5] ++;
                             hasPreventEmitErrors = true;
                         } else {
-                            errors[CompileErrorType.NonEmit] ++;
+                            if (value.indexOf("node_modules/") !== -1) {
+                                errors[CompileErrorType.ExternalNonEmit] ++;
+                                hasExternalTypeErrors = true;
+                            } else {
+                                errors[CompileErrorType.NonEmit] ++;
+                            }
+
                             processError = ErrorHandlerResponse.Silent;
                         }
                     }
@@ -407,7 +433,8 @@ export class TypeScriptCompiler {
             }
             return {
                 isError: isError,
-                isOnlyTypeErrors: !hasPreventEmitErrors,
+                isOnlyTypeErrors: !hasPreventEmitErrors && (errors[CompileErrorType.NonEmit] > 0),
+                isExternalTypeErrors: hasExternalTypeErrors,
                 errors: errors,
                 messages: theErrors
             }

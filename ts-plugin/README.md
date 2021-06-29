@@ -78,7 +78,8 @@ The options can be specified at the global ```options``` or ```task``` level, wi
 |------|------|------------
 | src | string | string[] | A single string or an array of source files to included in each task.
 | additionalFlags | string \| string[]<br />Default: Empty String | Pass in additional flags to the tsc compiler (added to the end of the command line)
-| failOnTypeErrors | Boolean<br/>Defaults: false | Should the compile run fail when type errors are identified
+| failOnTypeErrors | Boolean<br/>Defaults: true | Should the compile run fail when type errors are identified, ignores failures from imported node_module/** packages
+| failOnExternalTypeErrors | Boolean<br/>Defaults: false | Should the compile run fail when type errors are identified as originating from an external packages (node_modules/)
 | tscPath | String<br>Defaults: reverse scan from project path for node_modules/typescript/bin folder | Identify the root path of the version of the TypeScript is installed, this may include be either the root folder of where the node_modules/typescript/bin folder is located or the location of the command-line version of tsc.
 | compiler | String <br />Defaults: to "tsc" within the located or defined tscPath | Identify the complete path to the command line version of tsc
 | onError | ErrorHandlerResponse<br />| This callback function will be called when an error matching "error: TS\d+:" is found, the errorNumber is the detected value and line is the entire line containing the error message.
