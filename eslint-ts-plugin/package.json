@@ -42,7 +42,7 @@
     "devDependencies": {
         "@types/eslint": "^7.2.13",
         "@types/estree": "^0.0.48",
-        "@types/grunt": "0.4.25",
+        "@types/grunt": "^0.4.27",
         "@nevware21/grunt-plugins-shared-utils": "0.3.0",
         "@nevware21/grunt-ts-plugin": "^0.2.2",
         "@nevware21/grunt-eslint-ts": "^0.1.0",

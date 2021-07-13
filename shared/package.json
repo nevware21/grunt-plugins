@@ -42,7 +42,7 @@
         "node": ">= 0.8.0"
     },
     "devDependencies": {
-        "@types/grunt": "^0.4.25",
+        "@types/grunt": "^0.4.27",
         "@types/eslint": "^7.2.13",
         "grunt": "^1.4.0",
         "grunt-cli": "^1.4.3",
