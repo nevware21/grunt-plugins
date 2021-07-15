@@ -66,10 +66,7 @@ module.exports = function (grunt) {
             },
             "ts_plugin": {
                 tsconfig: "./ts-plugin/tsconfig.json",
-                // src: [
-                //     './ts-plugin/src/**/*.ts'
-                // ],
-                //out: "ts-plugin/tasks/ts.js"
+                outDir: "ts-plugin/dist-esm"
             },
             "eslint_ts_plugin": {
                 tsconfig: "./eslint-ts-plugin/tsconfig.json",

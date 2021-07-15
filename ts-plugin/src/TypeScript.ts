@@ -78,9 +78,19 @@ export interface ITypeScriptCompilerOptions extends ITsCommonOptions {
      /**
      * Optional out location
      */
-    out?: string
+    out?: string;
+
+    /** 
+     * Specify the output directory 
+     */
+    outDir?: string;
 
     execute?: (grunt: IGrunt, args: string[]) => Promise<IExecuteResponse>;
+
+    /**
+     * Keep the generated temporary files (don't delete them)
+     */
+    keepTemp?: boolean;
 }
 
 export class TypeScriptCompiler {
@@ -146,12 +156,18 @@ export class TypeScriptCompiler {
                     grunt.logDebug((" - Actual  : " + (tsDetails.rootDir ? tsDetails.rootDir : "<undefined>")).magenta);
                 }
 
+                let outDirParam = options.outDir;
                 let outParam = options.out;
                 if (outParam) {
                     if (compilerOptions.outDir) {
                         grunt.logWarn(("The 'out' parameter is not compatible usage of 'outDir' within the TsConfig project file -- ignoring the out parameter").magenta);
                         outParam = undefined;
                     } else {
+                        if (outDirParam) {
+                            grunt.logWarn(("The 'out' parameter is not compatible usage of 'outDir' parameter -- ignoring the outDir parameter").magenta);
+                            outDirParam = undefined;
+                        }
+
                         //let outFile = rootDir ? path.resolve(rootDir, outParam) : path.resolve(outParam);
                         let outFile = path.resolve(outParam);
                         _addArg(args, "--out " + quoteIfRequired(outFile));
@@ -169,9 +185,17 @@ export class TypeScriptCompiler {
                         }
                     }
                 } else if (compilerOptions.outFile || compilerOptions.out) {
+                    if (outDirParam) {
+                        grunt.logWarn(("The 'outDir' parameter is not compatible usage of 'out' or 'outFile' within the TsConfig project file -- ignoring the outDir parameter").magenta);
+                        outDirParam = undefined;
+                    }
+
                     let outFile = compilerOptions.outFile || compilerOptions.out;
                     //outFile = rootDir ? path.resolve(rootDir, outFile) : path.resolve(outFile);
                     _addArg(args, "--out " + quoteIfRequired(outFile));
+                } else if (outDirParam) {
+                    let outDir = path.resolve(outDirParam);
+                    _addArg(args, "--outDir " + quoteIfRequired(outDir));
                 }
 
                 tsDetails.addFiles(tsFiles);
@@ -221,9 +245,11 @@ export class TypeScriptCompiler {
 
                 return response;
             } finally {
-                tsDetails.cleanupTemp();
-                // tmpTsConfig && fs.unlinkSync(tmpTsConfig);
-                tsCommand && fs.unlinkSync(tsCommand);
+                if (!options.keepTemp) {
+                    tsDetails.cleanupTemp();
+                    // tmpTsConfig && fs.unlinkSync(tmpTsConfig);
+                    tsCommand && fs.unlinkSync(tsCommand);
+                }
             }
         }
 

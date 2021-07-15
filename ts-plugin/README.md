@@ -70,7 +70,8 @@ The options can be specified at the global ```options``` or ```task``` level, wi
 |------|------|------------
 | tsconfig | string | The path to the tsConfig file to use, when specified
 | src | string | string[] | A single string or an array of source files to be "added" to the tsconfig as either files or include. When a string it assumes a single entry, there is not encoded list etc.
-| out | string |  Concatenate the output into a single file using the tsc --out parameter. If the tscConfig also includes an ```outDir``` this value will be ignored
+| out | string | Concatenate the output into a single file using the tsc --out parameter. If the tscConfig also includes an ```outDir``` this value will be ignored.
+| outDir | string | Use the tsc --outDir parameter. If the tscConfig also includes an ```out``` or ```outFile``` the value will be ignored.
 
 #### __Common options:__ Global and Task
 
@@ -85,6 +86,7 @@ The options can be specified at the global ```options``` or ```task``` level, wi
 | onError | ErrorHandlerResponse<br />| This callback function will be called when an error matching "error: TS\d+:" is found, the errorNumber is the detected value and line is the entire line containing the error message.
 | debug | Boolean<br/>Defaults: false | Log additional debug messages during the build, you can also enable grunt --verbose mode.
 | logOutput | Boolean<br/>Defaults: false | Log the output of the execute response
+| keepTemp | Boolean<br/>Defaults: false | Additional debugging switch that will not cleanup (delete) the temporary files used for building, use this flag to review the generated temporary tsconfig.json if one is required.
 
 **Example showing some option combinations**
 
