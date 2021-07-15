@@ -227,7 +227,8 @@ export class TypeScriptCompiler {
                 let chkResponse = _checkResponse(execResponse);
                 _logErrorSummary(chkResponse);
     
-                let isSuccess = !chkResponse.isError;
+                // Consider a failure if the exit code of tsc was non-zero (isError) AND it was not only type errors (isOnlyTypeErrors)
+                let isSuccess = !chkResponse.isError || chkResponse.isOnlyTypeErrors;
                 if (chkResponse.isOnlyTypeErrors && options.failOnTypeErrors) {
                     isSuccess = false;
                 }
