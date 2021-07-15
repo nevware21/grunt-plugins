@@ -1,5 +1,12 @@
 
-# v 0.2.0
+# v0.2.0
+
+## Changelog
+
+- Fixup ```eslint-ts``` task alias introduced in v0.2.0
+- Also add ```eslint``` task alias
+
+# v0.2.0
 
 ## Changelog
 

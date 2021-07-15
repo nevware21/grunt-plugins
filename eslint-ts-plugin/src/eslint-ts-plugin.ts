@@ -13,8 +13,8 @@ import { IEslintTsPluginTaskOptions } from "./interfaces/IEslintTsPluginOptions"
 import { Linter } from "eslint";
 import { IESLintRunnerOptions, IESLintRunnerResponse } from "./interfaces/IESLintRunnerOptions";
 
-export function esLintFn (inst: IGrunt) {
-    inst.registerMultiTask("lint", "ESLint TypeScript validator project", function (...args: any[]) {
+function _registerTask(inst: IGrunt, taskName: string) {
+    inst.registerMultiTask(taskName, "ESLint TypeScript validator project", function () {
         const tempIgnoreFile: string = null;
         let done: grunt.task.AsyncResultCatcher = null;
 
@@ -135,6 +135,10 @@ export function esLintFn (inst: IGrunt) {
             }
         }
 	});
+}
 
-    inst.registerTask("eslint-ts", ["lint"]);
+export function esLintFn (inst: IGrunt) {
+    _registerTask(inst, "lint");
+    _registerTask(inst, "eslint");
+    _registerTask(inst, "eslint-ts");
 }
