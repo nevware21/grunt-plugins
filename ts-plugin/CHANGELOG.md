@@ -1,8 +1,14 @@
+# v0.4.2
+
+## Changelog
+
+- #51 [BUG] ts-plugin v0.4.1 Failing with only external non-emit-preventing errors
+
 # v0.4.1
 
 ## Changelog
 
-- [BUG] tsplugin does not fail when both type and external type errors are detected #48 #49
+- #48 [BUG] tsplugin does not fail when both type and external type errors are detected
 
 # v0.4.0
 
