@@ -28,26 +28,6 @@ module.exports = function (grunt) {
             tests: ['tmp']
         },
 
-        // Configuration to be run (and then tested).
-        plugin_ts: {
-            default_options: {
-                options: {
-                },
-                files: {
-                    'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
-                }
-            },
-            custom_options: {
-                options: {
-                    separator: ': ',
-                    punctuation: ' !!!'
-                },
-                files: {
-                    'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
-                }
-            }
-        },
-
         // Unit tests.
         nodeunit: {
             tests: ['test/*_test.js']
@@ -76,7 +56,7 @@ module.exports = function (grunt) {
                 //out: "ts-plugin/tasks/ts.js"
             },
         },
-        "eslint-ts": {
+        "lint": {
             options: {
                 format: "codeframe",
                 suppressWarnings: false
@@ -121,15 +101,14 @@ module.exports = function (grunt) {
     });
 
     // Actually load this plugin's task(s).
-    grunt.loadTasks('tasks');
     grunt.loadNpmTasks("@nevware21/grunt-ts-plugin");
     grunt.loadNpmTasks("@nevware21/grunt-eslint-ts");
 
-    grunt.registerTask("shared_utils", [ "eslint-ts:shared-fix", "ts:shared_utils" ]);
-    grunt.registerTask("ts_plugin", [ "eslint-ts:ts_plugin-fix", "ts:ts_plugin" ]);
-    grunt.registerTask("eslint_ts_plugin", [ "eslint-ts:eslint_ts-fix", "ts:eslint_ts_plugin" ]);
-    grunt.registerTask("lint", [ "eslint-ts:shared", "eslint-ts:ts_plugin", "eslint-ts:eslint_ts" ]);
-    grunt.registerTask("lint-fix", [ "eslint-ts:shared-fix", "eslint-ts:ts_plugin-fix", "eslint-ts:eslint_ts-fix" ]);
+    grunt.registerTask("shared_utils", [ "lint:shared-fix", "ts:shared_utils" ]);
+    grunt.registerTask("ts_plugin", [ "lint:ts_plugin-fix", "ts:ts_plugin" ]);
+    grunt.registerTask("eslint_ts_plugin", [ "lint:eslint_ts-fix", "ts:eslint_ts_plugin" ]);
+    grunt.registerTask("dolint", [ "lint:shared", "lint:ts_plugin", "lint:eslint_ts" ]);
+    grunt.registerTask("lint-fix", [ "lint:shared-fix", "lint:ts_plugin-fix", "lint:eslint_ts-fix" ]);
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.

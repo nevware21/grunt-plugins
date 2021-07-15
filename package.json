@@ -23,9 +23,9 @@
         "postinstall": "node common/scripts/install-run-rush.js update",
         "build": "node common/scripts/install-run-rush.js rebuild --verbose",
         "test": "node common/scripts/install-run-rush.js test --verbose",
-        "lint": "node common/scripts/install-run-rush.js lint --verbose",
+        "lint": "node common/scripts/install-run-rush.js dolint --verbose",
         "check": "node common/scripts/install-run-rush.js check",
-        "rupdate": "rush update --recheck --purge --full",
+        "rupdate": "rush update --recheck --full",
         "clean": "git clean -xdf && npm install && npm run rupdate",
         "cleanBuild": "npm run clean && npm run build"
     },
@@ -47,7 +47,7 @@
     },
     "devDependencies": {
         "@microsoft/rush": "5.49.1",
-        "@nevware21/grunt-eslint-ts": "^0.1.0",
+        "@nevware21/grunt-eslint-ts": "^0.2.0",
         "@nevware21/grunt-ts-plugin": "^0.3.0",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",

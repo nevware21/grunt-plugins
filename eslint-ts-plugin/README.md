@@ -146,7 +146,7 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks("@nevware21/grunt-eslint-ts");
-  grunt.registerTask("lint", [ "lint:shared", "lint:ts_plugin", "lint:eslint_ts" ]);
+  grunt.registerTask("dolint", [ "lint:shared", "lint:ts_plugin", "lint:eslint_ts" ]);
   grunt.registerTask("lint-fix", [ "lint:shared-fix", "lint:ts_plugin-fix", "lint:eslint_ts-fix" ]);
 };
 ```
