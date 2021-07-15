@@ -46,7 +46,7 @@
         "node": ">= 0.8.0"
     },
     "devDependencies": {
-        "@microsoft/rush": "5.49.1",
+        "@microsoft/rush": "5.49.2",
         "@nevware21/grunt-eslint-ts": "^0.2.0",
         "@nevware21/grunt-ts-plugin": "^0.3.0",
         "@rollup/plugin-commonjs": "^19.0.0",
