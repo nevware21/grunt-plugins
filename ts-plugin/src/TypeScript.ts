@@ -23,7 +23,9 @@ const enum CompileErrorType {
     TS7017 = 2,
     HandlerError = 3,
     NonEmit = 4,
-    ExternalNonEmit = 5
+    ExternalNonEmit = 5,
+    Total = 6,
+    Ignored = 7 
 }
 
 interface ICheckResponse {
@@ -32,6 +34,8 @@ interface ICheckResponse {
     isExternalTypeErrors: boolean,
     errors:  { [type: number]: number }
     messages: string[];
+    failingMessages: string[];
+    ignoredMessages: string[];
 }
 
 function _hasArgument(args: string[], theArg: string) {
@@ -227,13 +231,22 @@ export class TypeScriptCompiler {
                 let chkResponse = _checkResponse(execResponse);
                 _logErrorSummary(chkResponse);
     
-                // Consider a failure if the exit code of tsc was non-zero (isError) AND it was not only type errors (isOnlyTypeErrors)
-                let isSuccess = !chkResponse.isError || chkResponse.isOnlyTypeErrors;
-                if (chkResponse.isOnlyTypeErrors && options.failOnTypeErrors) {
-                    isSuccess = false;
+                // Get the total number of parsed errors
+                let totalErrors = chkResponse.errors[CompileErrorType.Total];
+
+                // Get the total number of ignored / silented errors
+                let ignoredErrors = chkResponse.errors[CompileErrorType.Ignored];
+
+                // Consider a failure if the exit code from tsc
+                let isSuccess = !chkResponse.isError;
+                if (!isSuccess && totalErrors > 0 && totalErrors === ignoredErrors) {
+                    // If tsc gave an exit response code but we processed the output, found at least 1 error but ignored all of them
+                    // then ignore the exit code
+                    isSuccess = true;
                 }
 
-                if (chkResponse.isExternalTypeErrors && options.failOnExternalTypeErrors) {
+                if (totalErrors > ignoredErrors) {
+                    // We have at least 1 reported error that has not been ignored
                     isSuccess = false;
                 }
 
@@ -330,6 +343,8 @@ export class TypeScriptCompiler {
                     " suppress TypeScript error TS7017.").magenta);
             }
 
+            let totalErrors = errors[CompileErrorType.Total];
+            let ignoredErrors = errors[CompileErrorType.Ignored];
             let level1 = errors[CompileErrorType.Level1];
             let level5 = errors[CompileErrorType.Level5];
             let handlerErrors = errors[CompileErrorType.HandlerError];
@@ -338,7 +353,7 @@ export class TypeScriptCompiler {
 
             // Log error summary
             if (level1 + level5 + nonEmit + externalNonEmit > 0) {
-                if ((level1 + level5 > 0) || options.failOnTypeErrors || options.failOnExternalTypeErrors) {
+                if (totalErrors - ignoredErrors > 0) {
                     grunt.logWrite((">> ").red);
                 } else {
                     grunt.logWrite((">> ").green);
@@ -365,6 +380,14 @@ export class TypeScriptCompiler {
 
                 if (externalNonEmit > 0) {
                     grunt.logWrite(externalNonEmit.toString() + " external non-emit-preventing type warning" + (externalNonEmit === 1 ? "" : "s") + "  ");
+                }
+
+                if (ignoredErrors > 0) {
+                    if (totalErrors - ignoredErrors > 0) {
+                        grunt.logWrite(ignoredErrors.toString() + " ignored error" + (ignoredErrors === 1 ? "" : "s") + "  ")
+                    } else {
+                        grunt.logWrite((totalErrors > 1 ? "All r" : "R") + "eported error" + (totalErrors === 1 ? "" : "s") + " ignored  ")
+                    }
                 }
 
                 grunt.log("");
@@ -404,7 +427,9 @@ export class TypeScriptCompiler {
                 [CompileErrorType.Level5]: 0,
                 [CompileErrorType.TS7017]: 0,
                 [CompileErrorType.NonEmit]: 0,
-                [CompileErrorType.ExternalNonEmit]: 0
+                [CompileErrorType.ExternalNonEmit]: 0,
+                [CompileErrorType.Total]: 0,
+                [CompileErrorType.Ignored]: 0
             };
 
             let output: string = response.stdout || response.stderr;
@@ -412,6 +437,8 @@ export class TypeScriptCompiler {
             let hasPreventEmitErrors = false;
             let hasExternalTypeErrors = false;
             let theErrors: string[] = [];
+            let failingErrors: string[] = [];
+            let ignoredErrors: string[] = [];
 
             lines.forEach((value) => {
                 let errorMatch = value.match(TsErrorRegEx);
@@ -444,16 +471,36 @@ export class TypeScriptCompiler {
                             if (value.indexOf("node_modules/") !== -1) {
                                 errors[CompileErrorType.ExternalNonEmit] ++;
                                 hasExternalTypeErrors = true;
+                                if (!options.failOnExternalTypeErrors) {
+                                    // Don't fail the build if we are ignoring this type of error
+                                    processError = ErrorHandlerResponse.Silent;
+                                }
                             } else {
                                 errors[CompileErrorType.NonEmit] ++;
+                                if (!options.failOnTypeErrors) {
+                                    // Don't fail the build if we are ignoring this type of error
+                                    processError = ErrorHandlerResponse.Silent;
+                                }
                             }
-
-                            processError = ErrorHandlerResponse.Silent;
                         }
                     }
 
+                    errors[CompileErrorType.Total] ++;
                     if (processError !== ErrorHandlerResponse.Ignore) {
+                        // Save all of the non-ignored messages
                         theErrors.push(value);
+                    }
+                    
+                    if (processError == ErrorHandlerResponse.Error) {
+                        failingErrors.push(value);
+                    } else if (processError === ErrorHandlerResponse.Silent) {
+                        ignoredErrors.push(value);
+
+                        // Don't count this error as a failure
+                        errors[CompileErrorType.Ignored] ++;
+                    } else if (processError === ErrorHandlerResponse.Ignore) {
+                        // Don't count this error as a failure
+                        errors[CompileErrorType.Ignored] ++;
                     }
                 }
             });
@@ -472,7 +519,9 @@ export class TypeScriptCompiler {
                 isOnlyTypeErrors: !hasPreventEmitErrors && (errors[CompileErrorType.NonEmit] > 0),
                 isExternalTypeErrors: hasExternalTypeErrors,
                 errors: errors,
-                messages: theErrors
+                messages: theErrors,
+                failingMessages: failingErrors,
+                ignoredMessages: ignoredErrors
             }
         }
     }

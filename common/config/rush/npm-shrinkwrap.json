@@ -9,7 +9,7 @@
       "version": "0.0.0",
       "dependencies": {
         "@nevware21/grunt-eslint-ts": "^0.2.1",
-        "@nevware21/grunt-ts-plugin": "^0.4.0",
+        "@nevware21/grunt-ts-plugin": "^0.4.2",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
@@ -175,9 +175,9 @@
       }
     },
     "node_modules/@nevware21/grunt-ts-plugin": {
-      "version": "0.4.0",
-      "resolved": "https://registry.npmjs.org/@nevware21/grunt-ts-plugin/-/grunt-ts-plugin-0.4.0.tgz",
-      "integrity": "sha512-b7oVGGKvbVm536ZcuIQBiGka4TLQfUtDrANB6yx304fQQjtHeNs8PtgWvTpAiwsevPlXCK2Wfm0q7bRNUziRIg==",
+      "version": "0.4.2",
+      "resolved": "https://registry.npmjs.org/@nevware21/grunt-ts-plugin/-/grunt-ts-plugin-0.4.2.tgz",
+      "integrity": "sha512-OUfMJpl//BJxSWhSw+nNwQQlmYnYpsVZfDCtxswKAsjm7P96QAhSqELRlGNhpc+BKzadA3WnKrLb9zfwgqX4ag==",
       "engines": {
         "node": ">= 0.8.0"
       },
@@ -297,10 +297,10 @@
     "node_modules/@rush-temp/grunt-eslint-ts": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-eslint-ts.tgz",
-      "integrity": "sha512-BBdOcvM0mte8Op2MGpUItK8dN2yEBM4+dqpy2lTAq9hQhufHrrUzTxV0ZZSJBTbZdoFNrzaMrA8ja+cSeDbfBQ==",
+      "integrity": "sha512-1pwe16srDbKKUsx/Ws4xCQ0zEC00LeeHSvKaWBnnUqYmXS9bC8VB1k+N7IEwA/Jm90SLBrpFZYplEKuclgBJvg==",
       "dependencies": {
         "@nevware21/grunt-eslint-ts": "^0.2.1",
-        "@nevware21/grunt-ts-plugin": "^0.4.0",
+        "@nevware21/grunt-ts-plugin": "^0.4.2",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
@@ -321,10 +321,10 @@
     "node_modules/@rush-temp/grunt-plugins-shared-utils": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-plugins-shared-utils.tgz",
-      "integrity": "sha512-fwWG4o5/6IWup8Y+TEaL9o+NyHd2Wscwbt1X7Tp+WpjXBITlvTX06d+AIr4QHmcUBopA9gAfoj8Bg4JLD6zUow==",
+      "integrity": "sha512-12OVXTpPzkJK5G6NGTBY1sWrQIKytFcj6xbKo9pI+3A5cwJgnnSe5go24NKrh1o0dSmvxHibVR4vxfbfkRdI0Q==",
       "dependencies": {
         "@nevware21/grunt-eslint-ts": "^0.2.1",
-        "@nevware21/grunt-ts-plugin": "^0.4.0",
+        "@nevware21/grunt-ts-plugin": "^0.4.2",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
         "@types/eslint": "^7.2.13",
@@ -338,10 +338,10 @@
     "node_modules/@rush-temp/grunt-ts-plugin": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-ts-plugin.tgz",
-      "integrity": "sha512-NymdaSkIfTZ4kUfk6FR+ZRzSHltUdYP8uklFslE6N+vTTIct7kcTUYyA78PjSz7K4HAxlPdvbH91bgz7r5KRrw==",
+      "integrity": "sha512-DpRHYRUxGb+S3xINVE8kQEVwvT9Q5lkVF7kakdHkgU4YIjGhnPiUUXQh5sMS0BDO/RPnDqzOQEGJrrwqHW46Jg==",
       "dependencies": {
         "@nevware21/grunt-eslint-ts": "^0.2.1",
-        "@nevware21/grunt-ts-plugin": "^0.4.0",
+        "@nevware21/grunt-ts-plugin": "^0.4.2",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
         "@types/grunt": "^0.4.27",
@@ -1269,6 +1269,19 @@
       "version": "1.0.0",
       "resolved": "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz",
       "integrity": "sha1-FQStJSMVjKpA20onh8sBQRmU6k8="
+    },
+    "node_modules/fsevents": {
+      "version": "2.3.2",
+      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz",
+      "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
+      "hasInstallScript": true,
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": "^8.16.0 || ^10.6.0 || >=11.0.0"
+      }
     },
     "node_modules/function-bind": {
       "version": "1.1.1",
@@ -2570,9 +2583,9 @@
       }
     },
     "node_modules/table/node_modules/ajv": {
-      "version": "8.6.1",
-      "resolved": "https://registry.npmjs.org/ajv/-/ajv-8.6.1.tgz",
-      "integrity": "sha512-42VLtQUOLefAvKFAQIxIZDaThq6om/PrfP0CYk3/vn+y4BMNkKnbli8ON2QCiHov4KkzOSJ/xSoBJdayiiYvVQ==",
+      "version": "8.6.2",
+      "resolved": "https://registry.npmjs.org/ajv/-/ajv-8.6.2.tgz",
+      "integrity": "sha512-9807RlWAgT564wT+DjeyU5OFMPjmzxVobvDFmNAhY+5zD6A2ly3jDp6sgnfyDtlIQ+7H97oc/DGCzzfu9rjw9w==",
       "dependencies": {
         "fast-deep-equal": "^3.1.1",
         "json-schema-traverse": "^1.0.0",
@@ -2926,9 +2939,9 @@
       "requires": {}
     },
     "@nevware21/grunt-ts-plugin": {
-      "version": "0.4.0",
-      "resolved": "https://registry.npmjs.org/@nevware21/grunt-ts-plugin/-/grunt-ts-plugin-0.4.0.tgz",
-      "integrity": "sha512-b7oVGGKvbVm536ZcuIQBiGka4TLQfUtDrANB6yx304fQQjtHeNs8PtgWvTpAiwsevPlXCK2Wfm0q7bRNUziRIg==",
+      "version": "0.4.2",
+      "resolved": "https://registry.npmjs.org/@nevware21/grunt-ts-plugin/-/grunt-ts-plugin-0.4.2.tgz",
+      "integrity": "sha512-OUfMJpl//BJxSWhSw+nNwQQlmYnYpsVZfDCtxswKAsjm7P96QAhSqELRlGNhpc+BKzadA3WnKrLb9zfwgqX4ag==",
       "requires": {}
     },
     "@nodelib/fs.scandir": {
@@ -3013,10 +3026,10 @@
     },
     "@rush-temp/grunt-eslint-ts": {
       "version": "file:projects\\grunt-eslint-ts.tgz",
-      "integrity": "sha512-BBdOcvM0mte8Op2MGpUItK8dN2yEBM4+dqpy2lTAq9hQhufHrrUzTxV0ZZSJBTbZdoFNrzaMrA8ja+cSeDbfBQ==",
+      "integrity": "sha512-1pwe16srDbKKUsx/Ws4xCQ0zEC00LeeHSvKaWBnnUqYmXS9bC8VB1k+N7IEwA/Jm90SLBrpFZYplEKuclgBJvg==",
       "requires": {
         "@nevware21/grunt-eslint-ts": "^0.2.1",
-        "@nevware21/grunt-ts-plugin": "^0.4.0",
+        "@nevware21/grunt-ts-plugin": "^0.4.2",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
@@ -3036,10 +3049,10 @@
     },
     "@rush-temp/grunt-plugins-shared-utils": {
       "version": "file:projects\\grunt-plugins-shared-utils.tgz",
-      "integrity": "sha512-fwWG4o5/6IWup8Y+TEaL9o+NyHd2Wscwbt1X7Tp+WpjXBITlvTX06d+AIr4QHmcUBopA9gAfoj8Bg4JLD6zUow==",
+      "integrity": "sha512-12OVXTpPzkJK5G6NGTBY1sWrQIKytFcj6xbKo9pI+3A5cwJgnnSe5go24NKrh1o0dSmvxHibVR4vxfbfkRdI0Q==",
       "requires": {
         "@nevware21/grunt-eslint-ts": "^0.2.1",
-        "@nevware21/grunt-ts-plugin": "^0.4.0",
+        "@nevware21/grunt-ts-plugin": "^0.4.2",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
         "@types/eslint": "^7.2.13",
@@ -3052,10 +3065,10 @@
     },
     "@rush-temp/grunt-ts-plugin": {
       "version": "file:projects\\grunt-ts-plugin.tgz",
-      "integrity": "sha512-NymdaSkIfTZ4kUfk6FR+ZRzSHltUdYP8uklFslE6N+vTTIct7kcTUYyA78PjSz7K4HAxlPdvbH91bgz7r5KRrw==",
+      "integrity": "sha512-DpRHYRUxGb+S3xINVE8kQEVwvT9Q5lkVF7kakdHkgU4YIjGhnPiUUXQh5sMS0BDO/RPnDqzOQEGJrrwqHW46Jg==",
       "requires": {
         "@nevware21/grunt-eslint-ts": "^0.2.1",
-        "@nevware21/grunt-ts-plugin": "^0.4.0",
+        "@nevware21/grunt-ts-plugin": "^0.4.2",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
         "@types/grunt": "^0.4.27",
@@ -3720,6 +3733,12 @@
       "version": "1.0.0",
       "resolved": "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz",
       "integrity": "sha1-FQStJSMVjKpA20onh8sBQRmU6k8="
+    },
+    "fsevents": {
+      "version": "2.3.2",
+      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz",
+      "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
+      "optional": true
     },
     "function-bind": {
       "version": "1.1.1",
@@ -4670,9 +4689,9 @@
       },
       "dependencies": {
         "ajv": {
-          "version": "8.6.1",
-          "resolved": "https://registry.npmjs.org/ajv/-/ajv-8.6.1.tgz",
-          "integrity": "sha512-42VLtQUOLefAvKFAQIxIZDaThq6om/PrfP0CYk3/vn+y4BMNkKnbli8ON2QCiHov4KkzOSJ/xSoBJdayiiYvVQ==",
+          "version": "8.6.2",
+          "resolved": "https://registry.npmjs.org/ajv/-/ajv-8.6.2.tgz",
+          "integrity": "sha512-9807RlWAgT564wT+DjeyU5OFMPjmzxVobvDFmNAhY+5zD6A2ly3jDp6sgnfyDtlIQ+7H97oc/DGCzzfu9rjw9w==",
           "requires": {
             "fast-deep-equal": "^3.1.1",
             "json-schema-traverse": "^1.0.0",
