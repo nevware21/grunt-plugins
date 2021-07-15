@@ -1,3 +1,11 @@
+# v0.4.3
+
+## Changelog
+
+- #51 (Fix #2) [BUG] ts-plugin v0.4.1 Failing with only external non-emit-preventing errors
+  - Reworked the way that detected / parsed errors are handled and counted
+  - Also fixes simular issues related to using an onError() handler that where also getting ignored.
+
 # v0.4.2
 
 ## Changelog
