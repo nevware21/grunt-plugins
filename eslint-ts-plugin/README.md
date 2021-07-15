@@ -37,14 +37,14 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 ```js
 module.exports = function(grunt) {
   grunt.initConfig({
-    eslint-ts: {
+    lint: {
       default : {
         tsconfig: './tsconfig.json'
       }
     }
   });
   grunt.loadNpmTasks("@nevware21/grunt-eslint-ts");
-  grunt.registerTask("default", ["eslint-ts"]);
+  grunt.registerTask("default", ["lint"]);
 };
 ```
 
@@ -98,7 +98,7 @@ When the `eslint-plugin-security` package is detected in the `node_modules` this
 ```js
 module.exports = function(grunt) {
   grunt.initConfig({
-    "eslint-ts": {
+    "lint": {
         options: {
             format: "codeframe",
             suppressWarnings: false
@@ -146,10 +146,12 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks("@nevware21/grunt-eslint-ts");
-  grunt.registerTask("lint", [ "eslint-ts:shared", "eslint-ts:ts_plugin", "eslint-ts:eslint_ts" ]);
-  grunt.registerTask("lint-fix", [ "eslint-ts:shared-fix", "eslint-ts:ts_plugin-fix", "eslint-ts:eslint_ts-fix" ]);
+  grunt.registerTask("lint", [ "lint:shared", "lint:ts_plugin", "lint:eslint_ts" ]);
+  grunt.registerTask("lint-fix", [ "lint:shared-fix", "lint:ts_plugin-fix", "lint:eslint_ts-fix" ]);
 };
 ```
+
+Version 0.1.0 used a taskname of ```eslint-ts```, while 0.2.0 changes the primary taskname to ```lint``` but includes an alias task ```eslint-ts``` for backward compatibility. Will likely be removed prior to v1.0.0.
 
 ## Contributing
 
