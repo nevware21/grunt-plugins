@@ -1,3 +1,11 @@
+# v0.4.0
+
+## Changelog
+
+- Use updated tsconfig.json to handle (ignore) included comments and trailing comma after last element for an object
+- Add ```outDir``` option on the task for setting tsc destination
+- Add ```keepTemp``` option for additional debugging
+
 # v0.3.0
 
 ## Changelog
