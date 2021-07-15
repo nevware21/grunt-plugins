@@ -9,7 +9,7 @@
       "version": "0.0.0",
       "dependencies": {
         "@nevware21/grunt-eslint-ts": "^0.1.0",
-        "@nevware21/grunt-ts-plugin": "^0.2.2",
+        "@nevware21/grunt-ts-plugin": "^0.3.0",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
@@ -175,9 +175,9 @@
       }
     },
     "node_modules/@nevware21/grunt-ts-plugin": {
-      "version": "0.2.2",
-      "resolved": "https://registry.npmjs.org/@nevware21/grunt-ts-plugin/-/grunt-ts-plugin-0.2.2.tgz",
-      "integrity": "sha512-5CtPwYGbP+FlBZ6DOACgqrUCgBnXfyByN5aT5P4HqzkMIU/TPbl5BqPLpDs0BkeGig2mmQyw1dIDAxBcRy71zw==",
+      "version": "0.3.0",
+      "resolved": "https://registry.npmjs.org/@nevware21/grunt-ts-plugin/-/grunt-ts-plugin-0.3.0.tgz",
+      "integrity": "sha512-o2yy7ixn6faG2+C22uIbnk4I5KXvsPF6ETE6igHFv8GW2K7jBCfHdyBUD3Iy7bLhkYVUIfVueDf4NmPTgai9EA==",
       "engines": {
         "node": ">= 0.8.0"
       },
@@ -297,10 +297,10 @@
     "node_modules/@rush-temp/grunt-eslint-ts": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-eslint-ts.tgz",
-      "integrity": "sha512-ViUn2RXcNB7/URKGT0iotpgcu5NjQu1PDshnLxMjXyfDZkeOQvPLF1ENSDt5VPAOLoPciIyZ8bJwSOGWd53J3g==",
+      "integrity": "sha512-QMinYkSJ01SXbeEKPTz38uYv2YrfAIZyZYUY/GzCy3ifELF1WtiTQkZ73f+vZGXj1uRSSb0NM9Q8z9pxE+k6Eg==",
       "dependencies": {
         "@nevware21/grunt-eslint-ts": "^0.1.0",
-        "@nevware21/grunt-ts-plugin": "^0.2.2",
+        "@nevware21/grunt-ts-plugin": "^0.3.0",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
@@ -321,8 +321,10 @@
     "node_modules/@rush-temp/grunt-plugins-shared-utils": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-plugins-shared-utils.tgz",
-      "integrity": "sha512-2rGih1FhlAPx2i/36gYG9OJfr2CJ1YyZ3UW4uTUqgdq6WRmR/E1RuN6D0dEgW/xO/9uqsJ2/qBSeHQx3SrzMyg==",
+      "integrity": "sha512-J5h6w+QIzx5s8Tec8LiZz/2klOxfBnAgRIiuoJq9KtumB0Cd/cRkGKnzWChwCxo5yS16pg0YLXZRQ4g55tnRTA==",
       "dependencies": {
+        "@nevware21/grunt-eslint-ts": "^0.1.0",
+        "@nevware21/grunt-ts-plugin": "^0.3.0",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
         "@types/eslint": "^7.2.13",
@@ -336,10 +338,10 @@
     "node_modules/@rush-temp/grunt-ts-plugin": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-ts-plugin.tgz",
-      "integrity": "sha512-0g5rGHyS0YMeYiLT9zvYTNTTpysANX+X8oVCFfhhnFAOmkvU5NE/mEqW4HROjVF5m1u6zuC5cPsslF/HRa9Qjw==",
+      "integrity": "sha512-y12fjYQ6L7gzwT5TByw4RbiikCCcSqESIUvVMa3In7kyUL6F/fCaVIeNAZCwKTRzm3neWwSi1q8U/mHmClq99g==",
       "dependencies": {
         "@nevware21/grunt-eslint-ts": "^0.1.0",
-        "@nevware21/grunt-ts-plugin": "^0.2.2",
+        "@nevware21/grunt-ts-plugin": "^0.3.0",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
         "@types/grunt": "^0.4.27",
@@ -2358,9 +2360,9 @@
       }
     },
     "node_modules/rollup": {
-      "version": "2.53.1",
-      "resolved": "https://registry.npmjs.org/rollup/-/rollup-2.53.1.tgz",
-      "integrity": "sha512-yiTCvcYXZEulNWNlEONOQVlhXA/hgxjelFSjNcrwAAIfYx/xqjSHwqg/cCaWOyFRKr+IQBaXwt723m8tCaIUiw==",
+      "version": "2.53.2",
+      "resolved": "https://registry.npmjs.org/rollup/-/rollup-2.53.2.tgz",
+      "integrity": "sha512-1CtEYuS5CRCzFZ7SNW5528SlDlk4VDXIRGwbm/2POQxA/G4+7/crIqJwkmnj8Q/74hGx4oVlNvh4E1CJQ5hZ6w==",
       "bin": {
         "rollup": "dist/bin/rollup"
       },
@@ -2937,9 +2939,9 @@
       "requires": {}
     },
     "@nevware21/grunt-ts-plugin": {
-      "version": "0.2.2",
-      "resolved": "https://registry.npmjs.org/@nevware21/grunt-ts-plugin/-/grunt-ts-plugin-0.2.2.tgz",
-      "integrity": "sha512-5CtPwYGbP+FlBZ6DOACgqrUCgBnXfyByN5aT5P4HqzkMIU/TPbl5BqPLpDs0BkeGig2mmQyw1dIDAxBcRy71zw==",
+      "version": "0.3.0",
+      "resolved": "https://registry.npmjs.org/@nevware21/grunt-ts-plugin/-/grunt-ts-plugin-0.3.0.tgz",
+      "integrity": "sha512-o2yy7ixn6faG2+C22uIbnk4I5KXvsPF6ETE6igHFv8GW2K7jBCfHdyBUD3Iy7bLhkYVUIfVueDf4NmPTgai9EA==",
       "requires": {}
     },
     "@nodelib/fs.scandir": {
@@ -3024,10 +3026,10 @@
     },
     "@rush-temp/grunt-eslint-ts": {
       "version": "file:projects\\grunt-eslint-ts.tgz",
-      "integrity": "sha512-ViUn2RXcNB7/URKGT0iotpgcu5NjQu1PDshnLxMjXyfDZkeOQvPLF1ENSDt5VPAOLoPciIyZ8bJwSOGWd53J3g==",
+      "integrity": "sha512-QMinYkSJ01SXbeEKPTz38uYv2YrfAIZyZYUY/GzCy3ifELF1WtiTQkZ73f+vZGXj1uRSSb0NM9Q8z9pxE+k6Eg==",
       "requires": {
         "@nevware21/grunt-eslint-ts": "^0.1.0",
-        "@nevware21/grunt-ts-plugin": "^0.2.2",
+        "@nevware21/grunt-ts-plugin": "^0.3.0",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
@@ -3047,8 +3049,10 @@
     },
     "@rush-temp/grunt-plugins-shared-utils": {
       "version": "file:projects\\grunt-plugins-shared-utils.tgz",
-      "integrity": "sha512-2rGih1FhlAPx2i/36gYG9OJfr2CJ1YyZ3UW4uTUqgdq6WRmR/E1RuN6D0dEgW/xO/9uqsJ2/qBSeHQx3SrzMyg==",
+      "integrity": "sha512-J5h6w+QIzx5s8Tec8LiZz/2klOxfBnAgRIiuoJq9KtumB0Cd/cRkGKnzWChwCxo5yS16pg0YLXZRQ4g55tnRTA==",
       "requires": {
+        "@nevware21/grunt-eslint-ts": "^0.1.0",
+        "@nevware21/grunt-ts-plugin": "^0.3.0",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
         "@types/eslint": "^7.2.13",
@@ -3061,10 +3065,10 @@
     },
     "@rush-temp/grunt-ts-plugin": {
       "version": "file:projects\\grunt-ts-plugin.tgz",
-      "integrity": "sha512-0g5rGHyS0YMeYiLT9zvYTNTTpysANX+X8oVCFfhhnFAOmkvU5NE/mEqW4HROjVF5m1u6zuC5cPsslF/HRa9Qjw==",
+      "integrity": "sha512-y12fjYQ6L7gzwT5TByw4RbiikCCcSqESIUvVMa3In7kyUL6F/fCaVIeNAZCwKTRzm3neWwSi1q8U/mHmClq99g==",
       "requires": {
         "@nevware21/grunt-eslint-ts": "^0.1.0",
-        "@nevware21/grunt-ts-plugin": "^0.2.2",
+        "@nevware21/grunt-ts-plugin": "^0.3.0",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-node-resolve": "^13.0.0",
         "@types/grunt": "^0.4.27",
@@ -4531,9 +4535,9 @@
       }
     },
     "rollup": {
-      "version": "2.53.1",
-      "resolved": "https://registry.npmjs.org/rollup/-/rollup-2.53.1.tgz",
-      "integrity": "sha512-yiTCvcYXZEulNWNlEONOQVlhXA/hgxjelFSjNcrwAAIfYx/xqjSHwqg/cCaWOyFRKr+IQBaXwt723m8tCaIUiw==",
+      "version": "2.53.2",
+      "resolved": "https://registry.npmjs.org/rollup/-/rollup-2.53.2.tgz",
+      "integrity": "sha512-1CtEYuS5CRCzFZ7SNW5528SlDlk4VDXIRGwbm/2POQxA/G4+7/crIqJwkmnj8Q/74hGx4oVlNvh4E1CJQ5hZ6w==",
       "requires": {
         "fsevents": "~2.3.2"
       }
