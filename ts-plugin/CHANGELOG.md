@@ -1,3 +1,9 @@
+# v0.4.1
+
+## Changelog
+
+- [BUG] tsplugin does not fail when both type and external type errors are detected #48 #49
+
 # v0.4.0
 
 ## Changelog
