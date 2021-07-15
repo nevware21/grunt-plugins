@@ -227,9 +227,18 @@ export class TypeScriptCompiler {
                 let chkResponse = _checkResponse(execResponse);
                 _logErrorSummary(chkResponse);
     
+                let isSuccess = !chkResponse.isError;
+                if (chkResponse.isOnlyTypeErrors && options.failOnTypeErrors) {
+                    isSuccess = false;
+                }
+
+                if (chkResponse.isExternalTypeErrors && options.failOnExternalTypeErrors) {
+                    isSuccess = false;
+                }
+
                 let response: ICompileResponse = {
                     time: (endTime - startTime) / 1000,
-                    isSuccess: !chkResponse.isError || (chkResponse.isOnlyTypeErrors && !options.failOnTypeErrors) || (chkResponse.isExternalTypeErrors && !options.failOnExternalTypeErrors),
+                    isSuccess: isSuccess,
                     errors: chkResponse.messages
                 }
         
