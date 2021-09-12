@@ -7,23 +7,11 @@
  * Licensed under the MIT license.
  */
 
-import { dumpObj, IGruntWrapper, isFunction, isUndefined, locateModulePath } from "@nevware21/grunt-plugins-shared-utils";
+import { dumpObj, IGruntWrapper, isFunction, isUndefined, findModulePath, locateModulePath } from "@nevware21/grunt-plugins-shared-utils";
 import { IESLintRunnerFileResponse, IESLintRunnerOptions, IESLintRunnerResponse } from "./interfaces/IESLintRunnerOptions";
 import { Linter, ESLint } from "eslint";
-
-function _getESLint(grunt: IGruntWrapper) {
-    let eslintPath = "eslint";
-    try {
-        eslintPath = require.resolve("eslint");
-    } catch(e) {
-        eslintPath = "eslint";
-    }
-
-    grunt.log("Using ESLint from : " + eslintPath);
-
-    // eslint-disable-next-line security/detect-non-literal-require
-    return require(eslintPath);
-}
+import * as fs from "fs";
+import * as path from "path";
 
 export class ESLintRunner {
 
@@ -51,6 +39,37 @@ export class ESLintRunner {
         function _hasEsLintSecurity() {
             _logDebug("Locating eslint-plugin-security...");
             return !!locateModulePath("node_modules/eslint-plugin-security", _logDebug);
+        }
+       
+        function _getEslintPluginVersion() {
+            let modulePath = findModulePath("node_modules/@nevware21/grunt-eslint-ts", _logDebug);
+            grunt.log("Module Path: " + modulePath);
+            let thePath = path.join(modulePath, "./package.json");
+            if (fs.existsSync(thePath)) {
+                const packageJson = JSON.parse(fs.readFileSync(thePath).toString());
+                return packageJson.version;
+            }
+        
+            return "";
+        }
+        
+        function _getESLint(grunt: IGruntWrapper) {
+            let eslintPath = "eslint";
+            try {
+                eslintPath = require.resolve("eslint");
+            } catch(e) {
+                eslintPath = "eslint";
+            }
+        
+            let eslintPluginVersion = _getEslintPluginVersion();
+            if (eslintPath) {
+                grunt.log("Using ESLint from : " + eslintPath + (eslintPluginVersion ? " via grunt-eslint-ts v" + eslintPluginVersion : ""));
+            } else if (eslintPluginVersion) {
+                grunt.log("Using grunt-eslint-ts v" + eslintPluginVersion);
+            }
+        
+            // eslint-disable-next-line security/detect-non-literal-require
+            return require(eslintPath);
         }
        
         _self.lint = async (linterConfig?: Linter.Config, files?: string[]) => {
@@ -94,7 +113,7 @@ export class ESLintRunner {
                 baseConfig: Object.assign(defaultConfig, linterConfig),
             };
 
-            if (options.fix !== false) {
+            if (options.fix) {
                 if (isFunction(options.fix)) {
                     eslintOpts.fix = options.fix;
                 } else {
@@ -104,6 +123,7 @@ export class ESLintRunner {
             
             let fixableErrors = 0;
             let fixableWarnings = 0;
+            let fixedFiles = 0;
 
             const eslint = _getESLint(grunt);
             if (grunt.isDebug) {
@@ -122,14 +142,34 @@ export class ESLintRunner {
 
             const results: ESLint.LintResult[] = await esLint.lintFiles(files);
             if (results) {
+                grunt.logDebug(results.length + " Linting Results");
+                if (grunt.isDebug) {
+                    grunt.logVerbose("Results: " + dumpObj(results));
+                }
+
                 results.forEach((value) => {
                     fixableErrors += value.fixableErrorCount;
                     fixableWarnings += value.fixableWarningCount;
+                    if (value.output) {
+                        fixedFiles ++;
+                    }
                 });
 
-                if (options.fix && (fixableErrors + fixableWarnings) > 0) {
-                    grunt.log("Fixing lint issues...");
-                    await eslint.ESLint.outputFixes(results);
+                if ((fixableErrors + fixableWarnings) > 0 || fixedFiles > 0) {
+                    if (grunt.isDebug) {
+                        grunt.logDebug(fixedFiles + " Fixed Files");
+                        grunt.logDebug(fixableErrors + " Fixable Errors");
+                        grunt.logDebug(fixableWarnings + " Fixable Warnings");
+                    }
+    
+                    if (options.fix && options.disableOutputFixes !== true) {
+                        grunt.log("Fixing lint issues...");
+                        await eslint.ESLint.outputFixes(results);
+                    } else {
+                        grunt.log("Automatic Fixes disabled...");
+                    }
+                } else {
+                    grunt.log("No lint fixes identified...");
                 }
             }
     

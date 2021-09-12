@@ -35,6 +35,11 @@ export interface ITsCommonOptions {
      * The Lint error formatter to use
      */
     format?: string;
+
+    /**
+     * When automatic fixes are request and found, ignore the fix and don't output the fixed version
+     */
+    disableOutputFixes?: boolean;
 }
 
 export interface IEsLintParser {

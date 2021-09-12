@@ -46,7 +46,8 @@ function _registerTask(inst: IGrunt, taskName: string) {
                 fix: resolveValue(taskOptions.fix, options.fix),
                 suppressWarnings: resolveValue(taskOptions.suppressWarnings, options.suppressWarnings),
                 quiet: resolveValue(taskOptions.quiet, options.quiet),
-                outputFile: resolveValue(taskOptions.outputFile, options.outputFile)
+                outputFile: resolveValue(taskOptions.outputFile, options.outputFile),
+                disableOutputFixes: resolveValue(taskOptions.disableOutputFixes, options.disableOutputFixes)
             };            
           
             const maxWarnings = resolveValue(taskOptions.maxWarnings, options.maxWarnings);
