@@ -69,6 +69,7 @@ The options can be specified at the global ```options```, ```task options``` or 
 | logOutput | boolean | Log the output (stdout, stderr) of the execute command `eslint` response
 | suppressWarnings | boolean | Only include errors in the output
 | fix | boolean | Fix all `fixable` errors and warnings
+| disableOutputFixes | boolean | When automatic fixes are request and found, ignore the fix and don't output the fixed version, useful for debugging specific fixes that don't seem correct and you have automatic fixing enabled by default
 | debug | boolean | Log additional debug messages some are only display with grunt verbose messages enabled
 | quiet | boolean | Don't output the report to the console / grunt output
 | outputFile | string | Output the results to the provided file
