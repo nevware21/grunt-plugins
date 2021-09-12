@@ -1,4 +1,10 @@
 
+# v0.2.2
+
+## Changelog
+
+- #66 [Bug] eslint-ts-plugin v0.2.1 - Automatic fix is not always working
+
 # v0.2.1
 
 ## Changelog
