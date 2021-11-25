@@ -32,7 +32,7 @@ export interface ITsCommonOptions {
     outputFile?: string;
 
     /**
-     * The Lint error formatter to use
+     * The Lint error formatter to use, defaults to codeframe
      */
     format?: string;
 
