@@ -1,3 +1,11 @@
+
+# v0.4.4
+
+## Changelog
+
+- Update Dependencies
+- Consume @nevware21/ts-utils for common functions
+
 # v0.4.3
 
 ## Changelog

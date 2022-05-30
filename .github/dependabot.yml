@@ -21,3 +21,10 @@ updates:
       interval: "daily"
     ignore:
       - dependency-name: "@nevware21/grunt-plugins-shared-utils"
+      
+  - package-ecosystem: "npm" # See documentation for possible values
+    directory: "/eslint-ts-plugin" # Location of package manifests
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "@nevware21/grunt-plugins-shared-utils"
