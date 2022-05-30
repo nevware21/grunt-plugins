@@ -1,7 +1,7 @@
 {
     "name": "@nevware21/grunt-eslint-ts",
     "description": "ESLint TypeScript Validation Plugin for GruntJS",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "homepage": "https://github.com/nevware21/grunt-plugins",
     "author": {
         "name": "Nevware21",
@@ -45,7 +45,7 @@
         "@types/estree": "^0.0.51",
         "@types/grunt": "^0.4.27",
         "@nevware21/ts-utils": "^0.1.1",
-        "@nevware21/grunt-plugins-shared-utils": "0.3.1",
+        "@nevware21/grunt-plugins-shared-utils": "0.3.2",
         "@nevware21/grunt-eslint-ts": "^0.2.1",
         "@nevware21/grunt-ts-plugin": "^0.4.2",
         "grunt": "^1.5.3",
