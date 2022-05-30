@@ -8,8 +8,8 @@
       "name": "rush-common",
       "version": "0.0.0",
       "dependencies": {
-        "@nevware21/grunt-eslint-ts": "^0.2.1",
-        "@nevware21/grunt-ts-plugin": "^0.4.2",
+        "@nevware21/grunt-eslint-ts": "^0.2.4",
+        "@nevware21/grunt-ts-plugin": "^0.4.5",
         "@nevware21/ts-utils": "^0.1.1",
         "@rollup/plugin-commonjs": "^22.0.0",
         "@rollup/plugin-json": "^4.1.0",
@@ -158,9 +158,9 @@
       "integrity": "sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA=="
     },
     "node_modules/@nevware21/grunt-eslint-ts": {
-      "version": "0.2.3",
-      "resolved": "https://registry.npmjs.org/@nevware21/grunt-eslint-ts/-/grunt-eslint-ts-0.2.3.tgz",
-      "integrity": "sha512-jjEqqvuEAYnNPEY5N+fv/sl/mEk6SLujyxj8wenXQ6iz6yn40l5xmnl+ny+7d8/GDmSeRxx2Rua7lRntrzYDCA==",
+      "version": "0.2.4",
+      "resolved": "https://registry.npmjs.org/@nevware21/grunt-eslint-ts/-/grunt-eslint-ts-0.2.4.tgz",
+      "integrity": "sha512-SpuoSgAw84+LzUlkB6Z6FbOdR8SPukUPiSbxnKA6NUAPMfzD97MFn2ly6j4uiqjvTr5wUME3h1+1VKS2rDBC9w==",
       "dependencies": {
         "eslint-formatter-codeframe": "^7.32.1"
       },
@@ -177,9 +177,9 @@
       }
     },
     "node_modules/@nevware21/grunt-ts-plugin": {
-      "version": "0.4.4",
-      "resolved": "https://registry.npmjs.org/@nevware21/grunt-ts-plugin/-/grunt-ts-plugin-0.4.4.tgz",
-      "integrity": "sha512-VemIPlNwQMoqhBWgztV+eQT5OaVFpxZp5t9xcaKYdwErHX9ImLCptZgPB4wAefXxgKiF6+IiASimrhyBogx1tQ==",
+      "version": "0.4.5",
+      "resolved": "https://registry.npmjs.org/@nevware21/grunt-ts-plugin/-/grunt-ts-plugin-0.4.5.tgz",
+      "integrity": "sha512-4ALgho4uvEBMFu5jiN+bVzGMbpCGPrKjb47jus8T3zlBpi+k/swe6lKb5j6HGQ7EBSN7C41mLU02GMo9ZSgX3Q==",
       "engines": {
         "node": ">= 0.8.0"
       },
@@ -310,10 +310,10 @@
     "node_modules/@rush-temp/grunt-eslint-ts": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-eslint-ts.tgz",
-      "integrity": "sha512-Jbik3+GGlhlatOEuXJTM9Ads7UPMIgnX6ta1l2MrFHsNbmvurFF2FRdt9cuTO+9f+2oC/QvNoMEHyYoOzFJOMg==",
+      "integrity": "sha512-cgHWCPW8Mm+l1sM/Sac3bixDJPbF8Xjr8Hz6bT9mfCg39uSFYP2sdv03HnTmVIr9x1yyFwjggvB+hXoY/0AF7A==",
       "dependencies": {
-        "@nevware21/grunt-eslint-ts": "^0.2.1",
-        "@nevware21/grunt-ts-plugin": "^0.4.2",
+        "@nevware21/grunt-eslint-ts": "^0.2.4",
+        "@nevware21/grunt-ts-plugin": "^0.4.5",
         "@nevware21/ts-utils": "^0.1.1",
         "@rollup/plugin-commonjs": "^22.0.0",
         "@rollup/plugin-json": "^4.1.0",
@@ -351,10 +351,10 @@
     "node_modules/@rush-temp/grunt-ts-plugin": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-ts-plugin.tgz",
-      "integrity": "sha512-XyzIZEUG61SvbgbEaWNV92F2JY5ePYyXalVODFSNO+VZGEzQ/8Vyv7rm1BwALCpBzxDavHv7tX+N9Z7aoTzXMQ==",
+      "integrity": "sha512-P+/Hn0uLtQcLncwCPQvUYrhhXyj07HQRfd+1zmveBHDhnLXscSUKezNgPGA2lexpZfNgc6HQ+25L8chp2kO88w==",
       "dependencies": {
-        "@nevware21/grunt-eslint-ts": "^0.2.1",
-        "@nevware21/grunt-ts-plugin": "^0.4.2",
+        "@nevware21/grunt-eslint-ts": "^0.2.4",
+        "@nevware21/grunt-ts-plugin": "^0.4.5",
         "@nevware21/ts-utils": "^0.1.1",
         "@rollup/plugin-commonjs": "^22.0.0",
         "@rollup/plugin-node-resolve": "^13.3.0",
@@ -2691,17 +2691,17 @@
       "integrity": "sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA=="
     },
     "@nevware21/grunt-eslint-ts": {
-      "version": "0.2.3",
-      "resolved": "https://registry.npmjs.org/@nevware21/grunt-eslint-ts/-/grunt-eslint-ts-0.2.3.tgz",
-      "integrity": "sha512-jjEqqvuEAYnNPEY5N+fv/sl/mEk6SLujyxj8wenXQ6iz6yn40l5xmnl+ny+7d8/GDmSeRxx2Rua7lRntrzYDCA==",
+      "version": "0.2.4",
+      "resolved": "https://registry.npmjs.org/@nevware21/grunt-eslint-ts/-/grunt-eslint-ts-0.2.4.tgz",
+      "integrity": "sha512-SpuoSgAw84+LzUlkB6Z6FbOdR8SPukUPiSbxnKA6NUAPMfzD97MFn2ly6j4uiqjvTr5wUME3h1+1VKS2rDBC9w==",
       "requires": {
         "eslint-formatter-codeframe": "^7.32.1"
       }
     },
     "@nevware21/grunt-ts-plugin": {
-      "version": "0.4.4",
-      "resolved": "https://registry.npmjs.org/@nevware21/grunt-ts-plugin/-/grunt-ts-plugin-0.4.4.tgz",
-      "integrity": "sha512-VemIPlNwQMoqhBWgztV+eQT5OaVFpxZp5t9xcaKYdwErHX9ImLCptZgPB4wAefXxgKiF6+IiASimrhyBogx1tQ==",
+      "version": "0.4.5",
+      "resolved": "https://registry.npmjs.org/@nevware21/grunt-ts-plugin/-/grunt-ts-plugin-0.4.5.tgz",
+      "integrity": "sha512-4ALgho4uvEBMFu5jiN+bVzGMbpCGPrKjb47jus8T3zlBpi+k/swe6lKb5j6HGQ7EBSN7C41mLU02GMo9ZSgX3Q==",
       "requires": {}
     },
     "@nevware21/ts-utils": {
@@ -2792,10 +2792,10 @@
     },
     "@rush-temp/grunt-eslint-ts": {
       "version": "file:projects\\grunt-eslint-ts.tgz",
-      "integrity": "sha512-Jbik3+GGlhlatOEuXJTM9Ads7UPMIgnX6ta1l2MrFHsNbmvurFF2FRdt9cuTO+9f+2oC/QvNoMEHyYoOzFJOMg==",
+      "integrity": "sha512-cgHWCPW8Mm+l1sM/Sac3bixDJPbF8Xjr8Hz6bT9mfCg39uSFYP2sdv03HnTmVIr9x1yyFwjggvB+hXoY/0AF7A==",
       "requires": {
-        "@nevware21/grunt-eslint-ts": "^0.2.1",
-        "@nevware21/grunt-ts-plugin": "^0.4.2",
+        "@nevware21/grunt-eslint-ts": "^0.2.4",
+        "@nevware21/grunt-ts-plugin": "^0.4.5",
         "@nevware21/ts-utils": "^0.1.1",
         "@rollup/plugin-commonjs": "^22.0.0",
         "@rollup/plugin-json": "^4.1.0",
@@ -2831,10 +2831,10 @@
     },
     "@rush-temp/grunt-ts-plugin": {
       "version": "file:projects\\grunt-ts-plugin.tgz",
-      "integrity": "sha512-XyzIZEUG61SvbgbEaWNV92F2JY5ePYyXalVODFSNO+VZGEzQ/8Vyv7rm1BwALCpBzxDavHv7tX+N9Z7aoTzXMQ==",
+      "integrity": "sha512-P+/Hn0uLtQcLncwCPQvUYrhhXyj07HQRfd+1zmveBHDhnLXscSUKezNgPGA2lexpZfNgc6HQ+25L8chp2kO88w==",
       "requires": {
-        "@nevware21/grunt-eslint-ts": "^0.2.1",
-        "@nevware21/grunt-ts-plugin": "^0.4.2",
+        "@nevware21/grunt-eslint-ts": "^0.2.4",
+        "@nevware21/grunt-ts-plugin": "^0.4.5",
         "@nevware21/ts-utils": "^0.1.1",
         "@rollup/plugin-commonjs": "^22.0.0",
         "@rollup/plugin-node-resolve": "^13.3.0",
