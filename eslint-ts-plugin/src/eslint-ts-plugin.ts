@@ -7,7 +7,8 @@
  * Licensed under the MIT license.
  */
 
-import { getGruntMultiTaskOptions, resolveValue, dumpObj, deepMerge, getTsConfigDetails, isString, IGruntWrapperOptions, GruntWrapper } from "@nevware21/grunt-plugins-shared-utils";
+import { dumpObj, isString } from "@nevware21/ts-utils";
+import { getGruntMultiTaskOptions, resolveValue, deepMerge, getTsConfigDetails, IGruntWrapperOptions, GruntWrapper } from "@nevware21/grunt-plugins-shared-utils";
 import { ESLintRunner } from "./ESLintRunner";
 import { IEslintTsPluginTaskOptions } from "./interfaces/IEslintTsPluginOptions";
 import { Linter } from "eslint";

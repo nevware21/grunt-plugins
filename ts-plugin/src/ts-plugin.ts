@@ -8,7 +8,8 @@
  * Licensed under the MIT license.
  */
 
-import { getGruntMultiTaskOptions, resolveValue, isString, dumpObj, GruntWrapper, IGruntWrapperOptions } from "@nevware21/grunt-plugins-shared-utils";
+import { dumpObj, isString } from "@nevware21/ts-utils";
+import { getGruntMultiTaskOptions, resolveValue, GruntWrapper, IGruntWrapperOptions } from "@nevware21/grunt-plugins-shared-utils";
 import { ErrorHandlerResponse } from "./interfaces/IErrorHandler";
 import { ITsPluginOptions, ITsPluginTaskOptions } from "./interfaces/ITsPluginOptions";
 import { ITypeScriptCompilerOptions, TypeScriptCompiler } from "./TypeScript";

@@ -7,11 +7,11 @@
  * Licensed under the MIT license.
  */
 
-import { ITsConfig, ITsCompilerOptions } from "./interfaces/ITsConfig";
 import * as fs from "fs";
 import * as path from "path";
+import { isString } from "@nevware21/ts-utils";
+import { ITsConfig, ITsCompilerOptions } from "./interfaces/ITsConfig";
 import { findCommonPath, getTempFile, makeRelative, makeRelativeTo, normalizePath, readJsonFile } from "./fileHelpers";
-import { isString } from "./utils";
 import { IGruntWrapper } from "./interfaces/IGruntWrapper";
 
 export interface ITsConfigDetails {

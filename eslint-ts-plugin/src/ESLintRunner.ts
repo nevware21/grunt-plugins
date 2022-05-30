@@ -7,7 +7,8 @@
  * Licensed under the MIT license.
  */
 
-import { dumpObj, IGruntWrapper, isFunction, isUndefined, findModulePath, locateModulePath } from "@nevware21/grunt-plugins-shared-utils";
+import { dumpObj, isFunction, isUndefined } from "@nevware21/ts-utils";
+import { IGruntWrapper, findModulePath, locateModulePath } from "@nevware21/grunt-plugins-shared-utils";
 import { IESLintRunnerFileResponse, IESLintRunnerOptions, IESLintRunnerResponse } from "./interfaces/IESLintRunnerOptions";
 import { Linter, ESLint } from "eslint";
 import * as fs from "fs";
