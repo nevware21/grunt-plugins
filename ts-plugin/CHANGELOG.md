@@ -1,4 +1,10 @@
 
+# v0.4.5
+
+## Changelog
+
+- [BUG] Latest versions grunt-ts-plugin-0.4.4 and grunt-eslint-ts-0.2.3 sometimes complain about missing @nevware21/ts-utils #97
+
 # v0.4.4
 
 ## Changelog
