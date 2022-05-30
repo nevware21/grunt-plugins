@@ -41,19 +41,19 @@
         "eslint-formatter-codeframe": "^7.32.1"
     },
     "devDependencies": {
-        "@types/eslint": "^8.2.0",
-        "@types/estree": "^0.0.50",
+        "@types/eslint": "^8.4.2",
+        "@types/estree": "^0.0.51",
         "@types/grunt": "^0.4.27",
+        "@nevware21/ts-utils": "^0.1.0",
         "@nevware21/grunt-plugins-shared-utils": "0.3.0",
         "@nevware21/grunt-eslint-ts": "^0.2.1",
         "@nevware21/grunt-ts-plugin": "^0.4.2",
-        "grunt": "^1.4.0",
+        "grunt": "^1.5.3",
         "grunt-cli": "^1.4.3",
-        "typescript": "^4.2.0",
-        "typedoc": "^0.20.36",
-        "rollup": "^2.60.1",
-        "@rollup/plugin-commonjs": "^21.0.1",
-        "@rollup/plugin-node-resolve": "^13.0.6",
+        "typescript": "^4.7.2",
+        "rollup": "^2.75.3",
+        "@rollup/plugin-commonjs": "^22.0.0",
+        "@rollup/plugin-node-resolve": "^13.3.0",
         "@rollup/plugin-json": "^4.1.0"
     },
     "peerDependencies": {

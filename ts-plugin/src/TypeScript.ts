@@ -6,8 +6,9 @@
  * Licensed under the MIT license.
  */
 
+import { dumpObj } from "@nevware21/ts-utils";
 import {
-    doExecute, getTempFile, IExecuteResponse, quoteIfRequired, findModulePath, dumpObj, IGruntWrapper, getTsConfigDetails, ITsConfigDetails
+    doExecute, getTempFile, IExecuteResponse, quoteIfRequired, findModulePath, IGruntWrapper, getTsConfigDetails, ITsConfigDetails
 } from "@nevware21/grunt-plugins-shared-utils";
 import { ICompileResponse } from "./interfaces/ICompileResponse";
 import * as fs from "fs";

@@ -20,5 +20,5 @@ export {
 export { GruntWrapper } from "./GruntWrapper";
 export { ITsConfigDetails, getTsConfigDetails } from "./tsConfigDetails";
 export {
-    isUndefined, isNullOrUndefined, isPromiseLike, isPromise, isString, isFunction, dumpObj, getGruntMultiTaskOptions, resolveValue, mergeOptions, deepMerge
+    getGruntMultiTaskOptions, resolveValue, mergeOptions, deepMerge
 } from "./utils";
