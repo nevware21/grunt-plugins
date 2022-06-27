@@ -4,13 +4,27 @@
     "commands": [
         {
             "commandKind": "bulk",
-            "name": "build",
+            "name": "test",
+            "summary": "Run all test tasks for all packages",
+            "description": "Runs tests for all projects",
+            "safeForSimultaneousRushProcesses": false,
+            "enableParallelism": false,
+            "ignoreMissingScript": false,
             "allowWarningsInSuccessfulBuild": true
         },
         {
             "commandKind": "bulk",
+            "name": "build",
+            "summary": "Run all build tasks for all packages",
+            "allowWarningsInSuccessfulBuild": true,
+            "enableParallelism": true
+        },
+        {
+            "commandKind": "bulk",
             "name": "rebuild",
-            "allowWarningsInSuccessfulBuild": true
+            "summary": "Run all rebuild/build tasks for all packages",
+            "allowWarningsInSuccessfulBuild": true,
+            "enableParallelism": true
         }        
     ],
     "parameters": [
