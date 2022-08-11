@@ -42,7 +42,7 @@
         "node": ">= 0.8.0"
     },
     "devDependencies": {
-        "@nevware21/ts-utils": "^0.3.0",
+        "@nevware21/ts-utils": "^0.4.0",
         "@types/grunt": "^0.4.27",
         "@types/eslint": "^8.4.2",
         "grunt": "^1.5.3",
