@@ -63,7 +63,7 @@
         "eslint-plugin-security": "^1.5.0",
         "grunt": "^1.5.3",
         "grunt-cli": "^1.4.3",
-        "rollup": "^2.75.3",
+        "rollup": "^3.7.5",
         "typescript": "^4.7.2"
     }
 }
