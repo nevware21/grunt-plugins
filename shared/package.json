@@ -21,7 +21,7 @@
         "clean": "grunt clean",
         "build": "grunt shared_utils",
         "rebuild": "npm run build",
-        "package": "rollup -c rollup.config.js",
+        "package": "rollup -c rollup.config.mjs",
         "test": "grunt shared_utils_test",
         "lint": "tslint -p tsconfig.json"
     },
@@ -49,9 +49,9 @@
         "@types/eslint": "^8.4.2",
         "grunt": "^1.5.3",
         "grunt-cli": "^1.4.3",
-        "typescript": "^4.7.2",
-        "rollup": "^2.75.3",
-        "@rollup/plugin-commonjs": "^23.0.3",
-        "@rollup/plugin-node-resolve": "^13.3.0"
+        "typescript": "^4.9.4",
+        "rollup": "^3.8.1",
+        "@rollup/plugin-commonjs": "^24.0.0",
+        "@rollup/plugin-node-resolve": "^15.0.1"
     }
 }
