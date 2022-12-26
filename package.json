@@ -50,7 +50,7 @@
         "eslint-formatter-codeframe": "^7.32.1"
     },
     "devDependencies": {
-        "@microsoft/rush": "5.82.1",
+        "@microsoft/rush": "5.88.0",
         "@nevware21/grunt-eslint-ts": "^0.2.4",
         "@nevware21/grunt-ts-plugin": "^0.4.5",
         "@rollup/plugin-commonjs": "^24.0.0",
