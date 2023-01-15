@@ -2,7 +2,7 @@
 
 <p align="center">This Monorepo is aimed at providing additional GruntTS support tasks for TypeScript</p>
 
-![GitHub Workflow Status (main)](https://img.shields.io/github/workflow/status/nevware21/grunt-plugins/NodeCI/main)
+![GitHub Workflow Status (main)](https://img.shields.io/github/actions/workflow/status/nevware21/grunt-plugins/ci.yml?branch=main)
 
 # Current Plugins
 

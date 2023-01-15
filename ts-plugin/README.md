@@ -1,6 +1,6 @@
 <h1 align="center">@Nevware21 grunt-ts-plugin</h1>
 
-![GitHub Workflow Status (main)](https://img.shields.io/github/workflow/status/nevware21/grunt-plugins/NodeCI/main)
+![GitHub Workflow Status (main)](https://img.shields.io/github/actions/workflow/status/nevware21/grunt-plugins/ci.yml?branch=main)
 [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin)
 [![downloads](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin.svg)](https://img.shields.io/npm/dm/%40nevware21/grunt-ts-plugin)
 
