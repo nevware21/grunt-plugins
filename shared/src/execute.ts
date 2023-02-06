@@ -6,11 +6,12 @@
  * Licensed under the MIT license.
  */
 
+import { createPromise, IPromise } from "@nevware21/ts-async";
 import { IExecuteResponse } from "./interfaces/IExecuteResponse";
 import { IGruntWrapper } from "./interfaces/IGruntWrapper";
 
-export function doExecute(grunt: IGruntWrapper, args: string[]): Promise<IExecuteResponse> {
-    return new Promise<IExecuteResponse>((resolve) => {
+export function doExecute(grunt: IGruntWrapper, args: string[]): IPromise<IExecuteResponse> {
+    return createPromise<IExecuteResponse>((resolve) => {
         // Log the complete running command line
         grunt.logVerbose("Executing: [" + (args.join(" ")).cyan + "]")
         grunt.util.spawn({
