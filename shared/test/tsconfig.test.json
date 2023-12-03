@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+      "sourceMap": true,
+      "inlineSources": true,
+      "noImplicitAny": true,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "target": "es5",
+      "forceConsistentCasingInFileNames": true,
+      "importHelpers": true,
+      "noEmitHelpers": false,
+      "alwaysStrict": true,
+      "declaration": false,
+      "outDir": "../test-node",
+      "suppressImplicitAnyIndexErrors": true,
+      "allowSyntheticDefaultImports": true,
+      "removeComments": false
+    },
+    "include": [
+      "../src/**/*.ts",
+      "./src/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules/"
+      ]
+  }
+  

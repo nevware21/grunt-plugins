@@ -6,6 +6,8 @@
  * Licensed under the MIT license.
  */
 
+import { strLeft } from "@nevware21/ts-utils";
+
 const UInt32Mask = 0x100000000;
 
 /**
@@ -22,5 +24,5 @@ export function getRandomHex(length = 8): string {
         randomValue += value.toString(16);
     } while (randomValue.length < length);
 
-    return randomValue.substr(0, length);
+    return strLeft(randomValue, length);
 }

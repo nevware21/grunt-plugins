@@ -14,8 +14,17 @@
         },
         {
             "commandKind": "bulk",
+            "name": "lint",
+            "summary": "Run all tslint for all packages",
+            "description": "Runs tslint for all projects",
+            "safeForSimultaneousRushProcesses": false,
+            "enableParallelism": true,
+            "ignoreMissingScript": false
+        },
+        {
+            "commandKind": "bulk",
             "name": "build",
-            "summary": "Run all build tasks for all packages",
+            "summary": "Run all build for all packages",
             "allowWarningsInSuccessfulBuild": true,
             "enableParallelism": true
         },

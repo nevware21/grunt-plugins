@@ -1,4 +1,3 @@
-/// <reference types="grunt" />
 /*
  * @nevware21/grunt-ts-plugins
  * https://github.com/nevware21/grunt-plugins
