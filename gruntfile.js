@@ -38,10 +38,16 @@ module.exports = function (grunt) {
                 logOutput: true,
                 additionalFlags: "--removeComments"
             },
-            "shared_utils": {
+            "shared": {
                 tsconfig: "./shared/tsconfig.json",
                 src: [
                     './shared/src/**/*.ts'
+                ],
+            },
+            "shared-test": {
+                tsconfig: "./shared/test/tsconfig.test.json",
+                src: [
+                    './shared/test/src/**/*.ts'
                 ],
             },
             "ts_plugin": {
@@ -67,6 +73,16 @@ module.exports = function (grunt) {
                 src: [
                     './shared/src/**/*.ts'
                 ]
+            },
+            "shared-test": {
+                tsconfig: "./shared/test/tsconfig.test.json",
+                ignoreFailures: true
+            },
+            "shared-test-fix": {
+                options: {
+                    tsconfig: "./shared/test/tsconfig.test.json",
+                    fix: true
+                }
             },
             "ts_plugin": {
                 tsconfig: "./ts-plugin/tsconfig.json",
@@ -104,7 +120,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("@nevware21/grunt-ts-plugin");
     grunt.loadNpmTasks("@nevware21/grunt-eslint-ts");
 
-    grunt.registerTask("shared_utils", [ "lint:shared-fix", "ts:shared_utils" ]);
+    grunt.registerTask("shared_utils", [ "lint:shared-fix", "ts:shared" ]);
     grunt.registerTask("ts_plugin", [ "lint:ts_plugin-fix", "ts:ts_plugin" ]);
     grunt.registerTask("eslint_ts_plugin", [ "lint:eslint_ts-fix", "ts:eslint_ts_plugin" ]);
     grunt.registerTask("dolint", [ "lint:shared", "lint:ts_plugin", "lint:eslint_ts" ]);
@@ -112,7 +128,7 @@ module.exports = function (grunt) {
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
-    // grunt.registerTask('shared_utils_test', ['clean', 'shared_utils']);
+    grunt.registerTask('shared_utils-test', [ "lint:shared-test-fix", "ts:shared-test" ]);
     // grunt.registerTask('ts_plugin_test', ['clean', 'ts_plugin']);
     // grunt.registerTask('eslint_ts_plugin_test', ['clean', 'eslint_ts_plugin']);
 

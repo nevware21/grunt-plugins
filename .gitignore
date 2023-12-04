@@ -355,12 +355,47 @@ MigrationBackup/
 npm-debug.log
 tmp
 
+npm
+
+package-deps.json
+.nyc_output/
+**/.nyc_output/**
+
 localtasks/
 .tscache/
 common/temp/
 dist/
 dist-esm/
+test-node/
 package-lock.json
 types/
 tasks/
 **/.rush/temp
+
+# Temp directories
+bundle/
+node_modules/
+out/
+test-dist/
+test-esm/
+browser/
+types/
+build/
+dist/
+dist-es**/
+
+# Common toolchain intermediate files
+temp
+
+# Coverage directory used by tools like istanbul
+/coverage/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Output of 'npm pack'
+*.tgz
+

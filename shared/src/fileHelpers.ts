@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  */
 
-import { isUndefined } from "@nevware21/ts-utils";
+import { isUndefined, strEndsWith, strIndexOf, strLeft, strStartsWith, strSubstring } from "@nevware21/ts-utils";
 import { getRandomHex } from "./random";
 import * as fs from "fs";
 import * as path from "path";
@@ -39,21 +39,17 @@ export function quoteIfRequired(value: string, convertToRelative: boolean = true
         return value;
     }
 
-    if (value.length >= 2 && value.charAt(0) === "\"" && value.charAt(value.length - 1) === "\"") {
-        // Already Quoted
-        if (!convertToRelative) {
-            return value;
-        }
-
+    // Is Already Quoted
+    if (value.length >= 2 && ((strStartsWith(value, "\"") && strEndsWith(value, "\"")) || (strStartsWith(value, "'") && strEndsWith(value, "'")))) {
         // Stip existing quotes
-        value = value.substring(1, value.length - 2);
+        value = strSubstring(value, 1, value.length - 1);
     }
 
     if (convertToRelative) {
         value = makeRelative(path.resolve(value));
     }
 
-    if (value.indexOf(" ") !== -1) {
+    if (strIndexOf(value, " ") !== -1) {
         return "\"" + value + "\"";
     }
 
@@ -68,19 +64,19 @@ export function findCommonRoot(values: string[]) {
     }
 
     if (values.length === 1) {
-        return values[0];
+        return values[0] || "";
     }
 
     let sorted = values.slice(0).sort();
-    let firstValue = sorted[0] as string;
-    let lastValue = sorted[sorted.length - 1];
+    let firstValue = sorted[0] as string || "";
+    let lastValue = sorted[sorted.length - 1] || "";
     let len = firstValue.length;
     let idx = 0;
     while (idx < len && firstValue.charAt(idx) === lastValue.charAt(idx)) {
         idx ++;
     }
 
-    return firstValue.substring(0, idx);
+    return strLeft(firstValue, idx);
 }
 
 export function findCommonPath(paths: string[], seperator?: string) {
@@ -91,7 +87,7 @@ export function findCommonPath(paths: string[], seperator?: string) {
         if (isUndefined(seperator)) {
             endIdx = Math.max(commonPath.lastIndexOf("/"), commonPath.lastIndexOf("\\"));
         } else {
-            endIdx = commonPath.lastIndexOf(seperator);
+            endIdx = commonPath.lastIndexOf(normalizePath(seperator));
         }
     }
 
@@ -99,7 +95,7 @@ export function findCommonPath(paths: string[], seperator?: string) {
         return "";
     }
 
-    return commonPath.substring(0, endIdx);
+    return strLeft(commonPath, endIdx);
 }
 
 export function normalizePath(thePath: string) {
@@ -107,7 +103,7 @@ export function normalizePath(thePath: string) {
         return thePath.replace(/\\/g, "/");
     }
 
-    return thePath || "";
+    return thePath;
 }
 
 export function makeRelative(thePath: string) {
@@ -160,8 +156,8 @@ export function findModulePath(moduleFolder: string, logDebug?: (message: string
 }
 
 function _removeComments(value: string, removeTrailingComma: boolean = false): string {
-    let idx = value.indexOf("/*");
-    if (idx === -1) {
+    // Check for single line comment first as it is the most common comment type
+    if (strIndexOf(value, "/*") === -1 && strIndexOf(value, "//") === -1) {
         // nothing to do
         return value;
     }
@@ -193,7 +189,7 @@ function _removeComments(value: string, removeTrailingComma: boolean = false): s
                 }
             }
 
-            value = value.substring(0, commentStart) + value.substring(pos);
+            value = strLeft(value, commentStart) + strSubstring(value, pos);
 
             // rewind back to the start of the original comment
             pos = commentStart;
@@ -225,7 +221,7 @@ function _removeComments(value: string, removeTrailingComma: boolean = false): s
             }
         } else if (ch === "}" && prevCommaPos !== -1) {
             // We have a trailing comment that should be removed
-            value = value.substring(0, prevCommaPos) + value.substring(prevCommaPos + 1);
+            value = strLeft(value, prevCommaPos) + strSubstring(value, prevCommaPos + 1);
             pos--;
         } else if (ch === "," && removeTrailingComma) {
             lastComma = pos - 1;
@@ -249,6 +245,9 @@ export function readJsonFile<T>(filePath: string, stripComments = true): T {
         if (stripComments) {
             fileContent = _removeComments(fileContent);
         }
+
+        // Remove trailing commas from JSON string
+        fileContent = fileContent.replace(/,\s*([\]}])/g, "$1");
 
         try {
             return JSON.parse(fileContent);
