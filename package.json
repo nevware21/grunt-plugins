@@ -61,7 +61,7 @@
         "@types/estree": "^1.0.0",
         "@typescript-eslint/eslint-plugin": "^6.1.0",
         "@typescript-eslint/parser": "^6.1.0",
-        "eslint": "^8.16.0",
+        "eslint": "^9.4.0",
         "eslint-plugin-security": "^1.7.1",
         "grunt": "^1.5.3",
         "grunt-cli": "^1.4.3",
