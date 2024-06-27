@@ -3,13 +3,14 @@
  * @nevware21/grunt-ts-plugins
  * https://github.com/nevware21/grunt-plugins
  *
- * Copyright (c) 2021 Nevware21
+ * Copyright (c) 2021 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 
 import { arrForEach, isArray, isNullOrUndefined, isUndefined, objAssign, objForEachKey } from "@nevware21/ts-utils";
+import { IGruntWrapper } from "./shared-utils";
 
-export function getGruntMultiTaskOptions<T>(grunt: IGrunt, theTask: grunt.task.IMultiTask<T>) {
+export function getGruntMultiTaskOptions<T>(grunt: IGruntWrapper, theTask: grunt.task.IMultiTask<T>) {
     let taskOptions = theTask.data as T;
 
     if (!taskOptions) {

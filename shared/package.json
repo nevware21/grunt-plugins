@@ -11,7 +11,7 @@
         "task"
     ],
     "author": {
-        "name": "Nevware21",
+        "name": "NevWare21 Solutions LLC",
         "email": "github@nevware21.com"
     },    
     "main": "dist/shared-utils.js",
@@ -43,8 +43,8 @@
         "node": ">= 0.8.0"
     },
     "dependencies": {
-        "@nevware21/ts-utils": ">= 0.10.1 < 2.x",
-        "@nevware21/ts-async": ">= 0.3 < 2.x"
+        "@nevware21/ts-utils": ">= 0.11.1 < 2.x",
+        "@nevware21/ts-async": ">= 0.5.0 < 2.x"
     },
     "devDependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
@@ -66,6 +66,5 @@
         "nyc": "^15.1.0",
         "sinon": "^15.0.0",
         "ts-mocha": "^10.0.0"
-
     }
 }

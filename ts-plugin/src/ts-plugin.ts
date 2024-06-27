@@ -4,15 +4,16 @@
  * @nevware21/grunt-ts-plugins
  * https://github.com/nevware21/grunt-plugins
  *
- * Copyright (c) 2021 Nevware21
+ * Copyright (c) 2021 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 
-import { dumpObj, isString } from "@nevware21/ts-utils";
+import { arrForEach, dumpObj, isString } from "@nevware21/ts-utils";
 import { getGruntMultiTaskOptions, resolveValue, GruntWrapper, IGruntWrapperOptions } from "@nevware21/grunt-plugins-shared-utils";
 import { ErrorHandlerResponse } from "./interfaces/IErrorHandler";
 import { ITsPluginOptions, ITsPluginTaskOptions } from "./interfaces/ITsPluginOptions";
 import { ITypeScriptCompilerOptions, TypeScriptCompiler } from "./TypeScript";
+import { IPromise, createPromise, doAwait } from "@nevware21/ts-async";
 
 const buildFailingErrors = [
     "6050",
@@ -37,11 +38,13 @@ function _addFiles(files: string[], src: string | string[]) {
 
 export function pluginFn (inst: IGrunt) {
     inst.registerMultiTask("ts", "Compile TypeScript project", function () {
+        let gwInst = new GruntWrapper(inst, { debug: false });
+
         // Merge task-specific and/or target-specific options with these defaults.
         let options = this.options<ITsPluginOptions>({
         });
 
-        let taskOptions = getGruntMultiTaskOptions<ITsPluginTaskOptions>(inst, this);
+        let taskOptions = getGruntMultiTaskOptions<ITsPluginTaskOptions>(gwInst, this);
         //let taskFiles = this.files || [];
 
         const loggerOptions: IGruntWrapperOptions = {
@@ -80,24 +83,31 @@ export function pluginFn (inst: IGrunt) {
             return response;
         }
         
-        async function _processSingleTsConfig(theOptions: ITypeScriptCompilerOptions) {
+        function _processSingleTsConfig(theOptions: ITypeScriptCompilerOptions): IPromise<boolean> {
             let ts = new TypeScriptCompiler(grunt, theOptions);
             let srcFiles: string[] = [];
             srcFiles = _addFiles(srcFiles, options.src);
             srcFiles = _addFiles(srcFiles, taskOptions.src);
             
-            let response = await ts.compile(srcFiles);
-            if (!response.isSuccess && response.errors) {
-                response.errors.forEach((value) => {
-                    grunt.logError(value);
-                });
-            }
+            return createPromise<boolean>((resolve, reject) => {
+                doAwait(ts.compile(srcFiles), (responses) => {
+                    let isSuccess = true;
+                    arrForEach(responses, (response) => {
+                        if (!response.isSuccess && response.errors) {
+                            isSuccess = false;
+                            response.errors.forEach((value) => {
+                                grunt.logError(value);
+                            });
+                        }
+            
+                        if (options.debug) {
+                            grunt.logVerbose("Response:\n" + JSON.stringify(response, null, 4));
+                        }
+                    });
 
-            if (options.debug) {
-                grunt.logVerbose("Response:\n" + JSON.stringify(response, null, 4));
-            }
-
-            return response;
+                    resolve(isSuccess);
+                }, reject);
+            });
         }
 
         let tsOptions:ITypeScriptCompilerOptions = {
@@ -117,8 +127,8 @@ export function pluginFn (inst: IGrunt) {
         let done = this.async();
 
         (async function () {
-            let response = await _processSingleTsConfig(tsOptions);
-            done(response.isSuccess ? true : false);
+            let isSuccess = await _processSingleTsConfig(tsOptions);
+            done(isSuccess ? true : false);
         })().catch((error) => {
             grunt.logError(dumpObj(error));
             done(error);

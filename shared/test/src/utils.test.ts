@@ -2,7 +2,7 @@
  * @nevware21/grunt-ts-plugins
  * https://github.com/nevware21/grunt-plugins
  *
- * Copyright (c) 2023 Nevware21
+ * Copyright (c) 2023 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 
@@ -33,6 +33,7 @@ describe("utils", () => {
             assert.strictEqual(result, undefined);
         });
     });
+    
     describe("deepMerge", () => {
         it("should merge two non-empty objects", () => {
             const target = { a: 1, b: { c: 2 } };

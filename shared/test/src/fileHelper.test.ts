@@ -2,7 +2,7 @@
  * @nevware21/grunt-ts-plugins
  * https://github.com/nevware21/grunt-plugins
  *
- * Copyright (c) 2023 Nevware21
+ * Copyright (c) 2023 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 
@@ -194,6 +194,37 @@ describe("fileHelpers", () => {
             const result = normalizePath(thePath);
             assert.strictEqual(result, "");
         });
+
+        it("Handle null path", () => {
+            const result = normalizePath(null);
+            assert.strictEqual(result, null);
+        });
+
+        it("Handle undefined path", () => {
+            const result = normalizePath(undefined);
+            assert.strictEqual(result, undefined);
+        });
+
+        it("Handle empty path", () => {
+            const result = normalizePath("");
+            assert.strictEqual(result, "");
+        });
+
+        it("Handle whitespace path", () => {
+            const result = normalizePath(" ");
+            assert.strictEqual(result, " ");
+        });
+
+        it("Handle path with dot", () => {
+            const result = normalizePath(".");
+            assert.strictEqual(result, ".");
+        });
+
+        it("Handle path with double dot", () => {
+            const result = normalizePath("..");
+            assert.strictEqual(result, "..");
+        });
+
     });
 
     describe("makeRelative", () => {

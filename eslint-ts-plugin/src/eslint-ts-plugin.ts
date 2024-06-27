@@ -3,27 +3,29 @@
  * @nevware21/grunt-eslint-ts
  * https://github.com/nevware21/grunt-plugins
  *
- * Copyright (c) 2021 Nevware21
+ * Copyright (c) 2021 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 
-import { dumpObj, isString } from "@nevware21/ts-utils";
+import { arrForEach, dumpObj, isString } from "@nevware21/ts-utils";
 import { getGruntMultiTaskOptions, resolveValue, deepMerge, getTsConfigDetails, IGruntWrapperOptions, GruntWrapper } from "@nevware21/grunt-plugins-shared-utils";
 import { ESLintRunner } from "./ESLintRunner";
 import { IEslintTsPluginTaskOptions } from "./interfaces/IEslintTsPluginOptions";
 import { Linter } from "eslint";
 import { IESLintRunnerOptions, IESLintRunnerResponse } from "./interfaces/IESLintRunnerOptions";
+import { arrForEachAsync, doAwaitResponse } from "@nevware21/ts-async";
 
 function _registerTask(inst: IGrunt, taskName: string) {
     inst.registerMultiTask(taskName, "ESLint TypeScript validator project", function () {
         const tempIgnoreFile: string = null;
         let done: grunt.task.AsyncResultCatcher = null;
+        let gwInst = new GruntWrapper(inst, { debug: false });
 
         try {
             const options = this.options<IEslintTsPluginTaskOptions>({
             });
 
-            const taskOptions = getGruntMultiTaskOptions<IEslintTsPluginTaskOptions>(inst, this);
+            const taskOptions = getGruntMultiTaskOptions<IEslintTsPluginTaskOptions>(gwInst, this);
             const loggerOptions: IGruntWrapperOptions = {
                 debug: resolveValue(taskOptions.debug, options.debug, false)
             }
@@ -55,8 +57,12 @@ function _registerTask(inst: IGrunt, taskName: string) {
             grunt.logDebug("grunt-eslint-typescript options: " + dumpObj(eslintOptions, true));
 
             let tsDetails = getTsConfigDetails(grunt, tsconfig, true);
-            tsDetails.addFiles(options.src);
-            tsDetails.addFiles(taskOptions.src);
+            arrForEach(tsDetails, (tsDetail) => {
+                if (tsDetail) {
+                    tsDetail.addFiles(options.src);
+                    tsDetail.addFiles(taskOptions.src);
+                }
+            });
 
             let results: IESLintRunnerResponse = null;
     
@@ -91,34 +97,40 @@ function _registerTask(inst: IGrunt, taskName: string) {
                     });
                 }
 
-                try {
+                let isSuccess = true;
+                return doAwaitResponse(
+                    arrForEachAsync(tsDetails, async (tsDetail) => {
+                        try {
+                            const theTsConfig = tsDetail.createTemp();
+                            if (theTsConfig) {
+                                grunt.log("Using tsconfig: " + theTsConfig);
+                                linterConfig.parserOptions = linterConfig.parserOptions || {};
+                                linterConfig.parserOptions.project = theTsConfig;
+                            }                    
+                
+                            results = await eslint.lint(linterConfig, tsDetail.getFiles());
+            
+                        } finally {
+                            tsDetail.cleanupTemp();
+                        }
+            
+                        isSuccess = results.isSuccess;
+                        if (maxWarnings >= 0 && results && results.warnings && results.warnings.length > maxWarnings) {
+                            grunt.logWarn(`ESLint found too many warnings (maximum: ${maxWarnings})`);
+                            isSuccess = false;
+                        }
 
-                    const theTsConfig = tsDetails.createTemp();
-                    if (theTsConfig) {
-                        grunt.log("Using tsconfig: " + theTsConfig);
-                        linterConfig.parserOptions = linterConfig.parserOptions || {};
-                        linterConfig.parserOptions.project = theTsConfig;
-                    }                    
-        
-                    results = await eslint.lint(linterConfig, tsDetails.getFiles());
-    
-                } finally {
-                    tsDetails.cleanupTemp();
-                }
-    
-                let success = results.isSuccess;
-                if (maxWarnings >= 0 && results && results.warnings && results.warnings.length > maxWarnings) {
-                    grunt.logWarn(`ESLint found too many warnings (maximum: ${maxWarnings})`);
-                    success = false;
-                }
-       
-                if (taskOptions.ignoreFailures) {
-                    if (!success) {
-                        grunt.logError("[!] Ignoring Failures: The Task failed but continuing...")
-                        done(true);
-                    }
-                }
-                done(success);
+                        if (taskOptions.ignoreFailures) {
+                            if (!isSuccess) {
+                                grunt.logError("[!] Ignoring Failures: The Task failed but continuing...")
+                                done(true);
+                                return -1;
+                            }
+                        }
+                    }), 
+                    (response) => {
+                        done(!response.rejected && isSuccess);
+                    });
             })().catch((error) => {
                 console.error(error);
                 done(false);

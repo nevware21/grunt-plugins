@@ -5,7 +5,7 @@
     "homepage": "https://github.com/nevware21/grunt-plugins",
     "license": "MIT",
     "author": {
-        "name": "Nevware21",
+        "name": "NevWare21 Solutions LLC",
         "email": "github@nevware21.com"
     },
     "keywords": [
@@ -45,10 +45,11 @@
         "node": ">= 0.8.0"
     },
     "dependencies": {
-        "@nevware21/ts-utils": ">= 0.10.1 < 2.x",
-        "@nevware21/ts-async": ">= 0.3 < 2.x"
+        "@nevware21/ts-utils": ">= 0.11.1 < 2.x",
+        "@nevware21/ts-async": ">= 0.5.0 < 2.x"
     },
     "devDependencies": {
+        "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@types/grunt": "^0.4.27",
         "@nevware21/grunt-plugins-shared-utils": "0.3.2",
         "@nevware21/grunt-eslint-ts": "^0.2.4",
@@ -58,7 +59,17 @@
         "typescript": "^4.9.4",
         "rollup": "^4.6.0",
         "@rollup/plugin-commonjs": "^25.0.7",
-        "@rollup/plugin-node-resolve": "^15.2.3"
+        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@types/chai": "^4.3.1",
+        "@types/mocha": "^10.0.1",
+        "@types/sinon": "^10.0.11",
+        "cross-env": "^7.0.3",
+        "chai": "^4.3.6",
+        "codecov": "^3.8.3",
+        "mocha": "^10.0.0",
+        "nyc": "^15.1.0",
+        "sinon": "^15.0.0",
+        "ts-mocha": "^10.0.0"
     },
     "peerDependencies": {
         "grunt": ">=1",
