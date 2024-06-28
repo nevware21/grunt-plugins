@@ -2,7 +2,7 @@
  * grunt-plugin-ts
  * https://github.com/nevware21/grunt-plugin-ts
  *
- * Copyright (c) 2021 Nevware21
+ * Copyright (c) 2021 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 
@@ -54,12 +54,24 @@ module.exports = function (grunt) {
                 tsconfig: "./ts-plugin/tsconfig.json",
                 outDir: "ts-plugin/dist-esm"
             },
+            "ts_plugin-test": {
+                tsconfig: "./ts-plugin/test/tsconfig.test.json",
+                src: [
+                    './ts-plugin/test/src/**/*.ts'
+                ],
+            },
             "eslint_ts_plugin": {
                 tsconfig: "./eslint-ts-plugin/tsconfig.json",
                 // src: [
                 //     './ts-plugin/src/**/*.ts'
                 // ],
                 //out: "ts-plugin/tasks/ts.js"
+            },
+            "eslint_ts_plugin-test": {
+                tsconfig: "./eslint-ts-plugin/test/tsconfig.test.json",
+                src: [
+                    './eslint-ts-plugin/test/src/**/*.ts'
+                ],
             },
         },
         "lint": {
@@ -129,8 +141,8 @@ module.exports = function (grunt) {
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
     grunt.registerTask('shared_utils-test', [ "lint:shared-test-fix", "ts:shared-test" ]);
-    // grunt.registerTask('ts_plugin_test', ['clean', 'ts_plugin']);
-    // grunt.registerTask('eslint_ts_plugin_test', ['clean', 'eslint_ts_plugin']);
+    grunt.registerTask('ts_plugin_test', ["lint:ts_plugin-fix", "ts:ts_plugin-test"]);
+    grunt.registerTask('eslint_ts_plugin_test', ["lint:eslint_ts-fix", "ts:eslint_ts_plugin-test"]);
 
     // By default, lint and run all tests.
     grunt.registerTask('default', ['jshint', 'test']);

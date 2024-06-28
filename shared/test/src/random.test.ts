@@ -2,7 +2,7 @@
  * @nevware21/grunt-ts-plugins
  * https://github.com/nevware21/grunt-plugins
  *
- * Copyright (c) 2023 Nevware21
+ * Copyright (c) 2023 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 

@@ -2,7 +2,7 @@
  * @nevware21/grunt-ts-plugins
  * https://github.com/nevware21/grunt-plugins
  *
- * Copyright (c) 2021 Nevware21
+ * Copyright (c) 2021 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 
@@ -100,7 +100,7 @@ function _resolveTsConfigFiles(tsConfigPath: string, files: string[]): string[] 
     return files;
 }
 
-export function getTsConfigDetails(grunt: IGruntWrapper, tsConfigFile: string, logWarnings: boolean): ITsConfigDetails {
+export function getTsConfigDetails(grunt: IGruntWrapper, tsConfigFile: string, logWarnings: boolean): ITsConfigDetails[] {
     let details: ITsConfigDetails = {
         name: tsConfigFile,
         nameRoot: tsConfigFile ? path.resolve(findCommonPath([tsConfigFile])) : null,
@@ -294,5 +294,5 @@ export function getTsConfigDetails(grunt: IGruntWrapper, tsConfigFile: string, l
         details.tempName && fs.unlinkSync(details.tempName);
     };
 
-    return details;
+    return [ details ];
 }
