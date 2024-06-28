@@ -20,7 +20,7 @@
         "@rush-temp/grunt-plugins-shared-utils": "file:./projects/grunt-plugins-shared-utils.tgz",
         "@rush-temp/grunt-ts-plugin": "file:./projects/grunt-ts-plugin.tgz",
         "@types/chai": "^4.3.1",
-        "@types/eslint": "^8.4.2",
+        "@types/eslint": "^8.56.10",
         "@types/estree": "^1.0.1",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.1",
@@ -1083,7 +1083,7 @@
     "node_modules/@rush-temp/grunt-eslint-ts": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-eslint-ts.tgz",
-      "integrity": "sha512-xiuGSsB937fQc1ff+XKh0J9ye34Ns8Jk22il7ZDnwrAGozhUnT88bovQ1FxLjtdkT7eW0t4CqmhHPx+WzUZ+nQ==",
+      "integrity": "sha512-tkwvxU6/6Ghlj5iJw13frvFbyfohKCRWaw970CYTAW9eAqWQxcD5A4kBvKfYylwJDbo5ZaiN9XpgtWyYbF3H8A==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/grunt-eslint-ts": "^0.2.4",
@@ -1094,7 +1094,7 @@
         "@rollup/plugin-json": "^6.0.1",
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@types/chai": "^4.3.1",
-        "@types/eslint": "^8.4.2",
+        "@types/eslint": "^8.56.10",
         "@types/estree": "^1.0.1",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.1",
@@ -1120,7 +1120,7 @@
     "node_modules/@rush-temp/grunt-plugins-shared-utils": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-plugins-shared-utils.tgz",
-      "integrity": "sha512-5Lx0i/Td2SvP45VOsWfnQQI+G+AefeUMWSIrrlubMq/AexSp8Kj7GrON4WTJlPylMtYuCNtIzUKZ+B2zq6lGgw==",
+      "integrity": "sha512-Qya0qYPlH7pDq4xMBJa8ngpvyOxn60xcJB9usVkvC9uonKNM4G3Fcglp+pkuFgD2p81D68iWKkl7sog46gDKFQ==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/ts-async": ">= 0.5.0 < 2.x",
@@ -1128,7 +1128,7 @@
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@types/chai": "^4.3.1",
-        "@types/eslint": "^8.4.2",
+        "@types/eslint": "^8.56.10",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.1",
         "@types/sinon": "^10.0.11",
@@ -2082,9 +2082,9 @@
       }
     },
     "node_modules/electron-to-chromium": {
-      "version": "1.4.812",
-      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.812.tgz",
-      "integrity": "sha512-7L8fC2Ey/b6SePDFKR2zHAy4mbdp1/38Yk5TsARO66W3hC5KEaeKMMHoxwtuH+jcu2AYLSn9QX04i95t6Fl1Hg=="
+      "version": "1.4.814",
+      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.814.tgz",
+      "integrity": "sha512-GVulpHjFu1Y9ZvikvbArHmAhZXtm3wHlpjTMcXNGKl4IQ4jMQjlnz8yMQYYqdLHKi/jEL2+CBC2akWVCoIGUdw=="
     },
     "node_modules/emoji-regex": {
       "version": "8.0.0",
@@ -6140,7 +6140,7 @@
     },
     "@rush-temp/grunt-eslint-ts": {
       "version": "file:projects\\grunt-eslint-ts.tgz",
-      "integrity": "sha512-xiuGSsB937fQc1ff+XKh0J9ye34Ns8Jk22il7ZDnwrAGozhUnT88bovQ1FxLjtdkT7eW0t4CqmhHPx+WzUZ+nQ==",
+      "integrity": "sha512-tkwvxU6/6Ghlj5iJw13frvFbyfohKCRWaw970CYTAW9eAqWQxcD5A4kBvKfYylwJDbo5ZaiN9XpgtWyYbF3H8A==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/grunt-eslint-ts": "^0.2.4",
@@ -6151,7 +6151,7 @@
         "@rollup/plugin-json": "^6.0.1",
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@types/chai": "^4.3.1",
-        "@types/eslint": "^8.4.2",
+        "@types/eslint": "^8.56.10",
         "@types/estree": "^1.0.1",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.1",
@@ -6176,7 +6176,7 @@
     },
     "@rush-temp/grunt-plugins-shared-utils": {
       "version": "file:projects\\grunt-plugins-shared-utils.tgz",
-      "integrity": "sha512-5Lx0i/Td2SvP45VOsWfnQQI+G+AefeUMWSIrrlubMq/AexSp8Kj7GrON4WTJlPylMtYuCNtIzUKZ+B2zq6lGgw==",
+      "integrity": "sha512-Qya0qYPlH7pDq4xMBJa8ngpvyOxn60xcJB9usVkvC9uonKNM4G3Fcglp+pkuFgD2p81D68iWKkl7sog46gDKFQ==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/ts-async": ">= 0.5.0 < 2.x",
@@ -6184,7 +6184,7 @@
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@types/chai": "^4.3.1",
-        "@types/eslint": "^8.4.2",
+        "@types/eslint": "^8.56.10",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.1",
         "@types/sinon": "^10.0.11",
@@ -6847,9 +6847,9 @@
       }
     },
     "electron-to-chromium": {
-      "version": "1.4.812",
-      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.812.tgz",
-      "integrity": "sha512-7L8fC2Ey/b6SePDFKR2zHAy4mbdp1/38Yk5TsARO66W3hC5KEaeKMMHoxwtuH+jcu2AYLSn9QX04i95t6Fl1Hg=="
+      "version": "1.4.814",
+      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.814.tgz",
+      "integrity": "sha512-GVulpHjFu1Y9ZvikvbArHmAhZXtm3wHlpjTMcXNGKl4IQ4jMQjlnz8yMQYYqdLHKi/jEL2+CBC2akWVCoIGUdw=="
     },
     "emoji-regex": {
       "version": "8.0.0",
