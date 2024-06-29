@@ -1,4 +1,4 @@
-<h1 align="center">@Nevware21 grunt-ts-plugin</h1>
+<h1 align="center">@Nevware21/grunt-ts-plugin</h1>
 
 ![GitHub Workflow Status (main)](https://img.shields.io/github/actions/workflow/status/nevware21/grunt-plugins/ci.yml?branch=main)
 [![npm version](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin.svg)](https://badge.fury.io/js/%40nevware21%2Fgrunt-ts-plugin)
