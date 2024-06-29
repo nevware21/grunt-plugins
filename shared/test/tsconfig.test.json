@@ -13,8 +13,7 @@
       "declaration": false,
       "outDir": "../test-node",
       "suppressImplicitAnyIndexErrors": true,
-      "allowSyntheticDefaultImports": true,
-      "removeComments": false
+      "allowSyntheticDefaultImports": true
     },
     "include": [
       "../src/**/*.ts",
