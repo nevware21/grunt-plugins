@@ -15,14 +15,14 @@ const UInt32Mask = 0x100000000;
  *
  * @returns {string} hex string
  */
-export function getRandomHex(length = 8): string {
+export function getRandomHex(length: number): string {
     let randomValue = "";
 
-    do {
+    while (randomValue.length < length) {
         // Make sure the number is converted into the specified range (0x00000000..0xFFFFFFFF)
         let value = Math.floor((UInt32Mask * Math.random()) | 0) >>> 0;
         randomValue += value.toString(16);
-    } while (randomValue.length < length);
+    }
 
     return strLeft(randomValue, length);
 }

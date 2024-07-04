@@ -14,6 +14,11 @@ export interface ITsCommonOptions {
      */
     logOutput?: boolean;
  
+    /**
+     * Supporess any warnings from the output
+     */
+    suppressWarnings?: boolean;
+
      /**
      * Pass in additional flags to the tsc compiler (added to the end of the command line)
      */
