@@ -2,7 +2,7 @@
  * grunt-plugin-ts
  * https://github.com/nevware21/grunt-plugin-ts
  *
- * Copyright (c) 2021 NevWare21 Solutions LLC
+ * Copyright (c) 2021, 2024 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 
