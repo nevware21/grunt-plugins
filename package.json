@@ -20,14 +20,16 @@
         "email": "github@nevware21.com"
     },
     "scripts": {
-        "postinstall": "node common/scripts/install-run-rush.js update",
+        "postinstall": "node common/scripts/install-run-rush.js update --full",
         "build": "node common/scripts/install-run-rush.js rebuild --verbose",
         "test": "node common/scripts/install-run-rush.js test --verbose",
         "lint": "node common/scripts/install-run-rush.js dolint --verbose",
         "check": "node common/scripts/install-run-rush.js check",
         "rupdate": "rush update --recheck --full",
-        "clean": "git clean -xdf && npm install && npm run rupdate",
-        "cleanBuild": "npm run clean && npm run build"
+        "clean": "git clean -xdf && npm install",
+        "cleanBuild": "npm run clean && npm run build",
+        "prep-release": "npm run cleanBuild && npm run npm-pack",
+        "npm-pack": "cd ts-plugin && npm pack && cd ../eslint-ts-plugin && npm pack"
     },
     "repository": {
         "type": "git",
