@@ -56,7 +56,7 @@ function _registerTask(inst: IGrunt, taskName: string) {
             const maxWarnings = resolveValue(taskOptions.maxWarnings, options.maxWarnings);
             grunt.logDebug("grunt-eslint-typescript options: " + dumpObj(eslintOptions, true));
 
-            let tsDetails = getTsConfigDetails(grunt, tsconfig, true);
+            let tsDetails = getTsConfigDetails(grunt, tsconfig, !eslintOptions.suppressWarnings);
             arrForEach(tsDetails, (tsDetail) => {
                 if (tsDetail) {
                     tsDetail.addFiles(options.src);
@@ -99,9 +99,9 @@ function _registerTask(inst: IGrunt, taskName: string) {
 
                 let isSuccess = true;
                 return doAwaitResponse(
-                    arrForEachAsync(tsDetails, async (tsDetail) => {
+                    arrForEachAsync(tsDetails, async (tsDetail, idx) => {
                         try {
-                            const theTsConfig = tsDetail.createTemp();
+                            const theTsConfig = tsDetail.createTemp(idx);
                             if (theTsConfig) {
                                 grunt.log("Using tsconfig: " + theTsConfig);
                                 linterConfig.parserOptions = linterConfig.parserOptions || {};
@@ -129,15 +129,18 @@ function _registerTask(inst: IGrunt, taskName: string) {
                         }
                     }), 
                     (response) => {
+                        if (grunt.isDebug) {
+                            grunt.logVerbose("EsLint response:" + dumpObj(response));
+                        }
                         done(!response.rejected && isSuccess);
                     });
             })().catch((error) => {
-                console.error(error);
+                grunt.logError("EsLint error: " + error);
                 done(false);
             });
     
         } catch (e) {
-            console.error(e);
+            inst.log.error("EsLint catch: " + e);
             if (done) {
                 done(false);
             }

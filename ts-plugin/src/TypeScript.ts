@@ -125,171 +125,190 @@ export class TypeScriptCompiler {
                 grunt.log("Using grunt-ts-plugin v" + tsPluginVersion);
             }
 
-            let tsDetails: ITsConfigDetails[] = getTsConfigDetails(grunt, options.tsconfig, true);
+            let tsDetails: ITsConfigDetails[] = getTsConfigDetails(grunt, options.tsconfig, !options.suppressWarnings);
+            let responses: ICompileResponse[] = [];
+
             return createSyncPromise((resolve, reject) => {
-                let responses: ICompileResponse[] = [];
 
-                doAwait(arrForEachAsync(tsDetails, (tsDetail, idx) => {
-                    function cleanupTemp(tsCommand: string) {
-                        if (!options.keepTemp) {
-                            tsDetail.cleanupTemp();
-                            // tmpTsConfig && fs.unlinkSync(tmpTsConfig);
-                            tsCommand && fs.unlinkSync(tsCommand);
-                        }
-                    }
+                doAwait(arrForEachAsync(tsDetails,
+                    (tsDetail, idx) => {
+                        let tsCommand = _createCommandFile(idx, tsDetail, tsFiles, tsc);
 
-                    let tsCommand = getTempFile("tscommand");
-                    try {
-                        if (!tsCommand) {
-                            throw new Error("Unable to create a temporary file");
-                        }
-        
-                        let args: string[] = [];
-                        let showOverrides = false;
-            
-                        if (options.additionalFlags) {
-                            if (isArray(options.additionalFlags)) {
-                                args = args.concat(options.additionalFlags);
-                            } else {
-                                args.push(options.additionalFlags);
-                            }
-                        }
-
-                        const tsConfigFile = options.tsconfig;
-                        if (tsConfigFile) {
-                            let compilerOptions = tsDetail.compilerOptions;
-                            if (tsDetail.declarationDir) {
-                                _addArg(args, "--declarationDir " + quoteIfRequired(tsDetail.declarationDir));
-                            }
-
-                            if (tsDetail.rootDirUpdated) {
-                                _addArg(args, "--rootDir " + quoteIfRequired(tsDetail.rootDir));
-                            }
-
+                        return _execCommand(tsDetail, idx, tsCommand, (reason) => {
                             if (grunt.isDebug) {
-                                grunt.logDebug(("Ts-Plugin...").magenta);
-                                grunt.logDebug(("rootDir from [cwd:" + path.resolve(".") + "]").magenta);
-                                grunt.logDebug((" - TSConfig: " + tsDetail.nameRoot).magenta);
-                                grunt.logDebug((" - Project : " + (tsDetail.projectRootDir ? tsDetail.projectRootDir : "<assuming tsconfig location>")).magenta);
-                                grunt.logDebug((" - Actual  : " + (tsDetail.rootDir ? tsDetail.rootDir : "<undefined>")).magenta);
+                                grunt.logError("Ts-Plugin Error: " + dumpObj(reason));
                             }
-
-                            let outDirParam = options.outDir;
-                            let outParam = options.out;
-                            if (outParam) {
-                                if (compilerOptions.outDir) {
-                                    grunt.logWarn(("The 'out' parameter is not compatible usage of 'outDir' within the TsConfig project file -- ignoring the out parameter").magenta);
-                                    outParam = undefined;
-                                } else {
-                                    if (outDirParam) {
-                                        grunt.logWarn(("The 'out' parameter is not compatible usage of 'outDir' parameter -- ignoring the outDir parameter").magenta);
-                                        outDirParam = undefined;
-                                    }
-
-                                    //let outFile = rootDir ? path.resolve(rootDir, outParam) : path.resolve(outParam);
-                                    let outFile = path.resolve(outParam);
-                                    _addArg(args, "--out " + quoteIfRequired(outFile));
-
-                                    if (compilerOptions.outFile) {
-                                        delete compilerOptions.outFile;
-                                        tsDetail.modified = true;
-                                        // useTempTsConfig = true;
-                                    }
-                                    
-                                    if (compilerOptions.out) {
-                                        delete compilerOptions.out;
-                                        tsDetail.modified = true;
-                                        // useTempTsConfig = true;
-                                    }
-                                }
-                            } else if (compilerOptions.outFile || compilerOptions.out) {
-                                if (outDirParam) {
-                                    grunt.logWarn(("The 'outDir' parameter is not compatible usage of 'out' or 'outFile' within the TsConfig project file -- ignoring the outDir parameter").magenta);
-                                    outDirParam = undefined;
-                                }
-
-                                let outFile = compilerOptions.outFile || compilerOptions.out;
-                                //outFile = rootDir ? path.resolve(rootDir, outFile) : path.resolve(outFile);
-                                _addArg(args, "--out " + quoteIfRequired(outFile));
-                            } else if (outDirParam) {
-                                let outDir = path.resolve(outDirParam);
-                                _addArg(args, "--outDir " + quoteIfRequired(outDir));
-                            }
-
-                            tsDetail.addFiles(tsFiles);
-                        }
-
-                        const theTsConfig = tsDetail.createTemp();
-                        if (theTsConfig) {
-                            _addArg(args, "--project " + theTsConfig);
-                        }
-
-                        // Create the temporary commands
-                        if (showOverrides || grunt.isDebug) {
-                            grunt.log("Ts-Plugin Invoking: " + tsc + " @" + tsCommand + "\n Contents...\n    " + args.join("\n    ") + "\n");
-                        } else {
-                            grunt.log("Ts-Plugin Invoking: " + tsc + " @" + tsCommand);
-                        }
-                        fs.writeFileSync(tsCommand, args.join(" "));
-
-                        doAwait(
-                            options.execute ? options.execute(grunt.grunt, [tsc, "@" + tsCommand]) : doExecute(grunt, [tsc, "@" + tsCommand]),
-                            (execResponse) => {
-                                let endTime = Date.now();
-                    
-                                let chkResponse = _checkResponse(execResponse);
-                                _logErrorSummary(chkResponse);
-                    
-                                // Get the total number of parsed errors
-                                let totalErrors = chkResponse.errors[CompileErrorType.Total];
-
-                                // Get the total number of ignored / silented errors
-                                let ignoredErrors = chkResponse.errors[CompileErrorType.Ignored];
-
-                                // Consider a failure if the exit code from tsc
-                                let isSuccess = !chkResponse.isError;
-                                if (!isSuccess && totalErrors > 0 && totalErrors === ignoredErrors) {
-                                    // If tsc gave an exit response code but we processed the output, found at least 1 error but ignored all of them
-                                    // then ignore the exit code
-                                    isSuccess = true;
-                                }
-
-                                if (totalErrors > ignoredErrors) {
-                                    // We have at least 1 reported error that has not been ignored
-                                    isSuccess = false;
-                                }
-
-                                let theResponse: ICompileResponse = {
-                                    time: (endTime - startTime) / 1000,
-                                    isSuccess: isSuccess,
-                                    errors: chkResponse.messages
-                                }
-                        
-                                if (theResponse.isSuccess) {
-                                    grunt.log("");
-                                    let message = "TypeScript compiliation completed: " + theResponse.time.toFixed(2) + "s";
-                    
-                                    grunt.log(message.green);
-                                } else {
-                                    // Report failure
-                                    grunt.log(("Error: tsc return code: [" + execResponse.code + "]").yellow);
-                                }
-                                
-                                // eslint-disable-next-line security/detect-object-injection
-                                responses[idx] = theResponse;
-                            }, reject, () => {
-                                // Finally
-                                cleanupTemp(tsCommand);
-                            });
-                    } catch (e) {
-                        cleanupTemp(tsCommand);
-                        reject(e);
+                            _cleanupTemp(tsDetail, tsCommand);
+                            reject(reason);
+                        });
+                    }),
+                    () => {
+                        // All done
+                        grunt.log("Ts-Plugin All Done - " + dumpObj(responses).replace(/\n/g, " "));
+                        resolve(responses);
+                    },
+                    (reason) => {
+                        grunt.logError("Ts-Plugin Error: " + dumpObj(reason));
+                        reject(reason);
                     }
-                }), () => {
-                    // All done
-                    resolve(responses);
-                }, reject);
+                );
             });
+
+            function _execCommand(tsDetail: ITsConfigDetails, idx: number, tsCommand: string, doReject: (reason: any) => void) {
+                return doAwait(
+                    options.execute ? options.execute(grunt.grunt, [tsc, "@" + tsCommand]) : doExecute(grunt, [tsc, "@" + tsCommand]),
+                    (execResponse) => {
+                        let endTime = Date.now();
+            
+                        if (grunt.isDebug) {
+                            grunt.logDebug("Success Response: " + dumpObj(execResponse));
+                        }
+            
+                        let chkResponse = _checkResponse(execResponse);
+                        _logErrorSummary(chkResponse);
+            
+                        // Get the total number of parsed errors
+                        let totalErrors = chkResponse.errors[CompileErrorType.Total];
+            
+                        // Get the total number of ignored / silented errors
+                        let ignoredErrors = chkResponse.errors[CompileErrorType.Ignored];
+            
+                        // Consider a failure if the exit code from tsc
+                        let isSuccess = !chkResponse.isError;
+                        if (!isSuccess && totalErrors > 0 && totalErrors === ignoredErrors) {
+                            // If tsc gave an exit response code but we processed the output, found at least 1 error but ignored all of them
+                            // then ignore the exit code
+                            isSuccess = true;
+                        }
+            
+                        if (totalErrors > ignoredErrors) {
+                            // We have at least 1 reported error that has not been ignored
+                            isSuccess = false;
+                        }
+            
+                        let theResponse: ICompileResponse = {
+                            time: (endTime - startTime) / 1000,
+                            isSuccess: isSuccess,
+                            errors: chkResponse.messages
+                        };
+            
+                        if (theResponse.isSuccess) {
+                            grunt.log("");
+                            let message = "TypeScript compiliation completed: " + theResponse.time.toFixed(2) + "s";
+            
+                            grunt.log(message.green);
+                        } else {
+                            // Report failure
+                            grunt.log(("Error: tsc return code: [" + execResponse.code + "]").yellow);
+                        }
+            
+                        // eslint-disable-next-line security/detect-object-injection
+                        responses[idx] = theResponse;
+                    }, 
+                    doReject,
+                    () => {
+                        _cleanupTemp(tsDetail, tsCommand);
+                    }
+                );
+            }
+        }
+
+        function _createCommandFile(idx: number, tsDetail: ITsConfigDetails, tsFiles: string[], tsc: string) {
+            let tsCommand = getTempFile(options.keepTemp ? "tscommand" : "tscmd" + "-" + idx);
+
+            if (!tsCommand) {
+                throw new Error("Unable to create a temporary file");
+            }
+
+            let args: string[] = [];
+            let showOverrides = false;
+
+            if (options.additionalFlags) {
+                if (isArray(options.additionalFlags)) {
+                    args = args.concat(options.additionalFlags);
+                } else {
+                    args.push(options.additionalFlags);
+                }
+            }
+
+            const tsConfigFile = options.tsconfig;
+            if (tsConfigFile) {
+                let compilerOptions = tsDetail.compilerOptions;
+                if (tsDetail.declarationDir) {
+                    _addArg(args, "--declarationDir " + quoteIfRequired(tsDetail.declarationDir));
+                }
+
+                if (tsDetail.rootDirUpdated) {
+                    _addArg(args, "--rootDir " + quoteIfRequired(tsDetail.rootDir));
+                }
+
+                if (grunt.isDebug) {
+                    grunt.logDebug(("Ts-Plugin...").magenta);
+                    grunt.logDebug(("rootDir from [cwd:" + path.resolve(".") + "]").magenta);
+                    grunt.logDebug((" - TSConfig: " + tsDetail.nameRoot).magenta);
+                    grunt.logDebug((" - Project : " + (tsDetail.projectRootDir ? tsDetail.projectRootDir : "<assuming tsconfig location>")).magenta);
+                    grunt.logDebug((" - Actual  : " + (tsDetail.rootDir ? tsDetail.rootDir : "<undefined>")).magenta);
+                }
+
+                let outDirParam = options.outDir;
+                let outParam = options.out;
+                if (outParam) {
+                    if (compilerOptions.outDir) {
+                        grunt.logWarn(("The 'out' parameter is not compatible usage of 'outDir' within the TsConfig project file -- ignoring the out parameter").magenta);
+                        outParam = undefined;
+                    } else {
+                        if (outDirParam) {
+                            grunt.logWarn(("The 'out' parameter is not compatible usage of 'outDir' parameter -- ignoring the outDir parameter").magenta);
+                            outDirParam = undefined;
+                        }
+
+                        //let outFile = rootDir ? path.resolve(rootDir, outParam) : path.resolve(outParam);
+                        let outFile = path.resolve(outParam);
+                        _addArg(args, "--out " + quoteIfRequired(outFile));
+
+                        if (compilerOptions.outFile) {
+                            delete compilerOptions.outFile;
+                            tsDetail.modified = true;
+                            // useTempTsConfig = true;
+                        }
+
+                        if (compilerOptions.out) {
+                            delete compilerOptions.out;
+                            tsDetail.modified = true;
+                            // useTempTsConfig = true;
+                        }
+                    }
+                } else if (compilerOptions.outFile || compilerOptions.out) {
+                    if (outDirParam) {
+                        grunt.logWarn(("The 'outDir' parameter is not compatible usage of 'out' or 'outFile' within the TsConfig project file -- ignoring the outDir parameter").magenta);
+                        outDirParam = undefined;
+                    }
+
+                    let outFile = compilerOptions.outFile || compilerOptions.out;
+                    //outFile = rootDir ? path.resolve(rootDir, outFile) : path.resolve(outFile);
+                    _addArg(args, "--out " + quoteIfRequired(outFile));
+                } else if (outDirParam) {
+                    let outDir = path.resolve(outDirParam);
+                    _addArg(args, "--outDir " + quoteIfRequired(outDir));
+                }
+
+                tsDetail.addFiles(tsFiles);
+            }
+
+            const theTsConfig = tsDetail.createTemp(idx);
+            if (theTsConfig) {
+                _addArg(args, "--project " + theTsConfig);
+            }
+
+            // Create the temporary commands
+            if (showOverrides || grunt.isDebug) {
+                grunt.log("Ts-Plugin Invoking: " + tsc + " @" + tsCommand + "\n Contents...\n    " + args.join("\n    ") + "\n");
+            } else {
+                grunt.log("Ts-Plugin Invoking: " + tsc + " @" + tsCommand);
+            }
+
+            fs.writeFileSync(tsCommand, args.join(" "));
+            return tsCommand;
         }
 
         function _logDebug(message: string) {
@@ -297,7 +316,7 @@ export class TypeScriptCompiler {
                 grunt.logVerbose(message.cyan);
             }
         }
-
+        
         function _findTypeScriptPath() {
             _logDebug("Locating TypeScript compiler...");
             let tsFolder = "node_modules/typescript/bin";
@@ -347,7 +366,7 @@ export class TypeScriptCompiler {
                 const packageJson = JSON.parse(fs.readFileSync(thePath).toString());
                 return packageJson.version;
             }
-
+        
             return "";
         }
 
@@ -358,7 +377,7 @@ export class TypeScriptCompiler {
                     " grunt-ts option to allow dynamic property access by index.  This will" +
                     " suppress TypeScript error TS7017.").magenta);
             }
-
+        
             let totalErrors = errors[CompileErrorType.Total];
             let ignoredErrors = errors[CompileErrorType.Ignored];
             let level1 = errors[CompileErrorType.Level1];
@@ -366,7 +385,7 @@ export class TypeScriptCompiler {
             let handlerErrors = errors[CompileErrorType.HandlerError];
             let nonEmit = errors[CompileErrorType.NonEmit];
             let externalNonEmit = errors[CompileErrorType.ExternalNonEmit];
-
+        
             // Log error summary
             if (level1 + level5 + nonEmit + externalNonEmit > 0) {
                 if (totalErrors - ignoredErrors > 0) {
@@ -374,30 +393,30 @@ export class TypeScriptCompiler {
                 } else {
                     grunt.logWrite((">> ").green);
                 }
-
+        
                 if (level5 > 0) {
                     grunt.logWrite(level5.toString() + " compiler flag error" +
                         (level5 === 1 ? "" : "s") + "  ");
                 }
-
+        
                 if (level1 > 0) {
                     grunt.logWrite(level1.toString() + " syntax error" +
                         (level1 === 1 ? "" : "s") + "  ");
                 }
-
+        
                 if (handlerErrors > 0) {
                     grunt.logWrite(handlerErrors.toString() + " handler error" +
                         (handlerErrors === 1 ? "" : "s") + "  ");
                 }
-
+        
                 if (nonEmit > 0) {
                     grunt.logWrite(nonEmit.toString() + " non-emit-preventing type warning" + (nonEmit === 1 ? "" : "s") + "  ");
                 }
-
+        
                 if (externalNonEmit > 0) {
                     grunt.logWrite(externalNonEmit.toString() + " external non-emit-preventing type warning" + (externalNonEmit === 1 ? "" : "s") + "  ");
                 }
-
+        
                 if (ignoredErrors > 0) {
                     if (totalErrors - ignoredErrors > 0) {
                         grunt.logWrite(ignoredErrors.toString() + " ignored error" + (ignoredErrors === 1 ? "" : "s") + "  ")
@@ -405,7 +424,7 @@ export class TypeScriptCompiler {
                         grunt.logWrite((totalErrors > 1 ? "All r" : "R") + "eported error" + (totalErrors === 1 ? "" : "s") + " ignored  ")
                     }
                 }
-
+        
                 grunt.log("");
                 if (resp.isOnlyTypeErrors) {
                     if (!options.failOnTypeErrors) {
@@ -414,7 +433,7 @@ export class TypeScriptCompiler {
                         grunt.log((">> ").red + "Type only errors detected -- If you want to not fail the build on these type of errors set the 'failOnTypeErrors' option to false (defaults to true)");
                     }
                 }
-
+        
                 if (resp.isExternalTypeErrors) {
                     if (!options.failOnExternalTypeErrors) {
                         grunt.log((">> ").green + "External Type errors identified.");
@@ -429,7 +448,7 @@ export class TypeScriptCompiler {
             // In TypeScript 1.3 and above, the result code corresponds to the ExitCode enum in
             //   TypeScript/src/compiler/sys.ts
             let isError = response.code !== 0;
-
+        
             // If the compilation errors contain only type errors, JS files are still
             //   generated. If tsc finds type errors, it will return an error code, even
             //   if JS files are generated. We should check this for this,
@@ -447,7 +466,7 @@ export class TypeScriptCompiler {
                 [CompileErrorType.Total]: 0,
                 [CompileErrorType.Ignored]: 0
             };
-
+        
             let output: string = response.stdout || response.stderr;
             let lines = output.split("\n");
             let hasPreventEmitErrors = false;
@@ -455,14 +474,14 @@ export class TypeScriptCompiler {
             let theErrors: string[] = [];
             let failingErrors: string[] = [];
             let ignoredErrors: string[] = [];
-
+        
             lines.forEach((value) => {
                 let errorMatch = value.match(TsErrorRegEx);
                 if (errorMatch && errorMatch.length > 1) {
                     // We have an error match
                     let errorNumber = errorMatch[1];
                     let processError = ErrorHandlerResponse.Undefined;
-
+        
                     if (options.onError) {
                         processError = options.onError(errorNumber, value);
                         if (processError === ErrorHandlerResponse.Error) {
@@ -470,10 +489,10 @@ export class TypeScriptCompiler {
                             hasPreventEmitErrors = true;
                         }
                     }
-
+        
                     if (!processError) {
                         processError = ErrorHandlerResponse.Error;
-
+        
                         // Do default Handling
                         if (errorNumber === "7017") {
                             errors[CompileErrorType.TS7017]++;
@@ -500,7 +519,7 @@ export class TypeScriptCompiler {
                             }
                         }
                     }
-
+        
                     errors[CompileErrorType.Total] ++;
                     if (processError !== ErrorHandlerResponse.Ignore) {
                         // Save all of the non-ignored messages
@@ -511,7 +530,7 @@ export class TypeScriptCompiler {
                         failingErrors.push(value);
                     } else if (processError === ErrorHandlerResponse.Silent) {
                         ignoredErrors.push(value);
-
+        
                         // Don't count this error as a failure
                         errors[CompileErrorType.Ignored] ++;
                     } else if (processError === ErrorHandlerResponse.Ignore) {
@@ -520,12 +539,12 @@ export class TypeScriptCompiler {
                     }
                 }
             });
-
+        
             if (options.logOutput) {
                 if (response.stdout) {
                     grunt.log("StdOut:\n" + response.stdout);
                 }
-
+        
                 if (response.stderr) {
                     grunt.log("StdErr:\n" + response.stderr);
                 }
@@ -540,5 +559,31 @@ export class TypeScriptCompiler {
                 ignoredMessages: ignoredErrors
             }
         }
+        
+        function _cleanupTemp(tsDetail: ITsConfigDetails, tsCommand: string) {
+            if (!options.keepTemp) {
+                try {
+                    tsDetail && tsDetail.cleanupTemp();
+                } catch (e) {
+                    grunt.logError("Failed to cleanup temporary files: " + e);
+                }
+        
+                if (grunt.isDebug) {
+                    grunt.logDebug("Cleaning up temporary file:" + tsCommand);
+                }
+        
+                if (tsCommand && fs.existsSync(tsCommand)) {
+                    try {
+                        fs.unlinkSync(tsCommand);
+                        if (fs.existsSync(tsCommand)) {
+                            grunt.logError("Temporary files still exists: " + tsCommand);
+                        }
+                    } catch (e) {
+                        grunt.logError("Failed to cleanup temporary files: " + e);
+                    }
+                }
+            }
+        }
+        
     }
 }

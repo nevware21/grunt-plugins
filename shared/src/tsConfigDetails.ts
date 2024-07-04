@@ -74,7 +74,7 @@ export interface ITsConfigDetails {
      */
     getFiles: () => string[];
 
-    createTemp: () => string;
+    createTemp: (idx?: number) => string;
 
     cleanupTemp: () => void;
 }
@@ -269,9 +269,13 @@ export function getTsConfigDetails(grunt: IGruntWrapper, tsConfigFile: string, l
         return tsConfigFiles;
     }
 
-    details.createTemp = () => {
+    details.createTemp = (idx: number = 0) => {
         if (details.modified) {
-            details.tempName = getTempFile(details.name || "tsconfig");
+            if (details.tempName) {
+                throw new Error("Temporary tsconfig file already exists");
+            }
+
+            details.tempName = getTempFile(details.name || "tsconfig-" + idx);
             if (!details.tempName) {
                 throw new Error("Unable to create temporary tsconfig file");
             }
@@ -290,8 +294,19 @@ export function getTsConfigDetails(grunt: IGruntWrapper, tsConfigFile: string, l
     };
 
     details.cleanupTemp = () => {
+        if (grunt.isDebug) {
+            grunt.logDebug("Cleaning up temporary tsconfig file: " + details.tempName);
+        }
+
         // eslint-disable-next-line security/detect-non-literal-fs-filename
-        details.tempName && fs.unlinkSync(details.tempName);
+        if (details.tempName && fs.existsSync(details.tempName)) {
+            fs.unlinkSync(details.tempName);
+            if (fs.existsSync(details.tempName)) {
+                grunt.logWarn("Unable to delete temporary tsconfig file: " + details.tempName);
+            }
+        } else if (grunt.isDebug) {
+            grunt.logDebug("Temporary tsconfig file does not exist: " + details.tempName);
+        }
     };
 
     return [ details ];

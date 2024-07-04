@@ -96,7 +96,7 @@ export function pluginFn (inst: IGrunt) {
                         if (!response.isSuccess && response.errors) {
                             isSuccess = false;
                             response.errors.forEach((value) => {
-                                grunt.logError(value);
+                                grunt.logError( " - " + value);
                             });
                         }
             
@@ -130,7 +130,7 @@ export function pluginFn (inst: IGrunt) {
             let isSuccess = await _processSingleTsConfig(tsOptions);
             done(isSuccess ? true : false);
         })().catch((error) => {
-            grunt.logError(dumpObj(error));
+            grunt.logError("dump: " + dumpObj(error));
             done(error);
         });
     });
