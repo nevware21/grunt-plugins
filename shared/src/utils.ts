@@ -7,8 +7,9 @@
  * Licensed under the MIT license.
  */
 
-import { arrForEach, isArray, isNullOrUndefined, isUndefined, objAssign, objForEachKey } from "@nevware21/ts-utils";
+import { arrForEach, isArray, isFunction, isNullOrUndefined, isUndefined, objAssign, objForEachKey } from "@nevware21/ts-utils";
 import { IGruntWrapper } from "./shared-utils";
+import { doAwaitResponse, IPromise } from "@nevware21/ts-async";
 
 export function getGruntMultiTaskOptions<T>(grunt: IGruntWrapper, theTask: grunt.task.IMultiTask<T>) {
     let taskOptions = theTask.data as T;
@@ -18,6 +19,48 @@ export function getGruntMultiTaskOptions<T>(grunt: IGruntWrapper, theTask: grunt
     }
 
     return taskOptions;
+}
+
+function _resolveValue<T>(theValue?: T | IPromise<T> | (() => T | IPromise<T>)): T | IPromise<T> {
+    if (isNullOrUndefined(theValue)) {
+        return theValue as T;
+    }
+
+    if (isFunction(theValue)) {
+        theValue = theValue();
+    }
+
+    return doAwaitResponse<T>(theValue, (response) => {
+        if (response.rejected) {
+            throw response.reason;
+        }
+
+        return response.value;
+    });
+}
+
+export function resolveValueAsync<T>(value1?: T | IPromise<T> | (() => T | IPromise<T>), value2?: T | IPromise<T> | (() => T | IPromise<T>), defaultValue?: T): T | IPromise<T> {
+    return doAwaitResponse<T>(_resolveValue(value1), (response) => {
+        if (response.rejected) {
+            throw response.reason;
+        }
+
+        if (!isUndefined(response.value)) {
+            return response.value;
+        }
+
+        return doAwaitResponse<T>(_resolveValue(value2), (response) => {
+            if (response.rejected) {
+                throw response.reason;
+            }
+
+            if (!isUndefined(response.value)) {
+                return response.value;
+            }
+
+            return defaultValue;
+        });
+    });
 }
 
 export function resolveValue<T>(value1?: T, value2?: T, defaultValue?: T) {
@@ -34,21 +77,21 @@ export function resolveValue<T>(value1?: T, value2?: T, defaultValue?: T) {
     return value;
 }
 
-export function deepMerge<T>(target: T, src: T): T {
-    let newValue = objAssign({}, target, src);
+export function deepMerge<T = any>(target: T, src: T): T {
+    let newValue: any = objAssign({}, target, src);
 
     if (target && src) {
         objForEachKey(target, (key) => {
             // Any existing src[key] value would have been assigned over the target[key] version
             /* eslint-disable security/detect-object-injection */
-            if (src[key] !== undefined) {
+            if ((src as any)[key] !== undefined) {
                 if (isArray(newValue[key])) {
-                    arrForEach(target[key], (value: any) => {
+                    arrForEach((target as any)[key], (value: any) => {
                         newValue[key].push(value);
                     });
                 } else if (typeof newValue[key] === "object") {
                     // Make sure we merge all properties
-                    newValue[key] = deepMerge(newValue[key], target[key]);
+                    newValue[key] = deepMerge(newValue[key], (target as any)[key]);
                 }
             }
             /* eslint-enable security/detect-object-injection */

@@ -10,7 +10,7 @@
 export { IExecuteResponse } from "./interfaces/IExecuteResponse";
 export { IGruntLogger } from "./interfaces/IGruntLogger";
 export { IGruntWrapper, IGruntWrapperOptions } from "./interfaces/IGruntWrapper";
-export { ITsConfig, ITsCompilerOptions } from "./interfaces/ITsConfig";
+export { ITsConfig, ITsCompilerOptions, TsConfigDefinitions, ITsOption, ITsOptions } from "./interfaces/ITsConfig";
 export { doExecute } from "./execute";
 export { getRandomHex } from "./random";
 export {
@@ -20,5 +20,5 @@ export {
 export { GruntWrapper } from "./GruntWrapper";
 export { ITsConfigDetails, getTsConfigDetails } from "./tsConfigDetails";
 export {
-    getGruntMultiTaskOptions, resolveValue, mergeOptions, deepMerge
+    getGruntMultiTaskOptions, resolveValue, resolveValueAsync, mergeOptions, deepMerge
 } from "./utils";

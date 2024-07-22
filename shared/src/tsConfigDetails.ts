@@ -8,8 +8,8 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import { isString } from "@nevware21/ts-utils";
-import { ITsConfig, ITsCompilerOptions } from "./interfaces/ITsConfig";
+import { arrForEach, isArray, isIterable, isIterator, isNullOrUndefined, isPlainObject, isString, iterForOf, objDeepCopy, objForEachKey } from "@nevware21/ts-utils";
+import { ITsConfig, ITsOption, TsConfigDefinitions } from "./interfaces/ITsConfig";
 import { findCommonPath, getTempFile, makeRelative, makeRelativeTo, normalizePath, readJsonFile } from "./fileHelpers";
 import { IGruntWrapper } from "./interfaces/IGruntWrapper";
 
@@ -35,9 +35,9 @@ export interface ITsConfigDetails {
     tsConfig: ITsConfig;
 
     /**
-     * A reference to the compilerOptions from the tsConfig or an empty object if the tsConfig was not loaded
+     * The options that were used to override the loaded config
      */
-    compilerOptions: ITsCompilerOptions;
+    tsOption?: ITsOption;
 
     /**
      * Has the originally loaded config been changed
@@ -100,66 +100,118 @@ function _resolveTsConfigFiles(tsConfigPath: string, files: string[]): string[] 
     return files;
 }
 
-export function getTsConfigDetails(grunt: IGruntWrapper, tsConfigFile: string, logWarnings: boolean): ITsConfigDetails[] {
+function _mergeConfigs(target: any, merge: any): any {
+    if (isNullOrUndefined(target)) {
+        return merge;
+    }
+
+    if (isArray(target)) {
+        if (isArray(merge)) {
+            arrForEach(merge, (val) => {
+                target.push(val);
+            });
+        } else {
+            target.push(merge);
+        }
+
+        return target
+    }
+
+    if (isPlainObject(merge)) {
+        objForEachKey(merge, (key, value) => {
+            // eslint-disable-next-line security/detect-object-injection
+            (target as any)[key] = _mergeConfigs((target as any)[key], value);
+        });
+
+        return target;
+    }
+
+    return merge || target;
+}
+
+function _createTsConfigDetails(grunt: IGruntWrapper, tsConfigOrOption: string | ITsOption | null, logWarnings: boolean): ITsConfigDetails {
+    let tsOption: ITsOption = null;
+    
+    if (isString(tsConfigOrOption)) {
+        tsOption = {
+            name: tsConfigOrOption,
+            tsconfig: null
+        }
+    } else {
+        tsOption = tsConfigOrOption || {
+            name: null,
+            tsconfig: null
+        };
+    }
+    
+    // Make sure we have a filename
+    tsOption.name = tsOption.name || "./tsconfig.json";
+
     let details: ITsConfigDetails = {
-        name: tsConfigFile,
-        nameRoot: tsConfigFile ? path.resolve(findCommonPath([tsConfigFile])) : null,
+        name: tsOption.name,
+        nameRoot: path.resolve(findCommonPath([tsOption.name])),
         tsConfig: null,
-        compilerOptions: {} as ITsCompilerOptions,
+        tsOption: tsOption,
         modified: false,
         addFiles: null,
         getFiles: null,
         createTemp: null,
         cleanupTemp: null
+    };
+
+    let tsConfig = details.tsConfig = readJsonFile<ITsConfig>(details.name)
+    let tsConfigRoot = details.nameRoot;
+    let projectRootDir: string = null;
+    let rootDir: string = null;
+
+    // Override the compiler options if they are provided
+    if (tsConfig && details.tsConfig) {
+        // Overwrite the tsConfig with the provided additional options
+        tsConfig = details.tsConfig = _mergeConfigs(objDeepCopy(tsConfig), tsOption.tsconfig);
+        details.modified = true;
     }
 
-    if (tsConfigFile) {
-        let tsConfig = details.tsConfig = readJsonFile<ITsConfig>(tsConfigFile)
-        let compilerOptions = details.compilerOptions = tsConfig.compilerOptions || details.compilerOptions;
-        let tsConfigRoot = details.nameRoot;
-        let projectRootDir: string = null;
-        let rootDir: string = null;  
+    let compilerOptions = tsConfig.compilerOptions = tsConfig.compilerOptions || {};
 
-        if (compilerOptions.rootDir) {
-            projectRootDir = path.resolve(findCommonPath([tsConfigFile]), compilerOptions.rootDir);
+    if (compilerOptions.rootDir) {
+        projectRootDir = path.resolve(findCommonPath([details.name || "."]), compilerOptions.rootDir);
 
-            // eslint-disable-next-line security/detect-non-literal-fs-filename
-            if (!fs.existsSync(path.resolve(projectRootDir))) {
-                rootDir = path.resolve(compilerOptions.rootDir);
+        // eslint-disable-next-line security/detect-non-literal-fs-filename
+        if (!fs.existsSync(path.resolve(projectRootDir))) {
+            rootDir = path.resolve(compilerOptions.rootDir);
 
             // eslint-disable-next-line security/detect-non-literal-fs-filename
             if (rootDir !== tsConfigRoot && fs.existsSync(rootDir)) {
-                    logWarnings && grunt.logWarn(("The rootDir specified in your project file [" + tsConfigFile + "] is invalid as it assumes the current working directory.\n - [" + compilerOptions.rootDir + "] resolves to [" + projectRootDir + "]\n - Overridding to use: [" + rootDir + "]\n -- Update or remove to fix this warning").yellow);
-                } else {
-                    logWarnings && grunt.logWarn(("The rootDir specified in your project file [" + tsConfigFile + "] is invalid.\n - [" + compilerOptions.rootDir + "] resolves to [" + projectRootDir + "]\n - Using tsconfig location: [" + tsConfigRoot + "]\n -- Update or remove to fix this warning").yellow);
-                    rootDir = tsConfigRoot;
-                }
-
-                // Assume the declaration folder has the same issue
-                if (compilerOptions.declarationDir) {
-                    let projectDeclarationDir = path.resolve(rootDir, compilerOptions.declarationDir);
-                    let declarationDir = path.resolve(compilerOptions.declarationDir);
-
-                    // If the folders are different and the --rootDir existed based on the cwd then use the same resolution
-                    if (declarationDir !== projectDeclarationDir) {
-                        logWarnings && grunt.logWarn(("The declarationDir specified in your project file [" + tsConfigFile + "] is invalid as it assumes the current working directory.\n - [" + compilerOptions.declarationDir + "] resolves to [" + projectDeclarationDir + "]\n - Overridding to use: [" + declarationDir + "]\n -- Update or remove to fix this warning").yellow);
-                        details.declarationDir = declarationDir;
-                    } else {
-                        logWarnings && grunt.logWarn(("The rootDir specified in your project file [" + tsConfigFile + "] is invalid.\n - [" + compilerOptions.declarationDir + "] resolves to [" + projectDeclarationDir + "]\n - Using: [" + rootDir + "]\n -- Remove to fix this warning").yellow);
-                        details.declarationDir = rootDir;
-                    }
-                }
-                
-                details.rootDir = rootDir;
-                details.rootDirUpdated = true;
+                logWarnings && grunt.logWarn(("The rootDir specified in your project file [" + details.name + "] is invalid as it assumes the current working directory.\n - [" + compilerOptions.rootDir + "] resolves to [" + projectRootDir + "]\n - Overridding to use: [" + rootDir + "]\n -- Update or remove to fix this warning").yellow);
             } else {
-                // The specified rootDir is correct
-                details.rootDir = projectRootDir;
+                logWarnings && grunt.logWarn(("The rootDir specified in your project file [" + details.name + "] is invalid.\n - [" + compilerOptions.rootDir + "] resolves to [" + projectRootDir + "]\n - Using tsconfig location: [" + tsConfigRoot + "]\n -- Update or remove to fix this warning").yellow);
+                rootDir = tsConfigRoot;
             }
+
+            // Assume the declaration folder has the same issue
+            if (compilerOptions.declarationDir) {
+                let projectDeclarationDir = path.resolve(rootDir, compilerOptions.declarationDir);
+                let declarationDir = path.resolve(compilerOptions.declarationDir);
+
+                // If the folders are different and the --rootDir existed based on the cwd then use the same resolution
+                if (declarationDir !== projectDeclarationDir) {
+                    logWarnings && grunt.logWarn(("The declarationDir specified in your project file [" + details.name + "] is invalid as it assumes the current working directory.\n - [" + compilerOptions.declarationDir + "] resolves to [" + projectDeclarationDir + "]\n - Overridding to use: [" + declarationDir + "]\n -- Update or remove to fix this warning").yellow);
+                    details.declarationDir = declarationDir;
+                } else {
+                    logWarnings && grunt.logWarn(("The rootDir specified in your project file [" + details.name + "] is invalid.\n - [" + compilerOptions.declarationDir + "] resolves to [" + projectDeclarationDir + "]\n - Using: [" + rootDir + "]\n -- Remove to fix this warning").yellow);
+                    details.declarationDir = rootDir;
+                }
+            }
+            
+            details.rootDir = rootDir;
+            details.rootDirUpdated = true;
         } else {
-            // No rootDir defined in the project file
-            details.rootDir = tsConfigRoot;
+            // The specified rootDir is correct
+            details.rootDir = projectRootDir;
         }
+    } else {
+        // No rootDir defined in the project file
+        details.rootDir = tsConfigRoot;
     }
 
     details.addFiles = (tsFiles: string | string[]) => {
@@ -309,5 +361,38 @@ export function getTsConfigDetails(grunt: IGruntWrapper, tsConfigFile: string, l
         }
     };
 
-    return [ details ];
+    if (details.tsOption?.src) {
+        details.addFiles(details.tsOption.src);
+    }
+
+    return details;
+}
+
+export function getTsConfigDetails(
+    grunt: IGruntWrapper,
+    tsConfig: TsConfigDefinitions | undefined | null,
+    logWarnings: boolean
+): ITsConfigDetails[] {
+    let details: ITsConfigDetails[] = [];
+
+    // Collect the tsConfig files
+    if (isString(tsConfig)) {
+        // Just a single tsConfig file
+        details.push(_createTsConfigDetails(grunt, tsConfig, logWarnings));
+    } else if (isArray(tsConfig)) {
+        arrForEach(tsConfig, (tsConfig) => {
+            details.push(_createTsConfigDetails(grunt, tsConfig, logWarnings));
+        });
+    } else if (isIterable(tsConfig) || isIterator(tsConfig)) {
+        iterForOf(tsConfig, (tsConfig) => {
+            details.push(_createTsConfigDetails(grunt, tsConfig, logWarnings));
+        });
+    }
+
+    if (details.length === 0) {
+        // No tsConfig files provided, create an empty one
+        details.push(_createTsConfigDetails(grunt, null, logWarnings));
+    }
+
+    return details;
 }

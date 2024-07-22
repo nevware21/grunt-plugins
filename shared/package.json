@@ -19,7 +19,7 @@
     "types": "types/shared-utils.d.ts",
     "scripts": {
         "clean": "grunt clean",
-        "build": "grunt shared_utils",
+        "build": "grunt shared_utils && npm run package",
         "rebuild": "npm run build && npm run test",
         "package": "rollup -c rollup.config.mjs",
         "test": "grunt shared_utils-test && npm run test:node",

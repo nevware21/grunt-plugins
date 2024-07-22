@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  */
 
-'use strict';
+"use strict";
 
 module.exports = function (grunt) {
 
@@ -14,23 +14,23 @@ module.exports = function (grunt) {
     grunt.initConfig({
         jshint: {
             all: [
-                'Gruntfile.js',
-                'tasks/*.js',
-                '<%= nodeunit.tests %>'
+                "Gruntfile.js",
+                "tasks/*.js",
+                "<%= nodeunit.tests %>"
             ],
             options: {
-                jshintrc: '.jshintrc'
+                jshintrc: ".jshintrc"
             }
         },
 
         // Before generating any new files, remove any previously-created files.
         clean: {
-            tests: ['tmp']
+            tests: ["tmp"]
         },
 
         // Unit tests.
         nodeunit: {
-            tests: ['test/*_test.js']
+            tests: ["test/*_test.js"]
         },
         ts: {
             options: {
@@ -41,13 +41,13 @@ module.exports = function (grunt) {
             "shared": {
                 tsconfig: "./shared/tsconfig.json",
                 src: [
-                    './shared/src/**/*.ts'
-                ],
+                    "./shared/src/**/*.ts"
+                ]
             },
             "shared-test": {
                 tsconfig: "./shared/test/tsconfig.test.json",
                 src: [
-                    './shared/test/src/**/*.ts'
+                    "./shared/test/src/**/*.ts"
                 ],
             },
             "ts_plugin": {
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
             "ts_plugin-test": {
                 tsconfig: "./ts-plugin/test/tsconfig.test.json",
                 src: [
-                    './ts-plugin/test/src/**/*.ts'
+                    "./ts-plugin/test/src/**/*.ts"
                 ],
             },
             "eslint_ts_plugin": {
@@ -70,7 +70,7 @@ module.exports = function (grunt) {
             "eslint_ts_plugin-test": {
                 tsconfig: "./eslint-ts-plugin/test/tsconfig.test.json",
                 src: [
-                    './eslint-ts-plugin/test/src/**/*.ts'
+                    "./eslint-ts-plugin/test/src/**/*.ts"
                 ],
             },
         },
@@ -83,7 +83,7 @@ module.exports = function (grunt) {
                 tsconfig: "./shared/tsconfig.json",
                 ignoreFailures: true,
                 src: [
-                    './shared/src/**/*.ts'
+                    "./shared/src/**/*.ts"
                 ]
             },
             "shared-test": {
@@ -109,7 +109,7 @@ module.exports = function (grunt) {
                     tsconfig: "./shared/tsconfig.json",
                     fix: true,
                     src: [
-                        './shared/src/**/*.ts'
+                        "./shared/src/**/*.ts"
                     ]                
                 }
             },
@@ -140,10 +140,10 @@ module.exports = function (grunt) {
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
-    grunt.registerTask('shared_utils-test', [ "lint:shared-test-fix", "ts:shared-test" ]);
-    grunt.registerTask('ts_plugin_test', ["lint:ts_plugin-fix", "ts:ts_plugin-test"]);
-    grunt.registerTask('eslint_ts_plugin_test', ["lint:eslint_ts-fix", "ts:eslint_ts_plugin-test"]);
+    grunt.registerTask("shared_utils-test", [ "lint:shared-test-fix", "ts:shared-test" ]);
+    grunt.registerTask("ts_plugin_test", ["lint:ts_plugin-fix", "ts:ts_plugin-test"]);
+    grunt.registerTask("eslint_ts_plugin_test", ["lint:eslint_ts-fix", "ts:eslint_ts_plugin-test"]);
 
     // By default, lint and run all tests.
-    grunt.registerTask('default', ['jshint', 'test']);
+    grunt.registerTask("default", ["jshint", "test"]);
 };

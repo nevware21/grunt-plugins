@@ -68,25 +68,37 @@ The options can be specified at the global ```options``` or ```task``` level, wi
 
 | Name | Type | Description
 |------|------|------------
-| tsconfig | string | The path to the tsConfig file to use, when specified
-| src | string | string[] | A single string or an array of source files to be "added" to the tsconfig as either files or include. When a string it assumes a single entry, there is not encoded list etc.
-| out | string | Concatenate the output into a single file using the tsc --out parameter. If the tscConfig also includes an ```outDir``` this value will be ignored.
-| outDir | string | Use the tsc --outDir parameter. If the tscConfig also includes an ```out``` or ```outFile``` the value will be ignored.
+| tsconfig | `string` \| `ITsOption` \| `Array<string \| ITsOption>` \| `Iterable<string \| ITsOption>` \| `Iterator<string \| ITsOption>` it may also be a `function` that returns any of these or a `Promise` that also returns any of the above including a function that returns the result<br/> <sub>(since 0.5.0)</sub><br />`string` <sub>(prior to 0.5.0)</sub> | The path to the tsConfig file to use, when specified
+| src | `string` | string[] | A single string or an array of source files to be "added" to the tsconfig as either files or include. When a string it assumes a single entry, there is not encoded list etc.
+| out | `string` | Concatenate the output into a single file using the tsc --out parameter. If the tscConfig also includes an ```outDir``` this value will be ignored.
+| outDir | `string` | Use the tsc --outDir parameter. If the tscConfig also includes an ```out``` or ```outFile``` the value will be ignored.
+
+#### ITsOption
+
+| Name | Type | Description
+|------|------|------------
+| name | `string` | The filename / location of the `tsconfig.json` to be used
+| tsconfig | `Object` | An inlined version of the supported `tsconfig`, supports all options supported by TypeScript (no direct validate is applied)
+| src | `string` \| `string[]` | A single string or an array of source files to be "added" to the tsconfig as either files or include. When a string it assumes a single entry, there is not encoded list etc.
+| out | `string` | Concatenate the output into a single file using the tsc --out parameter. If the tscConfig also includes an ```outDir``` this value will be ignored.
+| outDir | `string` | Use the tsc --outDir parameter. If the tscConfig also includes an ```out``` or ```outFile``` the value will be ignored.
+| keepTemp | `Boolean`<br/>Defaults: `false` | Additional debugging switch that will not cleanup (delete) the temporary files used for building, use this flag to review the generated temporary tsconfig.json if one is required.
+| execute | `(grunt: IGrunt, args: string[]) => IPromise<IExecuteResponse>` | An optional function that will be called to compile the project.
 
 #### __Common options:__ Global and Task
 
 | Name | Type | Description
 |------|------|------------
-| src | string | string[] | A single string or an array of source files to included in each task.
-| additionalFlags | string \| string[]<br />Default: Empty String | Pass in additional flags to the tsc compiler (added to the end of the command line)
-| failOnTypeErrors | Boolean<br/>Defaults: true | Should the compile run fail when type errors are identified, ignores failures from imported node_module/** packages
-| failOnExternalTypeErrors | Boolean<br/>Defaults: false | Should the compile run fail when type errors are identified as originating from an external packages (node_modules/)
-| tscPath | String<br>Defaults: reverse scan from project path for node_modules/typescript/bin folder | Identify the root path of the version of the TypeScript is installed, this may include be either the root folder of where the node_modules/typescript/bin folder is located or the location of the command-line version of tsc.
-| compiler | String <br />Defaults: to "tsc" within the located or defined tscPath | Identify the complete path to the command line version of tsc
-| onError | ErrorHandlerResponse<br />| This callback function will be called when an error matching "error: TS\d+:" is found, the errorNumber is the detected value and line is the entire line containing the error message.
-| debug | Boolean<br/>Defaults: false | Log additional debug messages during the build, you can also enable grunt --verbose mode.
-| logOutput | Boolean<br/>Defaults: false | Log the output of the execute response
-| keepTemp | Boolean<br/>Defaults: false | Additional debugging switch that will not cleanup (delete) the temporary files used for building, use this flag to review the generated temporary tsconfig.json if one is required.
+| src | `string` \| `string[]` | A single string or an array of source files to included in each task.
+| additionalFlags | `string` \| `string[]`<br />Default: Empty String | Pass in additional flags to the tsc compiler (added to the end of the command line)
+| failOnTypeErrors | `Boolea`n<br/>Defaults: `true` | Should the compile run fail when type errors are identified, ignores failures from imported node_module/** packages
+| failOnExternalTypeErrors | `Boolean`<br/>Defaults: `false` | Should the compile run fail when type errors are identified as originating from an external packages (node_modules/)
+| tscPath | `String`<br>Defaults: reverse scan from project path for node_modules/typescript/bin folder | Identify the root path of the version of the TypeScript is installed, this may include be either the root folder of where the node_modules/typescript/bin folder is located or the location of the command-line version of tsc.
+| compiler | `String` <br />Defaults: to "tsc" within the located or defined tscPath | Identify the complete path to the command line version of tsc
+| onError | `ErrorHandlerResponse`<br />| This callback function will be called when an error matching "error: TS\d+:" is found, the errorNumber is the detected value and line is the entire line containing the error message.
+| debug | `Boolean`<br/>Defaults: `false` | Log additional debug messages during the build, you can also enable grunt --verbose mode.
+| logOutput | `Boolean`<br/>Defaults: `false` | Log the output of the execute response
+| keepTemp | `Boolean`<br/>Defaults: `false` | Additional debugging switch that will not cleanup (delete) the temporary files used for building, use this flag to review the generated temporary tsconfig.json if one is required.
 
 **Example showing some option combinations**
 
@@ -139,6 +151,33 @@ module.exports = function(grunt) {
             additionalFlags: [
               "--target esnext",
               "--outDir ../dist/esnext"
+            ]
+        },
+        "inline_utils_esnext": {
+            tsconfig: {
+              name: "./shared/tsconfig.json",
+              tsconfig: {    // Since 0.5.0
+                  compilerOptions: {
+                      target: "esnext",
+                      outDir: "../dist/esnext"
+                  }
+              }
+            }
+        },
+        "multiple_utils_default_and_esnext": {
+            tsconfig: [     // Since 0.5.0
+              {
+                name: "./shared/tsconfig.json",
+              },
+              {
+                name: "./shared/tsconfig.json",
+                tsconfig: {
+                  compilerOptions: {
+                    target: "esnext",
+                    outDir: "../dist/esnext"
+                  }
+                }
+              }
             ]
         }
     }

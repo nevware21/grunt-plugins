@@ -6,6 +6,8 @@
  * Licensed under the MIT license.
  */
 
+import { TsConfigDefinitions } from "@nevware21/grunt-plugins-shared-utils";
+import { IPromise } from "@nevware21/ts-async";
 import { Linter } from "eslint";
 
 export interface ITsCommonOptions {
@@ -70,44 +72,60 @@ export interface IEslintTsPluginOptions extends IEsLintOptions {
     /**
      * Log additional debug messages as verbose grunt messages
      */
-     debug?: boolean;
+    debug?: boolean;
 
-     /**
-     * The path to the tsConfig file to use
+    /**
+     * The path to the tsConfig file to use, may be
+     * - a single string
+     * - an array of strings
+     * - an iterable of strings
+     * - an iterator of strings
+     * - a single ITsOption object identifying the tsConfig
+     * - an array of ITsOption objects identifying the tsConfigs
+     * - an iterable of ITsOption objects identifying the tsConfigs
+     * - an iterator of ITsOption objects identifying the tsConfigs
+     * - a promise that resolves to any of the above
+     * - a function that returns any of the above including a promise that resolves to any of the above
      */
-     tsconfig?: string;
+    tsconfig?: TsConfigDefinitions | IPromise<TsConfigDefinitions> | (() => TsConfigDefinitions | IPromise<TsConfigDefinitions>);
 
     /**
      * If more than this number of warnings are reported failed the task
      */
-     maxWarnings?: number;
+    maxWarnings?: number;
 
     /**
      * An array of source files to be "added" to all tasks as either files or include for each task tsconfig
      */
-     src?: string | string[];
+    src?: string | string[];
 }
 
 export interface IEslintTsPluginTaskOptions extends IEsLintOptions {
     /**
      * Log additional debug messages as verbose grunt messages
      */
-     debug?: boolean;
+    debug?: boolean;
 
-     /**
-     * The path to the tsConfig file to use
+    /**
+     * The path to the tsConfig file to use, may be
+     * - a single string
+     * - an array of strings
+     * - an iterable of strings
+     * - an iterator of strings
+     * - a promise that resolves to any of the above
+     * - a function that returns any of the above including a promise that resolves to any of the above
      */
-    tsconfig?: string;
-
+    tsconfig?: TsConfigDefinitions | IPromise<TsConfigDefinitions> | (() => TsConfigDefinitions | IPromise<TsConfigDefinitions>);
+ 
     /**
      * If more than this number of warnings are reported failed the task
      */
-     maxWarnings?: number;
+    maxWarnings?: number;
 
     /**
      * An array of source files to be "added" to all tasks as either files or include for each task tsconfig
      */
-     src?: string | string[];
+    src?: string | string[];
 
     /**
      * Ignore failures and continue

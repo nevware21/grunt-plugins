@@ -1,4 +1,5 @@
 import nodeResolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 
 const gruntTaskRollupConfigFactory = () => {
     const gruntTaskRollupConfig = {
@@ -11,10 +12,12 @@ const gruntTaskRollupConfigFactory = () => {
             freeze: false,
             sourcemap: true
         },
+        external: [ "fs", "path" ],
         plugins: [
+            commonjs(),
             nodeResolve({
                 module: true,
-                browser: true,
+                browser: false,
                 preferBuiltins: false
             })
         ]

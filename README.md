@@ -60,8 +60,55 @@ module.exports = function(grunt) {
           './src/**/*.ts'
         ],
         out: './out/task1-dist.js'
+      },
+      task4: {
+        // As with task3, since 0.5.0 the tsconfig may have be inlined and specify more
+        // than just the filename / location of the tsconfig.json
+        tsconfig: {
+          name: './task1/tsconfig.json',
+          src: [
+            './src/**/*.ts'
+          ],
+          out: './out/task1-dist.js'
+        }
+      },
+      task5: {
+        // As with task3, since 0.5.0 the tsconfig may contain multiple inlined definitions
+        // and override the content of the loaded tsconfig.json
+        tsconfig: [
+          {
+            name: './task1/tsconfig.json',
+            src: [
+              './src/**/*.ts'
+            ],
+            out: './out/task5-dist.js'
+          },
+          {
+            name: './task1/tsconfig.json',
+            tsconfig: {
+              compilerOptions: {
+                target: "es6"
+              }
+            }
+            src: [
+              './src/**/*.ts'
+            ],
+            out: './out/task5-es6-dist.js'
+          },
+          {
+            name: './task1/tsconfig.json',
+            tsconfig: {
+              compilerOptions: {
+                target: "esnext"
+              }
+            }
+            src: [
+              './src/**/*.ts'
+            ],
+            out: './out/task5-esnext-dist.js'
+          }
+        ]
       }
-    }
   });
   grunt.loadNpmTasks("@nevware21/grunt-ts-plugin");
   grunt.registerTask("default", ["ts"]);
