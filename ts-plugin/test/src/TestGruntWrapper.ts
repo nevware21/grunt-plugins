@@ -6,9 +6,9 @@
  * Licensed under the MIT license.
  */
 
-import { IGruntLogger, IGruntWrapper } from "../../src/shared-utils";
+import { IGruntLogger, IGruntWrapper } from "@nevware21/grunt-plugins-shared-utils";
 
-export class MockGruntWrapper implements IGruntWrapper {
+export class TestGruntWrapper implements IGruntWrapper {
     _messages: { type: string, msg: string }[];
     
     constructor() {
@@ -26,7 +26,10 @@ export class MockGruntWrapper implements IGruntWrapper {
     util: grunt.util.UtilModule;
     hasErrors: () => boolean;
     hasWarnings: () => boolean;
-    log: (msg: string) => IGruntLogger;
+    log: (msg: string) => IGruntLogger = (msg: string) => {
+        this._messages.push({ type: "log", msg })
+        return this;
+    };
     logWrite: (msg: string) => IGruntLogger;
     logError: (msg: string) => IGruntLogger;
     logWarn: (msg: string) => IGruntLogger;
@@ -34,7 +37,10 @@ export class MockGruntWrapper implements IGruntWrapper {
         this._messages.push({ type: "debug", msg })
         return this;
     };
-    logVerbose: (msg: string) => IGruntLogger;
+    logVerbose: (msg: string) => IGruntLogger = (msg: string) => {
+        this._messages.push({ type: "verbose", msg })
+        return this;
+    };
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     fileExists(_filepath: string): boolean {
         // Implement your mock logic here

@@ -8,7 +8,6 @@
  */
 
 import * as assert from "assert";
-import * as sinon from 'sinon';
 import { IGruntWrapper } from '@nevware21/grunt-plugins-shared-utils';
 import { ESLintRunner } from '../../src/ESLintRunner';
 import { IESLintRunnerOptions } from '../../src/interfaces/IESLintRunnerOptions';

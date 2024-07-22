@@ -8,8 +8,8 @@
  * Licensed under the MIT license.
  */
 
-import { arrForEach, dumpObj, isString } from "@nevware21/ts-utils";
-import { getGruntMultiTaskOptions, resolveValue, GruntWrapper, IGruntWrapperOptions } from "@nevware21/grunt-plugins-shared-utils";
+import { arrForEach, dumpObj, isIterable, isIterator, isString, iterForOf } from "@nevware21/ts-utils";
+import { getGruntMultiTaskOptions, resolveValue, resolveValueAsync, GruntWrapper, IGruntWrapperOptions, ITsOption } from "@nevware21/grunt-plugins-shared-utils";
 import { ErrorHandlerResponse } from "./interfaces/IErrorHandler";
 import { ITsPluginOptions, ITsPluginTaskOptions } from "./interfaces/ITsPluginOptions";
 import { ITypeScriptCompilerOptions, TypeScriptCompiler } from "./TypeScript";
@@ -58,9 +58,40 @@ export function pluginFn (inst: IGrunt) {
             grunt.logVerbose((" Config : [" + dumpObj(taskOptions) + "]").cyan);
         }
 
-        if (!taskOptions.tsconfig || !grunt.file.exists(taskOptions.tsconfig)) {
-            grunt.logError("The TSConfig project file [" + taskOptions.tsconfig + "] does not exist");
-            return false;
+        function _validateOptions(tsOptions: ITypeScriptCompilerOptions): boolean {
+            let configs: Array<string | ITsOption> = [];
+
+            if (!tsOptions.tsConfigs) {
+                if (isString(tsOptions.tsConfigs)) {
+                    configs.push(tsOptions.tsConfigs);
+                } else if (Array.isArray(tsOptions.tsConfigs)) {
+                    configs = tsOptions.tsConfigs;
+                } else if (isIterable(tsOptions.tsConfigs) || isIterator(tsOptions.tsConfigs)) {
+                    iterForOf(tsOptions.tsConfigs, (value) => {
+                        configs.push(value);
+                    });
+                } else {
+                    grunt.logError("The TSConfig project file [" + tsOptions.tsConfigs + "] does not exist");
+                    return false;
+                }
+            }
+
+            for (let lp = 0; lp < configs.length; lp++) {
+                // eslint-disable-next-line security/detect-object-injection
+                let tsDef = configs[lp];
+                if (isString(tsDef)) {
+                    if (!grunt.file.exists(tsDef)) {
+                        // eslint-disable-next-line security/detect-object-injection
+                        grunt.logError("The TSConfig project file [" + tsDef + "] does not exist");
+                        return false;
+                    }
+                } else if (tsDef.name) {
+                    if (!grunt.file.exists(tsDef.name)) {
+                        grunt.logError("The TSConfig project file [" + tsDef.name + "] does not exist");
+                        return false;
+                    }
+                }
+            }   
         }
 
         function handleDefaultTsErrors(number: string, line: string) {
@@ -83,7 +114,7 @@ export function pluginFn (inst: IGrunt) {
             return response;
         }
         
-        function _processSingleTsConfig(theOptions: ITypeScriptCompilerOptions): IPromise<boolean> {
+        function _processTask(theOptions: ITypeScriptCompilerOptions): IPromise<boolean> {
             let ts = new TypeScriptCompiler(grunt, theOptions);
             let srcFiles: string[] = [];
             srcFiles = _addFiles(srcFiles, options.src);
@@ -110,24 +141,28 @@ export function pluginFn (inst: IGrunt) {
             });
         }
 
-        let tsOptions:ITypeScriptCompilerOptions = {
-            tsconfig: taskOptions.tsconfig,
-            tscPath: resolveValue(taskOptions.tscPath, options.tscPath),
-            compiler: resolveValue(taskOptions.compiler, options.compiler),
-            additionalFlags: resolveValue(taskOptions.additionalFlags, options.additionalFlags),
-            logOutput: resolveValue(taskOptions.logOutput, options.logOutput),
-            failOnTypeErrors: resolveValue(taskOptions.failOnTypeErrors, options.failOnTypeErrors, true),
-            failOnExternalTypeErrors: resolveValue(taskOptions.failOnExternalTypeErrors, options.failOnExternalTypeErrors, false),
-            out: taskOptions.out,
-            outDir: resolveValue(taskOptions.outDir, options.outDir),
-            onError: resolveValue(taskOptions.onError, options.onError, handleDefaultTsErrors),
-            keepTemp: resolveValue(taskOptions.keepTemp, options.keepTemp)
-        };
-
         let done = this.async();
 
         (async function () {
-            let isSuccess = await _processSingleTsConfig(tsOptions);
+            let tsOptions: ITypeScriptCompilerOptions = {
+                tsConfigs: await resolveValueAsync(taskOptions.tsconfig, options.tsconfig),
+                tscPath: resolveValue(taskOptions.tscPath, options.tscPath),
+                compiler: resolveValue(taskOptions.compiler, options.compiler),
+                additionalFlags: resolveValue(taskOptions.additionalFlags, options.additionalFlags),
+                logOutput: resolveValue(taskOptions.logOutput, options.logOutput),
+                failOnTypeErrors: resolveValue(taskOptions.failOnTypeErrors, options.failOnTypeErrors, true),
+                failOnExternalTypeErrors: resolveValue(taskOptions.failOnExternalTypeErrors, options.failOnExternalTypeErrors, false),
+                defaults: {
+                    out: taskOptions.out,
+                    outDir: resolveValue(taskOptions.outDir, options.outDir),
+                    keepTemp: resolveValue(taskOptions.keepTemp, options.keepTemp)
+                },
+                onError: resolveValue(taskOptions.onError, options.onError, handleDefaultTsErrors),
+            };
+
+            _validateOptions(tsOptions);
+
+            let isSuccess = await _processTask(tsOptions);
             done(isSuccess ? true : false);
         })().catch((error) => {
             grunt.logError("dump: " + dumpObj(error));

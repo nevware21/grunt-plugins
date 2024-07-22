@@ -16,7 +16,7 @@
     "scripts": {
         "clean": "grunt clean",
         "build": "grunt eslint_ts_plugin --verbose && npm run package",
-        "rebuild": "npm run build",
+        "rebuild": "npm run build && npm run test",
         "package": "rollup -c rollup.config.mjs",
         "test": "grunt eslint_ts_plugin_test",
         "lint": "grunt doLint"

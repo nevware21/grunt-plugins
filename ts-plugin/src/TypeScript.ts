@@ -8,13 +8,14 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import { dumpObj, isArray } from "@nevware21/ts-utils";
+import { dumpObj, isArray, isNullOrUndefined } from "@nevware21/ts-utils";
 import { IPromise, arrForEachAsync, createSyncPromise, doAwait } from "@nevware21/ts-async";
 import {
-    doExecute, getTempFile, IExecuteResponse, quoteIfRequired, findModulePath, IGruntWrapper, getTsConfigDetails, ITsConfigDetails
+    doExecute, getTempFile, IExecuteResponse, quoteIfRequired, findModulePath, IGruntWrapper, getTsConfigDetails, ITsConfigDetails,
+    TsConfigDefinitions
 } from "@nevware21/grunt-plugins-shared-utils";
 import { ICompileResponse } from "./interfaces/ICompileResponse";
-import { ITsCommonOptions } from "./interfaces/ITsPluginOptions";
+import { IPluginCommonOptions } from "./interfaces/ITsPluginOptions";
 import { ErrorHandlerResponse } from "./interfaces/IErrorHandler";
 
 const TsErrorRegEx = /error TS(\d+):/;
@@ -74,14 +75,31 @@ function _checkTscVersion(grunt: IGruntWrapper, tscVersion: string) {
     }
 }
 
-export interface ITypeScriptCompilerOptions extends ITsCommonOptions {
+export interface ITypeScriptCompilerOptions extends IPluginCommonOptions {
 
     /**
-     * The path to the tsConfig file to use
+     * The path to the tsConfig file to use, may be
+     * - a single string
+     * - an array of strings
+     * - an iterable of strings
+     * - an iterator of strings
+     * - a single ITsOptions object
+     * - an array of ITsOptions objects
+     * - an iterable of ITsOptions objects
+     * - an iterator of ITsOptions objects
+     * - a promise that resolves to any of the above
+     * - a function that returns any of the above including a promise that resolves to any of the above
      */
-    tsconfig?: string;
+    tsConfigs?: TsConfigDefinitions;
 
-     /**
+    /**
+     * The default options to use when not specified in the tsOptions
+     */
+    defaults: ITypeScriptDefaultOptions
+}
+
+export interface ITypeScriptDefaultOptions {
+    /**
      * Optional out location
      */
     out?: string;
@@ -91,6 +109,12 @@ export interface ITypeScriptCompilerOptions extends ITsCommonOptions {
      */
     outDir?: string;
 
+    /**
+     * The override function to use to execute typescript
+     * @param grunt 
+     * @param args 
+     * @returns 
+     */
     execute?: (grunt: IGrunt, args: string[]) => IPromise<IExecuteResponse>;
 
     /**
@@ -125,7 +149,7 @@ export class TypeScriptCompiler {
                 grunt.log("Using grunt-ts-plugin v" + tsPluginVersion);
             }
 
-            let tsDetails: ITsConfigDetails[] = getTsConfigDetails(grunt, options.tsconfig, !options.suppressWarnings);
+            let tsDetails: ITsConfigDetails[] = getTsConfigDetails(grunt, options.tsConfigs, !options.suppressWarnings);
             let responses: ICompileResponse[] = [];
 
             return createSyncPromise((resolve, reject) => {
@@ -155,8 +179,9 @@ export class TypeScriptCompiler {
             });
 
             function _execCommand(tsDetail: ITsConfigDetails, idx: number, tsCommand: string, doReject: (reason: any) => void) {
+                let execute = tsDetail.tsOption?.execute || options.defaults.execute;
                 return doAwait(
-                    options.execute ? options.execute(grunt.grunt, [tsc, "@" + tsCommand]) : doExecute(grunt, [tsc, "@" + tsCommand]),
+                    execute ? execute(grunt.grunt, [tsc, "@" + tsCommand]) : doExecute(grunt, [tsc, "@" + tsCommand]),
                     (execResponse) => {
                         let endTime = Date.now();
             
@@ -214,7 +239,12 @@ export class TypeScriptCompiler {
         }
 
         function _createCommandFile(idx: number, tsDetail: ITsConfigDetails, tsFiles: string[], tsc: string) {
-            let tsCommand = getTempFile(options.keepTemp ? "tscommand" : "tscmd" + "-" + idx);
+            let keepTemp = (isNullOrUndefined(tsDetail.tsOption?.keepTemp) ? options.defaults.keepTemp : tsDetail.tsOption.keepTemp);
+            if (isNullOrUndefined(keepTemp)) {
+                keepTemp = options.keepTemp || false;
+            }
+            
+            let tsCommand = getTempFile(keepTemp ? "tscommand" : "tscmd" + "-" + idx);
 
             if (!tsCommand) {
                 throw new Error("Unable to create a temporary file");
@@ -231,9 +261,9 @@ export class TypeScriptCompiler {
                 }
             }
 
-            const tsConfigFile = options.tsconfig;
+            const tsConfigFile = tsDetail.name;
             if (tsConfigFile) {
-                let compilerOptions = tsDetail.compilerOptions;
+                let compilerOptions = tsDetail.tsConfig.compilerOptions || {};
                 if (tsDetail.declarationDir) {
                     _addArg(args, "--declarationDir " + quoteIfRequired(tsDetail.declarationDir));
                 }
@@ -250,8 +280,8 @@ export class TypeScriptCompiler {
                     grunt.logDebug((" - Actual  : " + (tsDetail.rootDir ? tsDetail.rootDir : "<undefined>")).magenta);
                 }
 
-                let outDirParam = options.outDir;
-                let outParam = options.out;
+                let outDirParam = tsDetail?.tsOption?.outDir || options.defaults?.outDir || options.outDir;
+                let outParam = tsDetail?.tsOption?.out || options.defaults?.out;
                 if (outParam) {
                     if (compilerOptions.outDir) {
                         grunt.logWarn(("The 'out' parameter is not compatible usage of 'outDir' within the TsConfig project file -- ignoring the out parameter").magenta);
@@ -561,7 +591,8 @@ export class TypeScriptCompiler {
         }
         
         function _cleanupTemp(tsDetail: ITsConfigDetails, tsCommand: string) {
-            if (!options.keepTemp) {
+            let keepTemp = !!(isNullOrUndefined(tsDetail.tsOption?.keepTemp) ? options.defaults.keepTemp : tsDetail.tsOption.keepTemp);
+            if (!keepTemp) {
                 try {
                     tsDetail && tsDetail.cleanupTemp();
                 } catch (e) {
@@ -584,6 +615,5 @@ export class TypeScriptCompiler {
                 }
             }
         }
-        
     }
 }

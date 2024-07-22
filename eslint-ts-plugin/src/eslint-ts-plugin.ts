@@ -7,8 +7,8 @@
  * Licensed under the MIT license.
  */
 
-import { arrForEach, dumpObj, isString } from "@nevware21/ts-utils";
-import { getGruntMultiTaskOptions, resolveValue, deepMerge, getTsConfigDetails, IGruntWrapperOptions, GruntWrapper } from "@nevware21/grunt-plugins-shared-utils";
+import { arrForEach, dumpObj, isIterable, isIterator, isString, iterForOf } from "@nevware21/ts-utils";
+import { getGruntMultiTaskOptions, resolveValue, deepMerge, getTsConfigDetails, IGruntWrapperOptions, GruntWrapper, resolveValueAsync, ITsOption } from "@nevware21/grunt-plugins-shared-utils";
 import { ESLintRunner } from "./ESLintRunner";
 import { IEslintTsPluginTaskOptions } from "./interfaces/IEslintTsPluginOptions";
 import { Linter } from "eslint";
@@ -35,39 +35,70 @@ function _registerTask(inst: IGrunt, taskName: string) {
                 grunt.logVerbose((" Options: [" + dumpObj(options) + "]").cyan);
                 grunt.logVerbose((" Config : [" + dumpObj(this.data) + "]").cyan);
             }
-    
-            let tsconfig = resolveValue(taskOptions.tsconfig, options.tsconfig);
-            // eslint-disable-next-line security/detect-non-literal-fs-filename
-            if (!tsconfig || !grunt.file.exists(tsconfig)) {
-                grunt.logError("The TSConfig project file [" + tsconfig + "] does not exist");
-                return false;
-            }
 
-            const eslintOptions: IESLintRunnerOptions = {
-                format: resolveValue(taskOptions.format, options.format, "codeframe"),
-                logOutput: resolveValue(taskOptions.logOutput, options.logOutput),
-                fix: resolveValue(taskOptions.fix, options.fix),
-                suppressWarnings: resolveValue(taskOptions.suppressWarnings, options.suppressWarnings),
-                quiet: resolveValue(taskOptions.quiet, options.quiet),
-                outputFile: resolveValue(taskOptions.outputFile, options.outputFile),
-                disableOutputFixes: resolveValue(taskOptions.disableOutputFixes, options.disableOutputFixes)
-            };            
-          
-            const maxWarnings = resolveValue(taskOptions.maxWarnings, options.maxWarnings);
-            grunt.logDebug("grunt-eslint-typescript options: " + dumpObj(eslintOptions, true));
-
-            let tsDetails = getTsConfigDetails(grunt, tsconfig, !eslintOptions.suppressWarnings);
-            arrForEach(tsDetails, (tsDetail) => {
-                if (tsDetail) {
-                    tsDetail.addFiles(options.src);
-                    tsDetail.addFiles(taskOptions.src);
-                }
-            });
-
-            let results: IESLintRunnerResponse = null;
-    
             done = this.async();
             (async function runEslint() {
+                let tsDefs: Array<string | ITsOption> = [];
+                let tsconfig = await resolveValueAsync(taskOptions.tsconfig, options.tsconfig);
+                
+                if (!tsconfig) {
+                    if (isString(tsconfig)) {
+                        tsDefs.push(tsconfig);
+                    } else if (Array.isArray(tsconfig)) {
+                        tsDefs = tsconfig;
+                    } else if (isIterable(tsconfig) || isIterator(tsconfig)) {
+                        iterForOf(tsconfig, (value) => {
+                            tsDefs.push(value);
+                        });
+                    } else {
+                        grunt.logError("The TSConfig project file [" + tsconfig + "] does not exist");
+                        return false;
+                    }
+                }
+        
+                for (let lp = 0; lp < tsDefs.length; lp++) {
+                    // eslint-disable-next-line security/detect-non-literal-fs-filename, security/detect-object-injection
+                    let tsDef = tsDefs[lp];
+
+                    if (isString(tsDef)) {
+                        if (!grunt.file.exists(tsDef)) {
+                            // eslint-disable-next-line security/detect-object-injection
+                            grunt.logError("The TSConfig project file [" + tsDefs[lp] + "] does not exist");
+                            return false;
+                        }
+                    } else if (tsDef.name) {
+                        if (!grunt.file.exists(tsDef.name)) {
+                            grunt.logError("The TSConfig project file [" + tsDef.name + "] does not exist");
+                            return false;
+                        }
+                    }
+                }   
+
+                const eslintOptions: IESLintRunnerOptions = {
+                    format: resolveValue(taskOptions.format, options.format, "codeframe"),
+                    logOutput: resolveValue(taskOptions.logOutput, options.logOutput),
+                    fix: resolveValue(taskOptions.fix, options.fix),
+                    suppressWarnings: resolveValue(taskOptions.suppressWarnings, options.suppressWarnings),
+                    quiet: resolveValue(taskOptions.quiet, options.quiet),
+                    outputFile: resolveValue(taskOptions.outputFile, options.outputFile),
+                    disableOutputFixes: resolveValue(taskOptions.disableOutputFixes, options.disableOutputFixes)
+                };            
+              
+                const maxWarnings = resolveValue(taskOptions.maxWarnings, options.maxWarnings);
+                grunt.logDebug("grunt-eslint-typescript options: " + dumpObj(eslintOptions, true));
+    
+                let tsDetails = getTsConfigDetails(grunt, tsDefs, !eslintOptions.suppressWarnings);
+                arrForEach(tsDetails, (tsDetail) => {
+                    if (tsDetail) {
+                        tsDetail.addFiles(options.src);
+                        tsDetail.addFiles(taskOptions.src);
+                    }
+                });
+    
+                let results: IESLintRunnerResponse = null;
+        
+    
+
                 const eslint = new ESLintRunner(grunt, eslintOptions);
 
                 // Merge all of the additional Config into the linter
@@ -140,7 +171,7 @@ function _registerTask(inst: IGrunt, taskName: string) {
             });
     
         } catch (e) {
-            inst.log.error("EsLint catch: " + e);
+            inst.log.error("EsLint catch:: " + e + "\n" + dumpObj(e));
             if (done) {
                 done(false);
             }

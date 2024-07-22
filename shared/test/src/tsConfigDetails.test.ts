@@ -14,18 +14,46 @@ import * as os from "os";
 import { IGruntWrapper } from "../../src/shared-utils";
 import { getTsConfigDetails } from "../../src/tsConfigDetails";
 import { arrForEach } from "@nevware21/ts-utils";
-import { MockGruntWrapper } from "./MockGruntWrapper";
-
+import { TestGruntWrapper } from "./TestGruntWrapper";
 
 describe("getTsConfigDetails", () => {
     let grunt: IGruntWrapper;
+    let filePathBase: string;
+    let filePathEs5: string;
+    let filePathEs6: string;
 
     beforeEach(() => {
-        grunt = new MockGruntWrapper();
+        grunt = new TestGruntWrapper();
     });
 
-    it("should return the details of the tsconfig file when it exists", () => {
-        const filePath = path.join(os.tmpdir(), "tsconfig.json");
+    afterEach(() => {
+        if (fs.existsSync(filePathBase)) {
+            fs.unlinkSync(filePathBase);
+        }
+
+        if (fs.existsSync(filePathEs5)) {
+            fs.unlinkSync(filePathEs5);
+        }
+
+        if (fs.existsSync(filePathEs6)) {
+            fs.unlinkSync(filePathEs6);
+        }
+    });
+
+    function _createTestConfigs() {
+        filePathBase = path.join(os.tmpdir(), "tsconfig.base.json");
+        const baseContent = {
+            "compilerOptions": {
+                declaration: true,
+                declarationDir: "./build/types",
+                removeComments: false,
+                rootDir: "./src",
+            }
+        };
+
+        fs.writeFileSync(filePathBase, JSON.stringify(baseContent));
+
+        filePathEs5 = path.join(os.tmpdir(), "tsconfig.es5.json");
         const content = {
             "extends": "./tsconfig.base.json",
             "compilerOptions": {
@@ -38,18 +66,415 @@ describe("getTsConfigDetails", () => {
             }
         };
 
-        fs.writeFileSync(filePath, JSON.stringify(content));
-        const result = getTsConfigDetails(grunt, filePath, false);
+        fs.writeFileSync(filePathEs5, JSON.stringify(content));
+
+        filePathEs6 = path.join(os.tmpdir(), "tsconfig.es6.json");
+        const contentEs6 = {
+            "extends": "./tsconfig.base.json",
+            "compilerOptions": {
+                target: "es6",
+                declaration: true,
+                declarationDir: "./build/types",
+                removeComments: false,
+                rootDir: "./src",
+                outDir: "./dist-es6"
+            }
+        };
+
+        fs.writeFileSync(filePathEs6, JSON.stringify(contentEs6));
+    }
+
+    it("should return the details of the tsconfig file when it exists", () => {
+        _createTestConfigs();
+        const expectedContent = {
+            "extends": "./tsconfig.base.json",
+            "compilerOptions": {
+                target: "es5",
+                declaration: true,
+                declarationDir: "./build/types",
+                removeComments: false,
+                rootDir: "./src",
+                outDir: "./dist-es5"
+            }
+        };
+
+        const result = getTsConfigDetails(grunt, filePathEs5, false);
         assert.equal(result.length, 1)
-        assert.deepStrictEqual(result[0].tsConfig, content);
-        fs.unlinkSync(filePath);
+        assert.deepStrictEqual(result[0].tsConfig, expectedContent);
+    });
+
+    it("should return the details of multiple tsconfig files when they exists", () => {
+        _createTestConfigs();
+        const expectedContent1 = {
+            "extends": "./tsconfig.base.json",
+            "compilerOptions": {
+                target: "es5",
+                declaration: true,
+                declarationDir: "./build/types",
+                removeComments: false,
+                rootDir: "./src",
+                outDir: "./dist-es5"
+            }
+        };
+        const expectedContent2 = {
+            "extends": "./tsconfig.base.json",
+            "compilerOptions": {
+                target: "es6",
+                declaration: true,
+                declarationDir: "./build/types",
+                removeComments: false,
+                rootDir: "./src",
+                outDir: "./dist-es6"
+            }
+        };
+
+        const result = getTsConfigDetails(grunt, [ filePathEs5, filePathEs6 ], false);
+        assert.equal(result.length, 2)
+        assert.deepStrictEqual(result[0].tsConfig, expectedContent1);
+        assert.deepStrictEqual(result[1].tsConfig, expectedContent2);
+    });
+
+    it("should return the details of multiple tsconfig files when they exists with single compilerOptions override", () => {
+        _createTestConfigs();
+        const expectedContent1 = {
+            "extends": "./tsconfig.base.json",
+            "compilerOptions": {
+                target: "es5",
+                declaration: true,
+                declarationDir: "./build/types",
+                removeComments: false,
+                rootDir: "./override/src",
+                outDir: "./dist-es5"
+            }
+        };
+        const expectedContent2 = {
+            "extends": "./tsconfig.base.json",
+            "compilerOptions": {
+                target: "es6",
+                declaration: true,
+                declarationDir: "./build/types",
+                removeComments: false,
+                rootDir: "./override/src",
+                outDir: "./dist-es6"
+            }
+        };
+
+        const result = getTsConfigDetails(grunt, [  
+            {
+                name: filePathEs5,
+                tsconfig: {
+                    compilerOptions: {
+                        rootDir: "./override/src" 
+                    }
+                }
+            },
+            {
+                name: filePathEs6,
+                tsconfig: {
+                    compilerOptions: {
+                        rootDir: "./override/src" 
+                    }
+                }
+            }],
+            false);
+        assert.equal(result.length, 2)
+        assert.deepStrictEqual(result[0].tsConfig, expectedContent1, "Actual:" + JSON.stringify(result[0].tsConfig, null, 2));
+        assert.deepStrictEqual(result[1].tsConfig, expectedContent2, "Actual:" + JSON.stringify(result[1].tsConfig, null, 2));
+    });
+
+    it("should return the details of multiple tsconfig files when provided with multiple variants as an array", () => {
+        _createTestConfigs();
+        const expectedContent1 = {
+            "compilerOptions": {
+                target: "es5",
+                declaration: true,
+                declarationDir: "./build/types",
+                removeComments: false,
+                rootDir: "./src",
+                outDir: "./dist-es5"
+            }
+        };
+        const expectedContent2 = {
+            "compilerOptions": {
+                target: "es6",
+                declaration: true,
+                declarationDir: "./build/types",
+                removeComments: false,
+                rootDir: "./src",
+                outDir: "./dist-es6"
+            }
+        };
+
+        const result = getTsConfigDetails(grunt, [
+            {
+                name: filePathBase,
+                tsconfig: {
+                    compilerOptions: {
+                        target: "es5",
+                        outDir: "./dist-es5"
+                    }
+                }
+            },
+            {
+                name: filePathBase,
+                tsconfig: {
+                    compilerOptions: {
+                        target: "es6",
+                        outDir: "./dist-es6"
+                    }
+                }
+            }
+        ], false);
+        assert.equal(result.length, 2)
+        assert.deepStrictEqual(result[0].tsConfig, expectedContent1);
+        assert.deepStrictEqual(result[1].tsConfig, expectedContent2);
+    });
+
+    it("should return the details of multiple tsconfig files when provided with multiple variants as an iterable", () => {
+        _createTestConfigs();
+        const expectedContent1 = {
+            "compilerOptions": {
+                target: "es5",
+                declaration: true,
+                declarationDir: "./build/types",
+                removeComments: false,
+                rootDir: "./src",
+                outDir: "./dist-es5"
+            }
+        };
+        const expectedContent2 = {
+            "compilerOptions": {
+                target: "es6",
+                declaration: true,
+                declarationDir: "./build/types",
+                removeComments: false,
+                rootDir: "./src",
+                outDir: "./dist-es6"
+            }
+        };
+
+        const result = getTsConfigDetails(grunt, {
+            [Symbol.iterator]: function* () {
+                yield {
+                    name: filePathBase,
+                    tsconfig: {
+                        compilerOptions: {
+                            target: "es5",
+                            outDir: "./dist-es5"
+                        }
+                    }
+                };
+                yield {
+                    name: filePathBase,
+                    tsconfig: {
+                        compilerOptions: {
+                            target: "es6",
+                            outDir: "./dist-es6"
+                        }
+                    }
+                };
+            }
+        }, false);
+        assert.equal(result.length, 2)
+        assert.deepStrictEqual(result[0].tsConfig, expectedContent1);
+        assert.deepStrictEqual(result[1].tsConfig, expectedContent2);
+    });
+
+    it("should return the details of multiple tsconfig files when provided with multiple variants via an iterator", async () => {
+        _createTestConfigs();
+        const expectedContent1 = {
+            "compilerOptions": {
+                target: "es5",
+                declaration: true,
+                declarationDir: "./build/types",
+                removeComments: false,
+                rootDir: "./src",
+                outDir: "./dist-es5"
+            }
+        };
+        const expectedContent2 = {
+            "compilerOptions": {
+                target: "es6",
+                declaration: true,
+                declarationDir: "./build/types",
+                removeComments: false,
+                rootDir: "./src",
+                outDir: "./dist-es6"
+            }
+        };
+
+        const result = getTsConfigDetails(grunt, {
+            next: function() {
+                if (this._index === undefined) {
+                    this._index = 0;
+                } else {
+                    this._index++;
+                }
+
+                if (this._index < 2) {
+                    return { done: false, value: {
+                        name: filePathBase,
+                        tsconfig: {
+                            compilerOptions: {
+                                target: this._index === 0 ? "es5" : "es6",
+                                outDir: this._index === 0 ? "./dist-es5" : "./dist-es6"
+                            }
+                        }
+                    }};
+                }
+
+                return { done: true, value: undefined };
+            }
+        }, false);
+        assert.equal(result.length, 2)
+        assert.deepStrictEqual(result[0].tsConfig, expectedContent1);
+        assert.deepStrictEqual(result[1].tsConfig, expectedContent2);
+    });
+
+    it("should return the details of multiple tsconfig files when tsconfig uses the default is provided with multiple compilerOptions", () => {
+        _createTestConfigs();
+        const expectedContent1 = {
+            compilerOptions: {
+                sourceMap: true,
+                inlineSources: true,
+                noImplicitAny: true,
+                module: "es6",
+                moduleResolution: "node",
+                target: "es5",
+                forceConsistentCasingInFileNames: true,
+                importHelpers: true,
+                noEmitHelpers: false,
+                alwaysStrict: true,
+                declaration: true,
+                declarationDir: "./types",
+                outDir: "./dist-es5",
+                suppressImplicitAnyIndexErrors: true,
+                allowSyntheticDefaultImports: true,
+                rootDir: "./src",
+                removeComments: true
+            },
+            "exclude": [
+                "node_modules/"
+            ]
+        };
+
+        const expectedContent2 = {
+            compilerOptions: {
+                sourceMap: true,
+                inlineSources: true,
+                noImplicitAny: true,
+                module: "es6",
+                moduleResolution: "node",
+                target: "es6",
+                forceConsistentCasingInFileNames: true,
+                importHelpers: true,
+                noEmitHelpers: false,
+                alwaysStrict: true,
+                declaration: true,
+                declarationDir: "./types",
+                outDir: "./dist-es6",
+                suppressImplicitAnyIndexErrors: true,
+                allowSyntheticDefaultImports: true,
+                rootDir: "./src",
+                removeComments: true
+            },
+            "exclude": [
+                "node_modules/"
+            ]
+        };
+
+        const result = getTsConfigDetails(grunt, [
+            {
+                tsconfig: { 
+                    compilerOptions: {
+                        target: "es5",
+                        outDir: "./dist-es5"
+                    }
+                }
+            },
+            {
+                tsconfig: { 
+                    compilerOptions: {
+                        target: "es6",
+                        outDir: "./dist-es6"
+                    }
+                }
+            }
+        ], false);
+        assert.equal(result.length, 2)
+        assert.equal(result[0].name, "./tsconfig.json");
+        assert.deepStrictEqual(result[0].tsConfig, expectedContent1);
+
+        assert.equal(result[1].name, "./tsconfig.json");
+        assert.deepStrictEqual(result[1].tsConfig, expectedContent2);
+    });
+
+    it("should return the details of multiple tsconfig files when tsconfig does not exist and is provided with multiple compilerOptions", () => {
+        _createTestConfigs();
+        const expectedContent1 = {
+            compilerOptions: {
+                target: "es5",
+                outDir: "./dist-es5",
+            }
+        };
+
+        const expectedContent2 = {
+            compilerOptions: {
+                target: "es6",
+                outDir: "./dist-es6",
+            }
+        };
+
+        const result = getTsConfigDetails(grunt, [
+            {
+                name: "./non-existing.json",
+                tsconfig: { 
+                    compilerOptions: {
+                        target: "es5",
+                        outDir: "./dist-es5"
+                    }
+                }
+            },
+            {
+                name: "./non-existing.json",
+                tsconfig: { 
+                    compilerOptions: {
+                        target: "es6",
+                        outDir: "./dist-es6"
+                    }
+                }
+            }
+        ], false);
+        assert.equal(result.length, 2)
+        assert.equal(result[0].name, "./non-existing.json");
+        assert.deepStrictEqual(result[0].tsConfig, expectedContent1);
+
+        assert.equal(result[1].name, "./non-existing.json");
+        assert.deepStrictEqual(result[1].tsConfig, expectedContent2);
     });
 
     it("should return an empty details object when the tsconfig file does not exist", () => {
         const filePath = path.join(os.tmpdir(), "non-existing.json");
         const result = getTsConfigDetails(grunt, filePath, false);
         assert.equal(result.length, 1)
-        assert.deepStrictEqual(result[0].tsConfig, {});
+        assert.deepStrictEqual(result[0].tsConfig, {compilerOptions:{}});
+    });
+
+    it("should return an empty details object when the tsconfig is past as null / undefined / empty", () => {
+
+        let defaultConfig = JSON.parse(fs.readFileSync("./tsconfig.json", "utf8"));
+
+        const result1 = getTsConfigDetails(grunt, null, false);
+        assert.equal(result1.length, 1, "result1: " + JSON.stringify(result1))
+        assert.deepStrictEqual(result1[0].tsConfig, defaultConfig, "result1: " + JSON.stringify(result1));
+
+        const result2 = getTsConfigDetails(grunt, undefined, false);
+        assert.equal(result2.length, 1, "result2: " + JSON.stringify(result2))
+        assert.deepStrictEqual(result2[0].tsConfig, defaultConfig, "result2: " + JSON.stringify(result2));
+
+        const result3 = getTsConfigDetails(grunt, "", false);
+        assert.equal(result3.length, 1, "result3: " + JSON.stringify(result3))
+        assert.deepStrictEqual(result3[0].tsConfig, defaultConfig, "result3: " + JSON.stringify(result3));
     });
 
     describe("addFiles", () => {
