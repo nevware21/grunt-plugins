@@ -1,3 +1,13 @@
+# v0.5.0 (July 21st, 2024)
+
+Bumping to 0.5.0 to align with the changes for grunt ts plugin to support inlining the tsconfig.
+
+## Changelog
+
+- #44 [Feature] Add support to inlining the tsconfig.json within the grunt config
+- #254 [Feature] Add Support for multiple tsconfigs
+- #259 Bump @nevware21 gunt plugins to latest
+
 # v0.2.5 (July 4th, 2024)
 
 ## Changelog
