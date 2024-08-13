@@ -62,7 +62,7 @@
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@types/eslint": "^8.56.10",
         "@types/estree": "^1.0.0",
-        "@typescript-eslint/eslint-plugin": "^7.14.1",
+        "@typescript-eslint/eslint-plugin": "^8.1.0",
         "@typescript-eslint/parser": "^7.14.1",
         "eslint": "^8.56.10",
         "eslint-plugin-security": "^1.7.1",
