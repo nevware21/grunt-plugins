@@ -89,8 +89,8 @@ function _resolveTsConfigFiles(tsConfigPath: string, files: string[]): string[] 
     if (location) {
         const destFiles: string[] = [];
         if (files && files.length > 0) {
-            files.forEach((theFile) => {
-                destFiles.push(location + theFile);
+            arrForEach(files, (theFile) => {
+                destFiles.push(normalizePath(location + theFile));
             });
         }
 
@@ -98,6 +98,27 @@ function _resolveTsConfigFiles(tsConfigPath: string, files: string[]): string[] 
     }
 
     return files;
+}
+
+/**
+ * Merge the files from the merge array into the target array but only add unique values
+ * 
+ * @param target - The target array to merge into
+ * @param merge - The array to merge into the target
+ * @returns - The target array
+ */
+function _mergeFiles(target: string[], merge: string[]): string[] {
+    if (isNullOrUndefined(target) || target.length === 0) {
+        return merge;
+    }
+
+    arrForEach(merge, (val) => {
+        if (target.indexOf(val) === -1) {
+            target.push(val);
+        }
+    });
+
+    return target;
 }
 
 function _mergeConfigs(target: any, merge: any): any {
@@ -174,7 +195,7 @@ function _createTsConfigDetails(grunt: IGruntWrapper, tsConfigOrOption: string |
     let compilerOptions = tsConfig.compilerOptions = tsConfig.compilerOptions || {};
 
     if (compilerOptions.rootDir) {
-        projectRootDir = path.resolve(findCommonPath([details.name || "."]), compilerOptions.rootDir);
+        projectRootDir = normalizePath(path.resolve(findCommonPath([details.name || "."]), compilerOptions.rootDir));
 
         // eslint-disable-next-line security/detect-non-literal-fs-filename
         if (!fs.existsSync(path.resolve(projectRootDir))) {
@@ -230,7 +251,7 @@ function _createTsConfigDetails(grunt: IGruntWrapper, tsConfigOrOption: string |
                 grunt.logDebug("-----------------------------------------------------------------------------------------------------");
             }
     
-            tsFiles.forEach((theFile) => {
+            arrForEach(tsFiles, (theFile) => {
                 let excludePath = false;
 
                 if (theFile.startsWith("!")) {
@@ -270,8 +291,16 @@ function _createTsConfigDetails(grunt: IGruntWrapper, tsConfigOrOption: string |
                 if (excludePath) {
                     destContainer = tsConfig.exclude = tsConfig.exclude || [];
                 } else if (!tsConfig.exclude && theResolvedFile.indexOf("*") === -1) {
+                    if (grunt.isDebug) {
+                        grunt.logDebug("Using files as the container");
+                    }
+
                     destContainer = tsConfig.files = tsConfig.files || [];
                 } else {
+                    if (grunt.isDebug) {
+                        grunt.logDebug("Using include as the container");
+                    }
+
                     destContainer = tsConfig.include = tsConfig.include || [];
                 }
                 
@@ -282,16 +311,28 @@ function _createTsConfigDetails(grunt: IGruntWrapper, tsConfigOrOption: string |
             grunt.logDebug("-----------------------------------------------------------------------------------------------------");
     
             if (tsConfig.files && tsConfig.files.length === 0) {
+                if (grunt.isDebug) {
+                    grunt.logDebug("Removing empty files");
+                }
+
                 details.modified = true;
                 delete tsConfig.files;
             }
     
             if (tsConfig.include && tsConfig.include.length === 0) {
+                if (grunt.isDebug) {
+                    grunt.logDebug("Removing empty include");
+                }
+
                 details.modified = true;
                 delete tsConfig.include;
             }
 
             if (tsConfig.exclude && tsConfig.exclude.length === 0) {
+                if (grunt.isDebug) {
+                    grunt.logDebug("Removing empty exclude");
+                }
+
                 details.modified = true;
                 delete tsConfig.exclude;
             }
@@ -307,15 +348,29 @@ function _createTsConfigDetails(grunt: IGruntWrapper, tsConfigOrOption: string |
             let tsConfig = details.tsConfig;
             //grunt.log.writeln("Using tsconfig: " + tsProject);
             if (tsConfig.files) {
-                tsConfigFiles = _resolveTsConfigFiles(details.name, tsConfig.files);
-            } else if (tsConfig.include) {
-                tsConfigFiles = _resolveTsConfigFiles(details.name, tsConfig.include);
+                if (grunt.isDebug) {
+                    grunt.logDebug("Adding Files: " + JSON.stringify(tsConfig.files));
+                }
+
+                tsConfigFiles = _mergeFiles(tsConfigFiles, _resolveTsConfigFiles(details.name, tsConfig.files));
+            } 
+            
+            if (tsConfig.include) {
+                if (grunt.isDebug) {
+                    grunt.logDebug("Adding Include: " + JSON.stringify(tsConfig.include));
+                }
+
+                tsConfigFiles = _mergeFiles(tsConfigFiles, _resolveTsConfigFiles(details.name, tsConfig.include));
             }
     
             // if (tsConfig.exclude) {
             //     exclude = _resolveTsConfigFiles(details.name, tsConfig.exclude);          
             //     //grunt.log.writeln("Excluding: " + JSON.stringify(exclude));
             // } 
+        }
+
+        if (grunt.isDebug) {
+            grunt.logDebug("getFiles (" + details.name + "): " + JSON.stringify(tsConfigFiles));
         }
     
         return tsConfigFiles;
