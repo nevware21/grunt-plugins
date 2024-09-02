@@ -1,3 +1,12 @@
+# v0.5.1 (Sept 2nd, 2024)
+
+## Changelog
+
+- #271 [BUG] eslint ignoreFailures is not ignoring all failures
+  - Now merges `files` and `include` from the tsconfig
+  - Added more debug logging
+  - Add `fileNoFiles` (defaults to true)
+
 # v0.5.0 (July 21st, 2024)
 
 Bumping to 0.5.0 to align with the changes for grunt ts plugin to support inlining the tsconfig.
