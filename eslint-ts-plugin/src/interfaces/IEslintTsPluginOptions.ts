@@ -131,4 +131,9 @@ export interface IEslintTsPluginTaskOptions extends IEsLintOptions {
      * Ignore failures and continue
      */
     ignoreFailures?: boolean;
+
+    /**
+     * Fail the task if no files are found to process (default is true)
+     */
+    failNoFiles?: boolean;
 }

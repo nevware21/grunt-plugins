@@ -353,6 +353,9 @@ describe("getTsConfigDetails", () => {
                 rootDir: "./src",
                 removeComments: true
             },
+            "include" : [
+                "./src/**/*.ts"
+            ],
             "exclude": [
                 "node_modules/"
             ]
@@ -378,6 +381,9 @@ describe("getTsConfigDetails", () => {
                 rootDir: "./src",
                 removeComments: true
             },
+            "include" : [
+                "./src/**/*.ts"
+            ],
             "exclude": [
                 "node_modules/"
             ]
@@ -482,21 +488,21 @@ describe("getTsConfigDetails", () => {
             const details = getTsConfigDetails(grunt, "tsconfig.json", false);
             assert.equal(details.length, 1)
             details[0].addFiles("file1.ts");
-            assert.deepStrictEqual(details[0].tsConfig.include, [ "file1.ts" ]);
+            assert.deepStrictEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "file1.ts" ]);
         });
     
         it("should add multiple files to the tsConfig", () => {
             const details = getTsConfigDetails(grunt, "tsconfig.json", false);
             assert.equal(details.length, 1)
-            details[0].addFiles(["file1.ts", "file2.ts"]);
-            assert.deepStrictEqual(details[0].tsConfig.include, ["file1.ts", "file2.ts"]);
+            details[0].addFiles([ "file1.ts", "file2.ts"]);
+            assert.deepStrictEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "file1.ts", "file2.ts"]);
         });
     
         it("should add the files to the exclude list when they start with \"!\"", () => {
             const details = getTsConfigDetails(grunt, "tsconfig.json", false);
             assert.equal(details.length, 1)
             details[0].addFiles(["!file1.ts", "file2.ts"]);
-            assert.deepStrictEqual(details[0].tsConfig.include, ["file2.ts"]);
+            assert.deepStrictEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "file2.ts" ]);
             assert.deepStrictEqual(details[0].tsConfig.exclude, [ "node_modules/", "file1.ts" ]);
         });
     
@@ -504,7 +510,7 @@ describe("getTsConfigDetails", () => {
             const details = getTsConfigDetails(grunt, "tsconfig.json", false);
             assert.equal(details.length, 1)
             details[0].addFiles(["dir/**", "file2.ts"]);
-            assert.deepStrictEqual(details[0].tsConfig.include, ["dir/**/*", "file2.ts"] );
+            assert.deepStrictEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "dir/**/*", "file2.ts"] );
         });
     });
 
@@ -528,8 +534,9 @@ describe("getTsConfigDetails", () => {
         it("should return an empty array when details.name is null", () => {
             const details = getTsConfigDetails(grunt, null, false);
             assert.equal(details.length, 1)
+            assert.deepStrictEqual(details[0].tsConfig.include, [ "./src/**/*.ts"]);
             const files = details[0].getFiles();
-            assert.deepStrictEqual(files, []);
+            assert.deepStrictEqual(files, [ "./src/**/*.ts" ]);
         });
     });
 

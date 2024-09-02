@@ -21,19 +21,24 @@ function _registerTask(inst: IGrunt, taskName: string) {
         let done: grunt.task.AsyncResultCatcher = null;
         let gwInst = new GruntWrapper(inst, { debug: false });
 
+        let taskOptions: IEslintTsPluginTaskOptions = null;
+        let loggerOptions: IGruntWrapperOptions = null;
+        let grunt: GruntWrapper = null;
         try {
             const options = this.options<IEslintTsPluginTaskOptions>({
             });
 
-            const taskOptions = getGruntMultiTaskOptions<IEslintTsPluginTaskOptions>(gwInst, this);
-            const loggerOptions: IGruntWrapperOptions = {
+            taskOptions = getGruntMultiTaskOptions<IEslintTsPluginTaskOptions>(gwInst, this);
+            loggerOptions = {
                 debug: resolveValue(taskOptions.debug, options.debug, false)
             }
 
-            let grunt = new GruntWrapper(inst, loggerOptions);
+            grunt = new GruntWrapper(inst, loggerOptions);
             if (grunt.isDebug) {
+                grunt.logVerbose((" Pwd    : " + process.cwd()).cyan);
                 grunt.logVerbose((" Options: [" + dumpObj(options) + "]").cyan);
                 grunt.logVerbose((" Config : [" + dumpObj(this.data) + "]").cyan);
+                grunt.logVerbose((" Task   : [" + dumpObj(taskOptions) + "]").cyan);
             }
 
             done = this.async();
@@ -41,7 +46,7 @@ function _registerTask(inst: IGrunt, taskName: string) {
                 let tsDefs: Array<string | ITsOption> = [];
                 let tsconfig = await resolveValueAsync(taskOptions.tsconfig, options.tsconfig);
                 
-                if (!tsconfig) {
+                if (tsconfig) {
                     if (isString(tsconfig)) {
                         tsDefs.push(tsconfig);
                     } else if (Array.isArray(tsconfig)) {
@@ -51,9 +56,12 @@ function _registerTask(inst: IGrunt, taskName: string) {
                             tsDefs.push(value);
                         });
                     } else {
-                        grunt.logError("The TSConfig project file [" + tsconfig + "] does not exist");
+                        grunt.logError("The TSConfig project file [" + dumpObj(tsconfig) + "] is unsupported!");
                         return false;
                     }
+                } else {
+                    grunt.logError("Missing TSConfig project file... - " + dumpObj(tsconfig));
+                    return false;
                 }
         
                 for (let lp = 0; lp < tsDefs.length; lp++) {
@@ -61,16 +69,26 @@ function _registerTask(inst: IGrunt, taskName: string) {
                     let tsDef = tsDefs[lp];
 
                     if (isString(tsDef)) {
+                        if (grunt.isDebug) {
+                            grunt.logVerbose("TSConfig: " + tsDef);
+                        }
                         if (!grunt.file.exists(tsDef)) {
                             // eslint-disable-next-line security/detect-object-injection
                             grunt.logError("The TSConfig project file [" + tsDefs[lp] + "] does not exist");
                             return false;
                         }
                     } else if (tsDef.name) {
+                        if (grunt.isDebug) {
+                            grunt.logVerbose("TSConfig: " + tsDef);
+                        }
+    
                         if (!grunt.file.exists(tsDef.name)) {
                             grunt.logError("The TSConfig project file [" + tsDef.name + "] does not exist");
                             return false;
                         }
+                    } else {
+                        grunt.logError("The TSConfig project file [" + tsDef + "] does not exist");
+                        return false;
                     }
                 }   
 
@@ -96,8 +114,6 @@ function _registerTask(inst: IGrunt, taskName: string) {
                 });
     
                 let results: IESLintRunnerResponse = null;
-        
-    
 
                 const eslint = new ESLintRunner(grunt, eslintOptions);
 
@@ -139,8 +155,28 @@ function _registerTask(inst: IGrunt, taskName: string) {
                                 linterConfig.parserOptions.project = theTsConfig;
                             }                    
                 
+                            let theFiles = tsDetail.getFiles();
+                            if (theFiles.length === 0 && taskOptions.failNoFiles !== false) {
+                                if (!taskOptions.ignoreFailures) {
+                                    grunt.logError("No files found to lint! (disable this error with failNoFiles: false)");
+                                    done(true);
+                                    return -1;
+                                } else {
+                                    grunt.logError("[!] Ignoring Failures: No files found to lint... (disable this error with failNoFiles: false)")
+                                }
+                            }
+
                             results = await eslint.lint(linterConfig, tsDetail.getFiles());
-            
+                        } catch (e) {
+                            if (grunt.isDebug) {
+                                grunt.logError("EsLint error: " + e);
+                            }
+
+                            if (taskOptions.ignoreFailures) {
+                                grunt.logError("[!] Ignoring Failures: The Task failed but continuing... - " + e)
+                                done(true);
+                                return -1;
+                            }
                         } finally {
                             tsDetail.cleanupTemp();
                         }
@@ -160,22 +196,42 @@ function _registerTask(inst: IGrunt, taskName: string) {
                         }
                     }), 
                     (response) => {
+                        let theResult = !response.rejected && isSuccess;
                         if (grunt.isDebug) {
-                            grunt.logVerbose("EsLint response:" + dumpObj(response));
+                            grunt.logVerbose("EsLint response :" + theResult + " - " + dumpObj(response));
                         }
-                        done(!response.rejected && isSuccess);
+
+                        if (taskOptions.ignoreFailures) {
+                            grunt.logError("[!] Ignoring Failures: The Task failed but continuing... - " + dumpObj(response))
+                            theResult = true;
+                        }
+
+                        done(theResult);
                     });
             })().catch((error) => {
+                let theResult = false;
                 grunt.logError("EsLint error: " + error);
-                done(false);
+                if (taskOptions.ignoreFailures) {
+                    grunt.logError("[!] Ignoring Failures: The Task failed but continuing...")
+                    theResult = true;
+                }
+                
+                done(theResult);
             });
     
         } catch (e) {
+            let theResult = false;
             inst.log.error("EsLint catch:: " + e + "\n" + dumpObj(e));
+
+            if (taskOptions && taskOptions.ignoreFailures) {
+                inst.log.error("[!] Ignoring Failures: The Task failed but continuing...")
+                theResult = true;
+            }            
+
             if (done) {
-                done(false);
+                done(theResult);
             }
-            return false;
+            return theResult;
         } finally {
             if (tempIgnoreFile) {
                 // cleanup temp file

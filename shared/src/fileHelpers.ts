@@ -100,7 +100,7 @@ export function findCommonPath(paths: string[], seperator?: string) {
 
 export function normalizePath(thePath: string) {
     if (thePath) {
-        return thePath.replace(/\\/g, "/");
+        return thePath.replace(/\\/g, "/").replace(/\/\.\//g, "/");
     }
 
     return thePath;
@@ -111,7 +111,7 @@ export function makeRelative(thePath: string) {
 }
 
 export function makeRelativeTo(rootPath: string, thePath: string) {
-    return normalizePath(path.relative(rootPath, path.resolve(thePath)));
+    return normalizePath(path.relative(rootPath, path.resolve(normalizePath(thePath))));
 }
 
 function _findPath(rootPath: string, moduleFolder: string, logDebug?: (message: string) => void) {

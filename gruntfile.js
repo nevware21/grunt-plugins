@@ -91,8 +91,8 @@ module.exports = function (grunt) {
                 ignoreFailures: true
             },
             "shared-test-fix": {
+                tsconfig: "./shared/test/tsconfig.test.json",
                 options: {
-                    tsconfig: "./shared/test/tsconfig.test.json",
                     fix: true
                 }
             },
@@ -105,8 +105,8 @@ module.exports = function (grunt) {
                 ignoreFailures: true
             },
             "shared-fix": {
+                tsconfig: "./shared/tsconfig.json",
                 options: {
-                    tsconfig: "./shared/tsconfig.json",
                     fix: true,
                     src: [
                         "./shared/src/**/*.ts"
@@ -114,14 +114,14 @@ module.exports = function (grunt) {
                 }
             },
             "ts_plugin-fix": {
+                tsconfig: "./ts-plugin/tsconfig.json",
                 options: {
-                    tsconfig: "./ts-plugin/tsconfig.json",
                     fix: true
                 }
             },
             "eslint_ts-fix": {
+                tsconfig: "./eslint-ts-plugin/tsconfig.json",
                 options: {
-                    tsconfig: "./eslint-ts-plugin/tsconfig.json",
                     fix: true,
                 }
             }

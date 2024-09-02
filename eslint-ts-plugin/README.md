@@ -102,7 +102,10 @@ module.exports = function(grunt) {
     "lint": {
         options: {
             format: "codeframe",
-            suppressWarnings: false
+            suppressWarnings: false,
+            debug: true,
+            logOutput: true,
+            failNoFiles: false          // Defaults to `true` linting will fail if no files are configured
         },
         "shared": {
             tsconfig: "./shared/tsconfig.json",
