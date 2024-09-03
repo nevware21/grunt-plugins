@@ -1,7 +1,7 @@
 {
     "name": "@nevware21/grunt-ts-plugin",
     "description": "TypeScript Compilation Plugin for GruntJS",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "homepage": "https://github.com/nevware21/grunt-plugins",
     "license": "MIT",
     "author": {
@@ -52,7 +52,7 @@
     "devDependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@types/grunt": "^0.4.27",
-        "@nevware21/grunt-plugins-shared-utils": "0.5.0",
+        "@nevware21/grunt-plugins-shared-utils": "0.5.1",
         "@nevware21/grunt-eslint-ts": "^0.2.5",
         "@nevware21/grunt-ts-plugin": "^0.4.6",
         "grunt": "^1.5.3",

@@ -1,3 +1,11 @@
+# v0.5.1 (Sept 2nd, 2024)
+
+## Changelog
+
+- #272 [BUG] TsConfig file resolution ignores include if there is also a file node present
+  - Now merges `files` and `include` from the tsconfig
+  - Added more debug logging
+
 # v0.5.0 (July 21st, 2024)
 
 ## Changelog
