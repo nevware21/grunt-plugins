@@ -63,7 +63,7 @@
         "@types/eslint": "^8.56.10",
         "@types/estree": "^1.0.0",
         "@typescript-eslint/eslint-plugin": "^7.14.1",
-        "@typescript-eslint/parser": "^7.14.1",
+        "@typescript-eslint/parser": "^8.24.0",
         "eslint": "^8.56.10",
         "eslint-plugin-security": "^1.7.1",
         "grunt": "^1.5.3",
