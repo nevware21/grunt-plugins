@@ -52,6 +52,7 @@
     "devDependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@types/grunt": "^0.4.27",
+        "@types/node": "^20.17.10",
         "@nevware21/grunt-plugins-shared-utils": "0.5.1",
         "@nevware21/grunt-eslint-ts": "^0.2.5",
         "@nevware21/grunt-ts-plugin": "^0.4.6",
