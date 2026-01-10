@@ -11,7 +11,6 @@ import { arrForEach, dumpObj, isIterable, isIterator, isString, iterForOf } from
 import { getGruntMultiTaskOptions, resolveValue, deepMerge, getTsConfigDetails, IGruntWrapperOptions, GruntWrapper, resolveValueAsync, ITsOption } from "@nevware21/grunt-plugins-shared-utils";
 import { ESLintRunner } from "./ESLintRunner";
 import { IEslintTsPluginTaskOptions } from "./interfaces/IEslintTsPluginOptions";
-import { Linter } from "eslint";
 import { IESLintRunnerOptions, IESLintRunnerResponse } from "./interfaces/IESLintRunnerOptions";
 import { arrForEachAsync, doAwaitResponse } from "@nevware21/ts-async";
 
@@ -118,7 +117,7 @@ function _registerTask(inst: IGrunt, taskName: string) {
                 const eslint = new ESLintRunner(grunt, eslintOptions);
 
                 // Merge all of the additional Config into the linter
-                const linterConfig: Linter.Config = deepMerge(taskOptions.additionalConfig, options.additionalConfig);
+                const linterConfig: any = deepMerge(taskOptions.additionalConfig, options.additionalConfig);
 
                 const parser = resolveValue(taskOptions.parser, options.parser);
                 if (parser) {

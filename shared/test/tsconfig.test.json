@@ -12,7 +12,6 @@
       "alwaysStrict": true,
       "declaration": false,
       "outDir": "../test-node",
-      "suppressImplicitAnyIndexErrors": true,
       "allowSyntheticDefaultImports": true
     },
     "include": [

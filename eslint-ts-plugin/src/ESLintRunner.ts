@@ -7,7 +7,7 @@
  * Licensed under the MIT license.
  */
 
-import { dumpObj, isFunction, isUndefined } from "@nevware21/ts-utils";
+import { dumpObj, isArray, isFunction, isUndefined, objAssign } from "@nevware21/ts-utils";
 import { IGruntWrapper, findModulePath, locateModulePath } from "@nevware21/grunt-plugins-shared-utils";
 import { IESLintRunnerFileResponse, IESLintRunnerOptions, IESLintRunnerResponse } from "./interfaces/IESLintRunnerOptions";
 import { Linter, ESLint } from "eslint";
@@ -74,27 +74,25 @@ export class ESLintRunner {
         }
        
         _self.lint = async (linterConfig?: Linter.Config, files?: string[]) => {
-            const defaultConfig: Linter.Config = {
+            const defaultConfig = {
                 parserOptions: { },
-                plugins: [ ],
-                extends: [ ]
-            }
+                plugins: [ ] as string[],
+                extends: [ ] as string[]
+            };
 
-            if (Array.isArray(defaultConfig.extends)) {
-                defaultConfig.extends.push("eslint:recommended");
-            }
+            defaultConfig.extends.push("eslint:recommended");
 
-            if (!linterConfig || isUndefined(linterConfig.parser)) {
+            if (!linterConfig || isUndefined((linterConfig as any).parser)) {
                 // Try and add the default parser options
                 if (_hasEsLintParser()) {
-                    defaultConfig.parser = "@typescript-eslint/parser";
+                    (defaultConfig as any).parser = "@typescript-eslint/parser";
                 } else {
                     grunt.logWarn("@typescript-eslint/parser does not appear to be installed. Either add to your package.json 'npm i @typescript-eslint/parser' or specify a null or empty parser option in your grunt config.");
                 }
     
                 if (_hasEsLintPlugin()) {
                     defaultConfig.plugins.push("@typescript-eslint");
-                    if (Array.isArray(defaultConfig.extends)) {
+                    if (isArray(defaultConfig.extends)) {
                         defaultConfig.extends.push("plugin:@typescript-eslint/recommended");
                     }
                 } else {
@@ -104,14 +102,14 @@ export class ESLintRunner {
                 if (_hasEsLintSecurity()) {
                     grunt.log("Found eslint-plugin-security -- automatically adding, to avoid this specify a null or empty parser option in your grunt config.")
                     defaultConfig.plugins.push("security");
-                    if (Array.isArray(defaultConfig.extends)) {
+                    if (isArray(defaultConfig.extends)) {
                         defaultConfig.extends.push("plugin:security/recommended");
                     }
                 }
             }
 
             const eslintOpts: ESLint.Options = { 
-                baseConfig: Object.assign(defaultConfig, linterConfig),
+                baseConfig: objAssign(defaultConfig, linterConfig) as Linter.Config,
             };
 
             if (options.fix) {

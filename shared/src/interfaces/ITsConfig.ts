@@ -106,7 +106,7 @@ export interface ITsCompilerOptions {
     strictPropertyInitialization?: boolean;  // Always combine with strict property
     stripInternal?: boolean;
     suppressExcessPropertyErrors?: boolean;
-    suppressImplicitAnyIndexErrors?: boolean;
+    suppressImplicitAnyIndexErrors?: boolean;           // Deprecated in favor of noUncheckedIndexedAccess
     target?: "es3" | "es5" | "es6" | "es2015" | "es2016" | "es2017" | "es2018" | "es2019" | "es2020" | "es2021" | "esnext" | "json" | "latest";
     traceResolution?: boolean;
     useUnknownInCatchVariables?: boolean;
