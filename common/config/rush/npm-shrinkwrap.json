@@ -6205,7 +6205,7 @@
       "optional": true
     },
     "@rush-temp/grunt-eslint-ts": {
-      "version": "file:projects\\grunt-eslint-ts.tgz",
+      "version": "file:projects/grunt-eslint-ts.tgz",
       "integrity": "sha512-gHiKau5mUmC5nDDMo47RHIql9uNtJFeSMNp1+5tm7YPHkpyHmzflZ/48BOEr+9VFlsqvjIv4yLXH418XWFNSYQ==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
@@ -6242,7 +6242,7 @@
       }
     },
     "@rush-temp/grunt-plugins-shared-utils": {
-      "version": "file:projects\\grunt-plugins-shared-utils.tgz",
+      "version": "file:projects/grunt-plugins-shared-utils.tgz",
       "integrity": "sha512-AVS4JzvFQC2+5ak/KWjMLiH7HesgbycSvsFfmkcgZBwoGUqKVJtzKFGb5tNctvJAt2XLhacFk/J4YuJsKsRZJQ==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
@@ -6270,7 +6270,7 @@
       }
     },
     "@rush-temp/grunt-ts-plugin": {
-      "version": "file:projects\\grunt-ts-plugin.tgz",
+      "version": "file:projects/grunt-ts-plugin.tgz",
       "integrity": "sha512-ugkUL16mFfL8Knvakiy/xco/cK8/0xbb+1y0HQKNWQFov8939De9oDPRW/bvkk3iv0A7v/jYs81qU8bmCW8eig==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
