@@ -156,7 +156,7 @@ export class TypeScriptCompiler {
 
                 doAwait(arrForEachAsync(tsDetails,
                     (tsDetail, idx) => {
-                        let tsCommand = _createCommandFile(idx, tsDetail, tsFiles, tsc);
+                        let tsCommand = _createCommandFile(idx, tsDetail, tsFiles, tsc, parseFloat(tscVersion));
 
                         return _execCommand(tsDetail, idx, tsCommand, (reason) => {
                             if (grunt.isDebug) {
@@ -238,7 +238,7 @@ export class TypeScriptCompiler {
             }
         }
 
-        function _createCommandFile(idx: number, tsDetail: ITsConfigDetails, tsFiles: string[], tsc: string) {
+        function _createCommandFile(idx: number, tsDetail: ITsConfigDetails, tsFiles: string[], tsc: string, tscVersion: number) {
             let keepTemp = (isNullOrUndefined(tsDetail.tsOption?.keepTemp) ? options.defaults.keepTemp : tsDetail.tsOption.keepTemp);
             if (isNullOrUndefined(keepTemp)) {
                 keepTemp = options.keepTemp || false;
@@ -264,6 +264,13 @@ export class TypeScriptCompiler {
             const tsConfigFile = tsDetail.name;
             if (tsConfigFile) {
                 let compilerOptions = tsDetail.tsConfig.compilerOptions || {};
+                if (tscVersion >= 5.5 && "suppressImplicitAnyIndexErrors" in compilerOptions) {
+                    grunt.logWarn(("The 'suppressImplicitAnyIndexErrors' compiler option is not compatible usage within the TsConfig project file -- ignoring this option").magenta);
+                    delete compilerOptions.suppressImplicitAnyIndexErrors;
+                    tsDetail.modified = true;
+                    showOverrides = true;
+                }
+
                 if (tsDetail.declarationDir) {
                     _addArg(args, "--declarationDir " + quoteIfRequired(tsDetail.declarationDir));
                 }
