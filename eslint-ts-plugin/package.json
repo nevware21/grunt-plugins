@@ -69,10 +69,11 @@
     },
     "peerDependencies": {
         "grunt": ">=1",
-        "typescript": ">=1",
+        "typescript": "5.2.2",
         "eslint": ">=7",
         "@typescript-eslint/eslint-plugin": "*",
         "@typescript-eslint/parser": "*",
         "eslint-plugin-security": "*"
     }
 }
+
