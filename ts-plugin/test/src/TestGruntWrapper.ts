@@ -32,7 +32,10 @@ export class TestGruntWrapper implements IGruntWrapper {
     };
     logWrite: (msg: string) => IGruntLogger;
     logError: (msg: string) => IGruntLogger;
-    logWarn: (msg: string) => IGruntLogger;
+    logWarn: (msg: string) => IGruntLogger = (msg: string) => {
+        this._messages.push({ type: "warn", msg })
+        return this;
+    };
     logDebug: (msg: string) => IGruntLogger = (msg: string) => {
         this._messages.push({ type: "debug", msg })
         return this;
