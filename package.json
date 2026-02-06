@@ -59,7 +59,7 @@
         "@nevware21/grunt-eslint-ts": "^0.5.0",
         "@nevware21/grunt-ts-plugin": "^0.5.0",
         "@rollup/plugin-commonjs": "^25.0.7",
-        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-node-resolve": "^16.0.3",
         "@types/eslint": "^8.56.10",
         "@types/estree": "^1.0.0",
         "@typescript-eslint/eslint-plugin": "^7.14.1",
@@ -74,3 +74,4 @@
         "rollup": "^4.6.0"
     }
 }
+
