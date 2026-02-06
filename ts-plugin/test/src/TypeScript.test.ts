@@ -10,6 +10,7 @@
 import * as assert from "assert";
 import * as fs from "fs";
 import * as path from "path";
+import * as os from "os";
 import { IExecuteResponse, IGruntWrapper } from "@nevware21/grunt-plugins-shared-utils";
 import { TestGruntWrapper } from "./TestGruntWrapper";
 import { ITypeScriptCompilerOptions, TypeScriptCompiler } from "../../src/TypeScript";
@@ -383,7 +384,7 @@ describe("TypeScript", () => {
 
     it("TypeScript >= 5.5 should remove suppressImplicitAnyIndexErrors from tsconfig", async () => {
         // Create a temporary directory for mocking TypeScript installation
-        const tmpDir = path.join("/tmp", "ts-test-" + Date.now());
+        const tmpDir = path.join(os.tmpdir(), "ts-test-" + Date.now());
         const tsBinDir = path.join(tmpDir, "bin");
         const tsPackageJson = path.join(tmpDir, "package.json");
         
