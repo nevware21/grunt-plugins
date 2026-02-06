@@ -24,7 +24,7 @@
         "@types/estree": "^1.0.1",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.7",
-        "@types/node": "^25.0.3",
+        "@types/node": "^24.10.11",
         "@types/sinon": "^17.0.3",
         "chai": "^4.4.1",
         "codecov": "^3.8.3",
@@ -1175,7 +1175,7 @@
     "node_modules/@rush-temp/grunt-eslint-ts": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-eslint-ts.tgz",
-      "integrity": "sha512-3da6+EkBFsz/27Wcmxlj/s2xFoaHlV2hMks8/3rXTsAS8tp5L6O7rDwN+3AtrdziBwC/Dv4xgfKCEJal20EyCA==",
+      "integrity": "sha512-gHiKau5mUmC5nDDMo47RHIql9uNtJFeSMNp1+5tm7YPHkpyHmzflZ/48BOEr+9VFlsqvjIv4yLXH418XWFNSYQ==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/grunt-eslint-ts": "^0.2.5",
@@ -1190,7 +1190,7 @@
         "@types/estree": "^1.0.1",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.7",
-        "@types/node": "^25.0.3",
+        "@types/node": "^24.10.11",
         "@types/sinon": "^17.0.3",
         "@typescript-eslint/eslint-plugin": "*",
         "@typescript-eslint/parser": "*",
@@ -1213,7 +1213,7 @@
     "node_modules/@rush-temp/grunt-plugins-shared-utils": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-plugins-shared-utils.tgz",
-      "integrity": "sha512-QiRaELle5EPpImSqXeW/BV88vsZY6opJSclm+jK4UIDk60PEIXHWQEQUlff6GZhAnAQlzkCuYuh9b3i7B1uTQw==",
+      "integrity": "sha512-AVS4JzvFQC2+5ak/KWjMLiH7HesgbycSvsFfmkcgZBwoGUqKVJtzKFGb5tNctvJAt2XLhacFk/J4YuJsKsRZJQ==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
@@ -1224,7 +1224,7 @@
         "@types/eslint": "^8.56.10",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.7",
-        "@types/node": "^25.0.3",
+        "@types/node": "^24.10.11",
         "@types/sinon": "^17.0.3",
         "chai": "^4.4.1",
         "codecov": "^3.8.3",
@@ -1242,7 +1242,7 @@
     "node_modules/@rush-temp/grunt-ts-plugin": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-ts-plugin.tgz",
-      "integrity": "sha512-kZLfbgKH/ybF7SuYHGsN+RPSU0oQUi1xBGNEJ3xWzoSIcF29ECp3IWcvPnNm/fe6x6f1agiD0znG+yAsdiP7Ww==",
+      "integrity": "sha512-ugkUL16mFfL8Knvakiy/xco/cK8/0xbb+1y0HQKNWQFov8939De9oDPRW/bvkk3iv0A7v/jYs81qU8bmCW8eig==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/grunt-eslint-ts": "^0.2.5",
@@ -1254,7 +1254,7 @@
         "@types/chai": "^4.3.16",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.7",
-        "@types/node": "^25.0.3",
+        "@types/node": "^24.10.11",
         "@types/sinon": "^17.0.3",
         "chai": "^4.4.1",
         "codecov": "^3.8.3",
@@ -1359,9 +1359,9 @@
       "integrity": "sha512-xPyYSz1cMPnJQhl0CLMH68j3gprKZaTjG3s5Vi+fDgx+uhG9NOXwbVt52eFS8ECyXhyKcjDLCBEqBExKuiZb7Q=="
     },
     "node_modules/@types/node": {
-      "version": "25.2.1",
-      "resolved": "https://registry.npmjs.org/@types/node/-/node-25.2.1.tgz",
-      "integrity": "sha512-CPrnr8voK8vC6eEtyRzvMpgp3VyVRhgclonE7qYi6P9sXwYb59ucfrnmFBTaP0yUi8Gk4yZg/LlTJULGxvTNsg==",
+      "version": "24.10.11",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-24.10.11.tgz",
+      "integrity": "sha512-/Af7O8r1frCVgOz0I62jWUtMohJ0/ZQU/ZoketltOJPZpnb17yoNc9BSoVuV9qlaIXJiPNOpsfq4ByFajSArNQ==",
       "dependencies": {
         "undici-types": "~7.16.0"
       }
@@ -6206,7 +6206,7 @@
     },
     "@rush-temp/grunt-eslint-ts": {
       "version": "file:projects/grunt-eslint-ts.tgz",
-      "integrity": "sha512-3da6+EkBFsz/27Wcmxlj/s2xFoaHlV2hMks8/3rXTsAS8tp5L6O7rDwN+3AtrdziBwC/Dv4xgfKCEJal20EyCA==",
+      "integrity": "sha512-gHiKau5mUmC5nDDMo47RHIql9uNtJFeSMNp1+5tm7YPHkpyHmzflZ/48BOEr+9VFlsqvjIv4yLXH418XWFNSYQ==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/grunt-eslint-ts": "^0.2.5",
@@ -6221,7 +6221,7 @@
         "@types/estree": "^1.0.1",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.7",
-        "@types/node": "^25.0.3",
+        "@types/node": "^24.10.11",
         "@types/sinon": "^17.0.3",
         "@typescript-eslint/eslint-plugin": "*",
         "@typescript-eslint/parser": "*",
@@ -6243,7 +6243,7 @@
     },
     "@rush-temp/grunt-plugins-shared-utils": {
       "version": "file:projects/grunt-plugins-shared-utils.tgz",
-      "integrity": "sha512-QiRaELle5EPpImSqXeW/BV88vsZY6opJSclm+jK4UIDk60PEIXHWQEQUlff6GZhAnAQlzkCuYuh9b3i7B1uTQw==",
+      "integrity": "sha512-AVS4JzvFQC2+5ak/KWjMLiH7HesgbycSvsFfmkcgZBwoGUqKVJtzKFGb5tNctvJAt2XLhacFk/J4YuJsKsRZJQ==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
@@ -6254,7 +6254,7 @@
         "@types/eslint": "^8.56.10",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.7",
-        "@types/node": "^25.0.3",
+        "@types/node": "^24.10.11",
         "@types/sinon": "^17.0.3",
         "chai": "^4.4.1",
         "codecov": "^3.8.3",
@@ -6271,7 +6271,7 @@
     },
     "@rush-temp/grunt-ts-plugin": {
       "version": "file:projects/grunt-ts-plugin.tgz",
-      "integrity": "sha512-kZLfbgKH/ybF7SuYHGsN+RPSU0oQUi1xBGNEJ3xWzoSIcF29ECp3IWcvPnNm/fe6x6f1agiD0znG+yAsdiP7Ww==",
+      "integrity": "sha512-ugkUL16mFfL8Knvakiy/xco/cK8/0xbb+1y0HQKNWQFov8939De9oDPRW/bvkk3iv0A7v/jYs81qU8bmCW8eig==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/grunt-eslint-ts": "^0.2.5",
@@ -6283,7 +6283,7 @@
         "@types/chai": "^4.3.16",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.7",
-        "@types/node": "^25.0.3",
+        "@types/node": "^24.10.11",
         "@types/sinon": "^17.0.3",
         "chai": "^4.4.1",
         "codecov": "^3.8.3",
@@ -6384,9 +6384,9 @@
       "integrity": "sha512-xPyYSz1cMPnJQhl0CLMH68j3gprKZaTjG3s5Vi+fDgx+uhG9NOXwbVt52eFS8ECyXhyKcjDLCBEqBExKuiZb7Q=="
     },
     "@types/node": {
-      "version": "25.2.1",
-      "resolved": "https://registry.npmjs.org/@types/node/-/node-25.2.1.tgz",
-      "integrity": "sha512-CPrnr8voK8vC6eEtyRzvMpgp3VyVRhgclonE7qYi6P9sXwYb59ucfrnmFBTaP0yUi8Gk4yZg/LlTJULGxvTNsg==",
+      "version": "24.10.11",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-24.10.11.tgz",
+      "integrity": "sha512-/Af7O8r1frCVgOz0I62jWUtMohJ0/ZQU/ZoketltOJPZpnb17yoNc9BSoVuV9qlaIXJiPNOpsfq4ByFajSArNQ==",
       "requires": {
         "undici-types": "~7.16.0"
       }
