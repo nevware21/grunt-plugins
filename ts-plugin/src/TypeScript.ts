@@ -265,7 +265,7 @@ export class TypeScriptCompiler {
             if (tsConfigFile) {
                 let compilerOptions = tsDetail.tsConfig.compilerOptions || {};
                 if (tscVersion >= 5.5 && "suppressImplicitAnyIndexErrors" in compilerOptions) {
-                    grunt.logWarn(("The 'suppressImplicitAnyIndexErrors' compiler option is not compatible usage within the TsConfig project file -- ignoring this option").magenta);
+                    grunt.logWarn(("The 'suppressImplicitAnyIndexErrors' compiler option is not compatible for use within the TsConfig project file -- ignoring this option").magenta);
                     delete compilerOptions.suppressImplicitAnyIndexErrors;
                     tsDetail.modified = true;
                     showOverrides = true;
