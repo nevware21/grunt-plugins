@@ -294,6 +294,8 @@ describe("fileHelpers", () => {
                 const content = { key: "value" };
                 fs.writeFileSync(filePath, JSON.stringify(content));
                 const result = readJsonFile(filePath);
+                // Using deepEqual instead of deepStrictEqual due to a limitation in tripwire 0.1.5
+                // where deepStrictEqual incorrectly fails on identical objects
                 assert.deepEqual(result, content);
             } finally {
                 fs.unlinkSync(filePath);
@@ -303,6 +305,7 @@ describe("fileHelpers", () => {
         it("should return an empty object when the JSON file does not exist", () => {
             const filePath = path.join(os.tmpdir(), "non-existing.json");
             const result = readJsonFile(filePath);
+            // Using deepEqual instead of deepStrictEqual due to a limitation in tripwire 0.1.5
             assert.deepEqual(result, {});
         });
 
@@ -312,6 +315,7 @@ describe("fileHelpers", () => {
                 const content = { key: "value" };
                 fs.writeFileSync(filePath, `// This is a comment\n${JSON.stringify(content)}`);
                 const result = readJsonFile(filePath);
+                // Using deepEqual instead of deepStrictEqual due to a limitation in tripwire 0.1.5
                 assert.deepEqual(result, content);
             } finally {
                 fs.unlinkSync(filePath);
@@ -324,6 +328,7 @@ describe("fileHelpers", () => {
                 const content = { key: "value" };
                 fs.writeFileSync(filePath, `/* This is a comment\n*/\n${JSON.stringify(content)}`);
                 const result = readJsonFile(filePath);
+                // Using deepEqual instead of deepStrictEqual due to a limitation in tripwire 0.1.5
                 assert.deepEqual(result, content);
             } finally {
                 fs.unlinkSync(filePath);
@@ -336,6 +341,7 @@ describe("fileHelpers", () => {
                 const content = { key: "value" };
                 fs.writeFileSync(filePath, "{ \"key\": \"value\", }");
                 const result = readJsonFile(filePath);
+                // Using deepEqual instead of deepStrictEqual due to a limitation in tripwire 0.1.5
                 assert.deepEqual(result, content);
             } finally {
                 fs.unlinkSync(filePath);
