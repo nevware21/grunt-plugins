@@ -65,7 +65,7 @@
         "@types/node": "^18.11.18",
         "@typescript-eslint/eslint-plugin": "^7.14.1",
         "@typescript-eslint/parser": "^7.14.1",
-        "eslint": "^8.56.10",
+        "eslint": "^10.0.0",
         "eslint-plugin-security": "^1.7.1",
         "grunt": "^1.5.3",
         "grunt-cli": "^1.4.3",
