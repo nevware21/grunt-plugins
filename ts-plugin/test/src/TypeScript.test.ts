@@ -47,7 +47,7 @@ describe("TypeScript", () => {
                 "outDir": "./dist-esm",
                 "removeComments": true,
                 "sourceMap": true,
-                "suppressImplicitAnyIndexErrors": true,
+                // "suppressImplicitAnyIndexErrors": true,
                 "target": "es5",
             },
             "exclude": [
@@ -114,7 +114,7 @@ describe("TypeScript", () => {
                 "outDir": "./dist-esm",
                 "removeComments": true,
                 "sourceMap": true,
-                "suppressImplicitAnyIndexErrors": true,
+                // "suppressImplicitAnyIndexErrors": true,
                 "target": "es5",
             },
             "exclude": [
@@ -189,7 +189,7 @@ describe("TypeScript", () => {
                 "outDir": "./dist-esm",
                 "removeComments": true,
                 "sourceMap": true,
-                "suppressImplicitAnyIndexErrors": true,
+                // "suppressImplicitAnyIndexErrors": true,
                 "target": "es5",
             },
             "exclude": [
@@ -216,7 +216,7 @@ describe("TypeScript", () => {
                 "outDir": "./dist-esm",
                 "removeComments": true,
                 "sourceMap": true,
-                "suppressImplicitAnyIndexErrors": true,
+                // "suppressImplicitAnyIndexErrors": true,
                 "target": "es5",
             },
             "exclude": [
@@ -291,7 +291,7 @@ describe("TypeScript", () => {
                 "outDir": "./dist-esm",
                 "removeComments": true,
                 "sourceMap": true,
-                "suppressImplicitAnyIndexErrors": true,
+                // "suppressImplicitAnyIndexErrors": true,
                 "target": "es5",
             },
             "exclude": [
@@ -318,7 +318,7 @@ describe("TypeScript", () => {
                 "outDir": "./dist-esm",
                 "removeComments": true,
                 "sourceMap": true,
-                "suppressImplicitAnyIndexErrors": true,
+                // "suppressImplicitAnyIndexErrors": true,
                 "target": "es5",
             },
             "exclude": [

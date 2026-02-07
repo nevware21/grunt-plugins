@@ -75,6 +75,41 @@ function _checkTscVersion(grunt: IGruntWrapper, tscVersion: string) {
     }
 }
 
+/**
+ * Compare a version string against a target version (major.minor)
+ * Returns true if the version is >= the target version
+ * @param version - Version string like "5.10.0"
+ * @param targetMajor - Target major version
+ * @param targetMinor - Target minor version
+ */
+function _isVersionGte(version: string, targetMajor: number, targetMinor: number): boolean {
+    if (!version) {
+        return false;
+    }
+    
+    const parts = version.split(".");
+    if (parts.length < 2) {
+        return false;
+    }
+    
+    const major = parseInt(parts[0], 10);
+    const minor = parseInt(parts[1], 10);
+    
+    if (isNaN(major) || isNaN(minor)) {
+        return false;
+    }
+    
+    if (major > targetMajor) {
+        return true;
+    }
+    
+    if (major === targetMajor && minor >= targetMinor) {
+        return true;
+    }
+    
+    return false;
+}
+
 export interface ITypeScriptCompilerOptions extends IPluginCommonOptions {
 
     /**
@@ -156,7 +191,7 @@ export class TypeScriptCompiler {
 
                 doAwait(arrForEachAsync(tsDetails,
                     (tsDetail, idx) => {
-                        let tsCommand = _createCommandFile(idx, tsDetail, tsFiles, tsc);
+                        let tsCommand = _createCommandFile(idx, tsDetail, tsFiles, tsc, tscVersion);
 
                         return _execCommand(tsDetail, idx, tsCommand, (reason) => {
                             if (grunt.isDebug) {
@@ -238,7 +273,7 @@ export class TypeScriptCompiler {
             }
         }
 
-        function _createCommandFile(idx: number, tsDetail: ITsConfigDetails, tsFiles: string[], tsc: string) {
+        function _createCommandFile(idx: number, tsDetail: ITsConfigDetails, tsFiles: string[], tsc: string, tscVersion: string) {
             let keepTemp = (isNullOrUndefined(tsDetail.tsOption?.keepTemp) ? options.defaults.keepTemp : tsDetail.tsOption.keepTemp);
             if (isNullOrUndefined(keepTemp)) {
                 keepTemp = options.keepTemp || false;
@@ -264,6 +299,13 @@ export class TypeScriptCompiler {
             const tsConfigFile = tsDetail.name;
             if (tsConfigFile) {
                 let compilerOptions = tsDetail.tsConfig.compilerOptions || {};
+                if (_isVersionGte(tscVersion, 5, 5) && "suppressImplicitAnyIndexErrors" in compilerOptions) {
+                    grunt.logWarn(("The 'suppressImplicitAnyIndexErrors' compiler option is not compatible for use within the TsConfig project file -- ignoring this option").magenta);
+                    delete compilerOptions.suppressImplicitAnyIndexErrors;
+                    tsDetail.modified = true;
+                    showOverrides = true;
+                }
+
                 if (tsDetail.declarationDir) {
                     _addArg(args, "--declarationDir " + quoteIfRequired(tsDetail.declarationDir));
                 }
