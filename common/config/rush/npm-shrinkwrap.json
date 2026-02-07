@@ -13,7 +13,7 @@
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-json": "^6.0.1",
-        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-node-resolve": "^16.0.3",
         "@rush-temp/grunt-eslint-ts": "file:./projects/grunt-eslint-ts.tgz",
         "@rush-temp/grunt-plugins-shared-utils": "file:./projects/grunt-plugins-shared-utils.tgz",
         "@rush-temp/grunt-ts-plugin": "file:./projects/grunt-ts-plugin.tgz",
@@ -752,9 +752,9 @@
       }
     },
     "node_modules/@rollup/plugin-node-resolve": {
-      "version": "15.3.1",
-      "resolved": "https://registry.npmjs.org/@rollup/plugin-node-resolve/-/plugin-node-resolve-15.3.1.tgz",
-      "integrity": "sha512-tgg6b91pAybXHJQMAAwW9VuWBO6Thi+q7BCNARLwSqlmsHz0XYURtGvh/AuwSADXSI4h/2uHbs7s4FzlZDGSGA==",
+      "version": "16.0.3",
+      "resolved": "https://registry.npmjs.org/@rollup/plugin-node-resolve/-/plugin-node-resolve-16.0.3.tgz",
+      "integrity": "sha512-lUYM3UBGuM93CnMPG1YocWu7X802BrNF3jW2zny5gQyLQgRFJhV1Sq0Zi74+dh/6NBx1DxFC4b4GXg9wUCG5Qg==",
       "dependencies": {
         "@rollup/pluginutils": "^5.0.1",
         "@types/resolve": "1.20.2",
@@ -1098,14 +1098,14 @@
     "node_modules/@rush-temp/grunt-eslint-ts": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-eslint-ts.tgz",
-      "integrity": "sha512-y4JQ+LjtTXjIQHkL+rU72SPEGFYBc0sMZmmaOAbs5F3/DCs7sSQdePDZLl43P/vUE2/KZM3Jt/9jWl9WpdU2wg==",
+      "integrity": "sha512-OdsCWz49zsORx6rIif4PZPXjHew7HgO0JqFHtR+C5Ifvkg3lTMKALV9gLweePRBXNcvi3RIQckVkmExL29+MFw==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-json": "^6.0.1",
-        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-node-resolve": "^16.0.3",
         "@types/chai": "^4.3.16",
         "@types/eslint": "~8.44.0",
         "@types/estree": "^1.0.1",
@@ -1134,13 +1134,13 @@
     "node_modules/@rush-temp/grunt-plugins-shared-utils": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-plugins-shared-utils.tgz",
-      "integrity": "sha512-D8v9aY71b9gyOPFGAbfterAqGs1YGmNIUU87QfX4duMp1MKj+c12mB0wUQR2Atk6SaUKfd6gXFPmn0pFUDxj5w==",
+      "integrity": "sha512-4KZdToC02KPnnKrRjc0NELeRwBFfIfy+It11zriWmQhsaEP58SW1QBVspwMltN1jh0s6pGp4qllX4zrGC6EfwQ==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^25.0.7",
-        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-node-resolve": "^16.0.3",
         "@types/chai": "^4.3.16",
         "@types/eslint": "~8.44.0",
         "@types/grunt": "^0.4.27",
@@ -1163,13 +1163,13 @@
     "node_modules/@rush-temp/grunt-ts-plugin": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-ts-plugin.tgz",
-      "integrity": "sha512-+6u1MLZdfenpwFFYttMHlmBZYOy/LiIwY+EERtZR0QG1B6mtx6I9qMjGQ4CmGgtqUpFC73+2NKAua4Ye8Aitwg==",
+      "integrity": "sha512-M/sUst6NA3Am41JQDFUvIGaOUHDXxZBDQObyLEpVBmIdQTsZKh53uwCdzU74ZtQjSLNVJwrQMQyHdAX1Hsdnww==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^25.0.7",
-        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-node-resolve": "^16.0.3",
         "@types/chai": "^4.3.16",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.7",
@@ -6010,9 +6010,9 @@
       }
     },
     "@rollup/plugin-node-resolve": {
-      "version": "15.3.1",
-      "resolved": "https://registry.npmjs.org/@rollup/plugin-node-resolve/-/plugin-node-resolve-15.3.1.tgz",
-      "integrity": "sha512-tgg6b91pAybXHJQMAAwW9VuWBO6Thi+q7BCNARLwSqlmsHz0XYURtGvh/AuwSADXSI4h/2uHbs7s4FzlZDGSGA==",
+      "version": "16.0.3",
+      "resolved": "https://registry.npmjs.org/@rollup/plugin-node-resolve/-/plugin-node-resolve-16.0.3.tgz",
+      "integrity": "sha512-lUYM3UBGuM93CnMPG1YocWu7X802BrNF3jW2zny5gQyLQgRFJhV1Sq0Zi74+dh/6NBx1DxFC4b4GXg9wUCG5Qg==",
       "requires": {
         "@rollup/pluginutils": "^5.0.1",
         "@types/resolve": "1.20.2",
@@ -6183,14 +6183,14 @@
     },
     "@rush-temp/grunt-eslint-ts": {
       "version": "file:projects\\grunt-eslint-ts.tgz",
-      "integrity": "sha512-y4JQ+LjtTXjIQHkL+rU72SPEGFYBc0sMZmmaOAbs5F3/DCs7sSQdePDZLl43P/vUE2/KZM3Jt/9jWl9WpdU2wg==",
+      "integrity": "sha512-OdsCWz49zsORx6rIif4PZPXjHew7HgO0JqFHtR+C5Ifvkg3lTMKALV9gLweePRBXNcvi3RIQckVkmExL29+MFw==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-json": "^6.0.1",
-        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-node-resolve": "^16.0.3",
         "@types/chai": "^4.3.16",
         "@types/eslint": "~8.44.0",
         "@types/estree": "^1.0.1",
@@ -6218,13 +6218,13 @@
     },
     "@rush-temp/grunt-plugins-shared-utils": {
       "version": "file:projects\\grunt-plugins-shared-utils.tgz",
-      "integrity": "sha512-D8v9aY71b9gyOPFGAbfterAqGs1YGmNIUU87QfX4duMp1MKj+c12mB0wUQR2Atk6SaUKfd6gXFPmn0pFUDxj5w==",
+      "integrity": "sha512-4KZdToC02KPnnKrRjc0NELeRwBFfIfy+It11zriWmQhsaEP58SW1QBVspwMltN1jh0s6pGp4qllX4zrGC6EfwQ==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^25.0.7",
-        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-node-resolve": "^16.0.3",
         "@types/chai": "^4.3.16",
         "@types/eslint": "~8.44.0",
         "@types/grunt": "^0.4.27",
@@ -6246,13 +6246,13 @@
     },
     "@rush-temp/grunt-ts-plugin": {
       "version": "file:projects\\grunt-ts-plugin.tgz",
-      "integrity": "sha512-+6u1MLZdfenpwFFYttMHlmBZYOy/LiIwY+EERtZR0QG1B6mtx6I9qMjGQ4CmGgtqUpFC73+2NKAua4Ye8Aitwg==",
+      "integrity": "sha512-M/sUst6NA3Am41JQDFUvIGaOUHDXxZBDQObyLEpVBmIdQTsZKh53uwCdzU74ZtQjSLNVJwrQMQyHdAX1Hsdnww==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^25.0.7",
-        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-node-resolve": "^16.0.3",
         "@types/chai": "^4.3.16",
         "@types/grunt": "^0.4.27",
         "@types/mocha": "^10.0.7",
