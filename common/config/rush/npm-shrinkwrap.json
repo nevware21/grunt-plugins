@@ -1128,10 +1128,9 @@
     "node_modules/@rush-temp/grunt-eslint-ts": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-eslint-ts.tgz",
-      "integrity": "sha512-9ybYT7g7o81do+bJAiRflNuie80nRMkmJo+5rlZJiggsuvKWj/PLqYisxoSSY1+x+IRy3mwpFIW4b9O7hrs9xg==",
+      "integrity": "sha512-GRC04x4Gtls8h/K4fdbRTZUVBkpcE9JC+CnaneVIETYDu0JMkcwbPa3YzoBCpYt0xUpRvR8wMU7JpRq4KO8HOA==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@nevware21/tripwire": "^0.1.5",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^25.0.7",
@@ -1191,10 +1190,9 @@
     "node_modules/@rush-temp/grunt-ts-plugin": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-ts-plugin.tgz",
-      "integrity": "sha512-S9AtYOXhhzvujWSbqsVY9EcONSdvA5CH5CFCF2RjtA/+k/GEvQtGE20xiX0uxCkEkAcm/sdk7Xz2FWQlX8bcxQ==",
+      "integrity": "sha512-pFV1HfZTC2EQmYneO238jsPmhIxJ9fGxqdqVGvsiGDX5AECjXJuwgwGw9+nsNx7t9Wufv9lCxo5g2yPpc+UuKQ==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@nevware21/tripwire": "^0.1.5",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^25.0.7",
@@ -6161,11 +6159,10 @@
       "optional": true
     },
     "@rush-temp/grunt-eslint-ts": {
-      "version": "file:projects\\grunt-eslint-ts.tgz",
-      "integrity": "sha512-9ybYT7g7o81do+bJAiRflNuie80nRMkmJo+5rlZJiggsuvKWj/PLqYisxoSSY1+x+IRy3mwpFIW4b9O7hrs9xg==",
+      "version": "file:projects/grunt-eslint-ts.tgz",
+      "integrity": "sha512-GRC04x4Gtls8h/K4fdbRTZUVBkpcE9JC+CnaneVIETYDu0JMkcwbPa3YzoBCpYt0xUpRvR8wMU7JpRq4KO8HOA==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@nevware21/tripwire": "^0.1.5",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^25.0.7",
@@ -6195,7 +6192,7 @@
       }
     },
     "@rush-temp/grunt-plugins-shared-utils": {
-      "version": "file:projects\\grunt-plugins-shared-utils.tgz",
+      "version": "file:projects/grunt-plugins-shared-utils.tgz",
       "integrity": "sha512-1/37iuqioleQJ3uFz2sJ3H32/glTGirzvKy1PKz1+C4tKJPcQ6knkX2ejOOWHokctg7hk+r3E02BpRnc5T+45g==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
@@ -6222,11 +6219,10 @@
       }
     },
     "@rush-temp/grunt-ts-plugin": {
-      "version": "file:projects\\grunt-ts-plugin.tgz",
-      "integrity": "sha512-S9AtYOXhhzvujWSbqsVY9EcONSdvA5CH5CFCF2RjtA/+k/GEvQtGE20xiX0uxCkEkAcm/sdk7Xz2FWQlX8bcxQ==",
+      "version": "file:projects/grunt-ts-plugin.tgz",
+      "integrity": "sha512-pFV1HfZTC2EQmYneO238jsPmhIxJ9fGxqdqVGvsiGDX5AECjXJuwgwGw9+nsNx7t9Wufv9lCxo5g2yPpc+UuKQ==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@nevware21/tripwire": "^0.1.5",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^25.0.7",
