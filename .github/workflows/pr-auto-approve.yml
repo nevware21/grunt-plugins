@@ -28,7 +28,6 @@ jobs:
           wait-interval: 30
           running-workflow-name: 'auto-approve'
           allowed-conclusions: success,skipped,neutral
-          
       - name: Approve PR
         if: success()
         run: gh pr review --approve "$PR_URL"
