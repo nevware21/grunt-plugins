@@ -348,7 +348,6 @@ describe("getTsConfigDetails", () => {
                 declaration: true,
                 declarationDir: "./types",
                 outDir: "./dist-es5",
-                suppressImplicitAnyIndexErrors: true,
                 allowSyntheticDefaultImports: true,
                 rootDir: "./src",
                 removeComments: true
@@ -376,7 +375,6 @@ describe("getTsConfigDetails", () => {
                 declaration: true,
                 declarationDir: "./types",
                 outDir: "./dist-es6",
-                suppressImplicitAnyIndexErrors: true,
                 allowSyntheticDefaultImports: true,
                 rootDir: "./src",
                 removeComments: true
