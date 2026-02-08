@@ -100,7 +100,7 @@ describe("getTsConfigDetails", () => {
 
         const result = getTsConfigDetails(grunt, filePathEs5, false);
         assert.equal(result.length, 1)
-        assert.deepStrictEqual(result[0].tsConfig, expectedContent);
+        assert.deepEqual(result[0].tsConfig, expectedContent);
     });
 
     it("should return the details of multiple tsconfig files when they exists", () => {
@@ -130,8 +130,8 @@ describe("getTsConfigDetails", () => {
 
         const result = getTsConfigDetails(grunt, [ filePathEs5, filePathEs6 ], false);
         assert.equal(result.length, 2)
-        assert.deepStrictEqual(result[0].tsConfig, expectedContent1);
-        assert.deepStrictEqual(result[1].tsConfig, expectedContent2);
+        assert.deepEqual(result[0].tsConfig, expectedContent1);
+        assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
 
     it("should return the details of multiple tsconfig files when they exists with single compilerOptions override", () => {
@@ -178,8 +178,8 @@ describe("getTsConfigDetails", () => {
             }],
             false);
         assert.equal(result.length, 2)
-        assert.deepStrictEqual(result[0].tsConfig, expectedContent1, "Actual:" + JSON.stringify(result[0].tsConfig, null, 2));
-        assert.deepStrictEqual(result[1].tsConfig, expectedContent2, "Actual:" + JSON.stringify(result[1].tsConfig, null, 2));
+        assert.deepEqual(result[0].tsConfig, expectedContent1, "Actual:" + JSON.stringify(result[0].tsConfig, null, 2));
+        assert.deepEqual(result[1].tsConfig, expectedContent2, "Actual:" + JSON.stringify(result[1].tsConfig, null, 2));
     });
 
     it("should return the details of multiple tsconfig files when provided with multiple variants as an array", () => {
@@ -226,8 +226,8 @@ describe("getTsConfigDetails", () => {
             }
         ], false);
         assert.equal(result.length, 2)
-        assert.deepStrictEqual(result[0].tsConfig, expectedContent1);
-        assert.deepStrictEqual(result[1].tsConfig, expectedContent2);
+        assert.deepEqual(result[0].tsConfig, expectedContent1);
+        assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
 
     it("should return the details of multiple tsconfig files when provided with multiple variants as an iterable", () => {
@@ -276,8 +276,8 @@ describe("getTsConfigDetails", () => {
             }
         }, false);
         assert.equal(result.length, 2)
-        assert.deepStrictEqual(result[0].tsConfig, expectedContent1);
-        assert.deepStrictEqual(result[1].tsConfig, expectedContent2);
+        assert.deepEqual(result[0].tsConfig, expectedContent1);
+        assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
 
     it("should return the details of multiple tsconfig files when provided with multiple variants via an iterator", async () => {
@@ -327,8 +327,8 @@ describe("getTsConfigDetails", () => {
             }
         }, false);
         assert.equal(result.length, 2)
-        assert.deepStrictEqual(result[0].tsConfig, expectedContent1);
-        assert.deepStrictEqual(result[1].tsConfig, expectedContent2);
+        assert.deepEqual(result[0].tsConfig, expectedContent1);
+        assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
 
     it("should return the details of multiple tsconfig files when tsconfig uses the default is provided with multiple compilerOptions", () => {
@@ -407,10 +407,10 @@ describe("getTsConfigDetails", () => {
         ], false);
         assert.equal(result.length, 2)
         assert.equal(result[0].name, "./tsconfig.json");
-        assert.deepStrictEqual(result[0].tsConfig, expectedContent1);
+        assert.deepEqual(result[0].tsConfig, expectedContent1);
 
         assert.equal(result[1].name, "./tsconfig.json");
-        assert.deepStrictEqual(result[1].tsConfig, expectedContent2);
+        assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
 
     it("should return the details of multiple tsconfig files when tsconfig does not exist and is provided with multiple compilerOptions", () => {
@@ -451,17 +451,17 @@ describe("getTsConfigDetails", () => {
         ], false);
         assert.equal(result.length, 2)
         assert.equal(result[0].name, "./non-existing.json");
-        assert.deepStrictEqual(result[0].tsConfig, expectedContent1);
+        assert.deepEqual(result[0].tsConfig, expectedContent1);
 
         assert.equal(result[1].name, "./non-existing.json");
-        assert.deepStrictEqual(result[1].tsConfig, expectedContent2);
+        assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
 
     it("should return an empty details object when the tsconfig file does not exist", () => {
         const filePath = path.join(os.tmpdir(), "non-existing.json");
         const result = getTsConfigDetails(grunt, filePath, false);
         assert.equal(result.length, 1)
-        assert.deepStrictEqual(result[0].tsConfig, {compilerOptions:{}});
+        assert.deepEqual(result[0].tsConfig, {compilerOptions:{}});
     });
 
     it("should return an empty details object when the tsconfig is past as null / undefined / empty", () => {
@@ -470,15 +470,15 @@ describe("getTsConfigDetails", () => {
 
         const result1 = getTsConfigDetails(grunt, null, false);
         assert.equal(result1.length, 1, "result1: " + JSON.stringify(result1))
-        assert.deepStrictEqual(result1[0].tsConfig, defaultConfig, "result1: " + JSON.stringify(result1));
+        assert.deepEqual(result1[0].tsConfig, defaultConfig, "result1: " + JSON.stringify(result1));
 
         const result2 = getTsConfigDetails(grunt, undefined, false);
         assert.equal(result2.length, 1, "result2: " + JSON.stringify(result2))
-        assert.deepStrictEqual(result2[0].tsConfig, defaultConfig, "result2: " + JSON.stringify(result2));
+        assert.deepEqual(result2[0].tsConfig, defaultConfig, "result2: " + JSON.stringify(result2));
 
         const result3 = getTsConfigDetails(grunt, "", false);
         assert.equal(result3.length, 1, "result3: " + JSON.stringify(result3))
-        assert.deepStrictEqual(result3[0].tsConfig, defaultConfig, "result3: " + JSON.stringify(result3));
+        assert.deepEqual(result3[0].tsConfig, defaultConfig, "result3: " + JSON.stringify(result3));
     });
 
     describe("addFiles", () => {
@@ -486,29 +486,29 @@ describe("getTsConfigDetails", () => {
             const details = getTsConfigDetails(grunt, "tsconfig.json", false);
             assert.equal(details.length, 1)
             details[0].addFiles("file1.ts");
-            assert.deepStrictEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "file1.ts" ]);
+            assert.deepEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "file1.ts" ]);
         });
     
         it("should add multiple files to the tsConfig", () => {
             const details = getTsConfigDetails(grunt, "tsconfig.json", false);
             assert.equal(details.length, 1)
             details[0].addFiles([ "file1.ts", "file2.ts"]);
-            assert.deepStrictEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "file1.ts", "file2.ts"]);
+            assert.deepEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "file1.ts", "file2.ts"]);
         });
     
         it("should add the files to the exclude list when they start with \"!\"", () => {
             const details = getTsConfigDetails(grunt, "tsconfig.json", false);
             assert.equal(details.length, 1)
             details[0].addFiles(["!file1.ts", "file2.ts"]);
-            assert.deepStrictEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "file2.ts" ]);
-            assert.deepStrictEqual(details[0].tsConfig.exclude, [ "node_modules/", "file1.ts" ]);
+            assert.deepEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "file2.ts" ]);
+            assert.deepEqual(details[0].tsConfig.exclude, [ "node_modules/", "file1.ts" ]);
         });
     
         it("should add the files to the include list with a \"/*\" suffix when they end with \"**\"", () => {
             const details = getTsConfigDetails(grunt, "tsconfig.json", false);
             assert.equal(details.length, 1)
             details[0].addFiles(["dir/**", "file2.ts"]);
-            assert.deepStrictEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "dir/**/*", "file2.ts"] );
+            assert.deepEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "dir/**/*", "file2.ts"] );
         });
     });
 
@@ -518,7 +518,7 @@ describe("getTsConfigDetails", () => {
             assert.equal(details.length, 1)
             details[0].tsConfig = { files: ["file1.ts", "file2.ts"] };
             const files = details[0].getFiles();
-            assert.deepStrictEqual(files, ["file1.ts", "file2.ts"]);
+            assert.deepEqual(files, ["file1.ts", "file2.ts"]);
         });
 
         it("should return the files from tsConfig.include when details.name is not null and tsConfig.files is null", () => {
@@ -526,15 +526,15 @@ describe("getTsConfigDetails", () => {
             assert.equal(details.length, 1)
             details[0].tsConfig = { include: ["file1.ts", "file2.ts"] };
             const files = details[0].getFiles();
-            assert.deepStrictEqual(files, ["file1.ts", "file2.ts"]);
+            assert.deepEqual(files, ["file1.ts", "file2.ts"]);
         });
 
         it("should return an empty array when details.name is null", () => {
             const details = getTsConfigDetails(grunt, null, false);
             assert.equal(details.length, 1)
-            assert.deepStrictEqual(details[0].tsConfig.include, [ "./src/**/*.ts"]);
+            assert.deepEqual(details[0].tsConfig.include, [ "./src/**/*.ts"]);
             const files = details[0].getFiles();
-            assert.deepStrictEqual(files, [ "./src/**/*.ts" ]);
+            assert.deepEqual(files, [ "./src/**/*.ts" ]);
         });
     });
 
