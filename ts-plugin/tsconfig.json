@@ -13,7 +13,6 @@
         "declaration": true,
         "declarationDir": "./types",
         "outDir": "./dist-esm",
-        "suppressImplicitAnyIndexErrors": true,
         "allowSyntheticDefaultImports": true,
         "removeComments": true
     },
