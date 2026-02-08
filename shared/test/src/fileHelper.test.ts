@@ -9,7 +9,7 @@
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { assert } from "chai";
+import { assert } from "@nevware21/tripwire";
 import { findCommonPath, findCommonRoot, findModulePath, getTempFile, locateModulePath, makeRelative, makeRelativeTo, normalizePath, quoteIfRequired, readJsonFile } from "../../src/fileHelpers";
 import { strEndsWith, strStartsWith } from "@nevware21/ts-utils";
 

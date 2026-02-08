@@ -7,7 +7,7 @@
  */
 
 
-import * as assert from "assert";
+import { assert } from "@nevware21/tripwire";
 import { deepMerge, mergeOptions, resolveValue, resolveValueAsync } from "../../src/utils";
 
 describe("utils", () => {
