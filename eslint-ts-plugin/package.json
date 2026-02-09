@@ -44,7 +44,7 @@
     },
     "devDependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@types/eslint": "~8.56.12",
+        "@types/eslint": "~9.6.1",
         "@types/estree": "^1.0.1",
         "@types/grunt": "^0.4.27",
         "@nevware21/grunt-plugins-shared-utils": "0.5.1",
