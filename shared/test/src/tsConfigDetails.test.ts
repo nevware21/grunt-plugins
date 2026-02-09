@@ -549,7 +549,7 @@ describe("getTsConfigDetails", () => {
                 assert.ok(fs.existsSync(tempName));
             } finally {
                 arrForEach(details, (d) => d.cleanupTemp());
-                arrForEach(details, (d) => assert.equal(fs.existsSync(d.tempName), false));
+                arrForEach(details, (d) => { assert.equal(fs.existsSync(d.tempName), false); });
             }
         });
 
@@ -562,7 +562,7 @@ describe("getTsConfigDetails", () => {
                 assert.strictEqual(tempName, "tsconfig.json");
             } finally {
                 arrForEach(details, (d) => d.cleanupTemp());
-                arrForEach(details, (d) => assert.equal(fs.existsSync(d.tempName), false));
+                arrForEach(details, (d) => { assert.equal(fs.existsSync(d.tempName), false); });
             }
         });
     });

@@ -171,7 +171,7 @@ describe("utils", () => {
 
         it("should return an empty object when no values are provided", () => {
             const result = mergeOptions();
-            assert.deepEqual(result, undefined);
+            assert.strictEqual(result, undefined);
         });
     });
 });
