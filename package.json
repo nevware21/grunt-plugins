@@ -63,7 +63,7 @@
         "@types/eslint": "~8.56.12",
         "@types/estree": "^1.0.0",
         "@types/node": "^18.11.18",
-        "@typescript-eslint/eslint-plugin": "^7.14.1",
+        "@typescript-eslint/eslint-plugin": "^8.54.0",
         "@typescript-eslint/parser": "^8.54.0",
         "eslint": "^8.56.10",
         "eslint-plugin-security": "^1.7.1",
