@@ -100,6 +100,8 @@ describe("getTsConfigDetails", () => {
 
         const result = getTsConfigDetails(grunt, filePathEs5, false);
         assert.equal(result.length, 1)
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
+        // and creates new object instances, causing tripwire's deepStrictEqual to fail
         assert.deepEqual(result[0].tsConfig, expectedContent);
     });
 
@@ -130,6 +132,8 @@ describe("getTsConfigDetails", () => {
 
         const result = getTsConfigDetails(grunt, [ filePathEs5, filePathEs6 ], false);
         assert.equal(result.length, 2)
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
+        // and creates new object instances, causing tripwire's deepStrictEqual to fail
         assert.deepEqual(result[0].tsConfig, expectedContent1);
         assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
@@ -226,6 +230,8 @@ describe("getTsConfigDetails", () => {
             }
         ], false);
         assert.equal(result.length, 2)
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails merges config objects,
+        // creating new instances and potentially different property ordering
         assert.deepEqual(result[0].tsConfig, expectedContent1);
         assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
