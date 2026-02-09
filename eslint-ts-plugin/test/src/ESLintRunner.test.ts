@@ -7,7 +7,7 @@
  * Licensed under the MIT license.
  */
 
-import * as assert from "assert";
+import { assert } from "@nevware21/tripwire";
 import { IGruntWrapper } from '@nevware21/grunt-plugins-shared-utils';
 import { ESLintRunner } from '../../src/ESLintRunner';
 import { IESLintRunnerOptions } from '../../src/interfaces/IESLintRunnerOptions';
