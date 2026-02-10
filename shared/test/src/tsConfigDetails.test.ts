@@ -282,6 +282,8 @@ describe("getTsConfigDetails", () => {
             }
         }, false);
         assert.equal(result.length, 2)
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
+        // and merges config objects, creating new object instances
         assert.deepEqual(result[0].tsConfig, expectedContent1);
         assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
@@ -333,6 +335,8 @@ describe("getTsConfigDetails", () => {
             }
         }, false);
         assert.equal(result.length, 2)
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
+        // and merges config objects, creating new object instances
         assert.deepEqual(result[0].tsConfig, expectedContent1);
         assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
@@ -413,6 +417,8 @@ describe("getTsConfigDetails", () => {
         ], false);
         assert.equal(result.length, 2)
         assert.equal(result[0].name, "./tsconfig.json");
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
+        // and merges config objects with overrides, creating new object instances
         assert.deepEqual(result[0].tsConfig, expectedContent1);
 
         assert.equal(result[1].name, "./tsconfig.json");
@@ -457,6 +463,8 @@ describe("getTsConfigDetails", () => {
         ], false);
         assert.equal(result.length, 2)
         assert.equal(result[0].name, "./non-existing.json");
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails merges
+        // config objects with overrides, creating new object instances
         assert.deepEqual(result[0].tsConfig, expectedContent1);
 
         assert.equal(result[1].name, "./non-existing.json");
