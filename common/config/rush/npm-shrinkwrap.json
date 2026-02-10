@@ -1336,9 +1336,9 @@
       "integrity": "sha512-xPyYSz1cMPnJQhl0CLMH68j3gprKZaTjG3s5Vi+fDgx+uhG9NOXwbVt52eFS8ECyXhyKcjDLCBEqBExKuiZb7Q=="
     },
     "node_modules/@types/node": {
-      "version": "25.2.2",
-      "resolved": "https://registry.npmjs.org/@types/node/-/node-25.2.2.tgz",
-      "integrity": "sha512-BkmoP5/FhRYek5izySdkOneRyXYN35I860MFAGupTdebyE66uZaR+bXLHq8k4DirE5DwQi3NuhvRU1jqTVwUrQ==",
+      "version": "25.2.3",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-25.2.3.tgz",
+      "integrity": "sha512-m0jEgYlYz+mDJZ2+F4v8D1AyQb+QzsNqRuI7xg1VQX/KlKS0qT9r1Mo16yo5F/MtifXFgaofIFsdFMox2SxIbQ==",
       "dependencies": {
         "undici-types": "~7.16.0"
       }
@@ -6083,7 +6083,7 @@
       "optional": true
     },
     "@rush-temp/grunt-eslint-ts": {
-      "version": "file:projects\\grunt-eslint-ts.tgz",
+      "version": "file:projects/grunt-eslint-ts.tgz",
       "integrity": "sha512-JqYvV2NjYKPZIcxEjjhzV/bx9p+B3teetIBpcozusnqe6N/7OCre3CJwX731TcwPVlxhYRRrrFRqEypg0cxV3Q==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
@@ -6117,7 +6117,7 @@
       }
     },
     "@rush-temp/grunt-plugins-shared-utils": {
-      "version": "file:projects\\grunt-plugins-shared-utils.tgz",
+      "version": "file:projects/grunt-plugins-shared-utils.tgz",
       "integrity": "sha512-kE8p7MwsBrrZJKvR14La7b82k0jHuHM11vfVi/KjeWcYQ8NNC/KkI2vhNZR7z1Ex4hzzaPfRcnPgPzLEtODFgw==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
@@ -6144,7 +6144,7 @@
       }
     },
     "@rush-temp/grunt-ts-plugin": {
-      "version": "file:projects\\grunt-ts-plugin.tgz",
+      "version": "file:projects/grunt-ts-plugin.tgz",
       "integrity": "sha512-5SvDysENNUMhXdYsj01P98I0cwrQAbIm9FT3I2Q4HbHwmMPqk4JkF9xSxjcpRW9NhRwwl8KdvoI6cHMtikibsQ==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
@@ -6263,9 +6263,9 @@
       "integrity": "sha512-xPyYSz1cMPnJQhl0CLMH68j3gprKZaTjG3s5Vi+fDgx+uhG9NOXwbVt52eFS8ECyXhyKcjDLCBEqBExKuiZb7Q=="
     },
     "@types/node": {
-      "version": "25.2.2",
-      "resolved": "https://registry.npmjs.org/@types/node/-/node-25.2.2.tgz",
-      "integrity": "sha512-BkmoP5/FhRYek5izySdkOneRyXYN35I860MFAGupTdebyE66uZaR+bXLHq8k4DirE5DwQi3NuhvRU1jqTVwUrQ==",
+      "version": "25.2.3",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-25.2.3.tgz",
+      "integrity": "sha512-m0jEgYlYz+mDJZ2+F4v8D1AyQb+QzsNqRuI7xg1VQX/KlKS0qT9r1Mo16yo5F/MtifXFgaofIFsdFMox2SxIbQ==",
       "requires": {
         "undici-types": "~7.16.0"
       }

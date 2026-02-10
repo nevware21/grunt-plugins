@@ -182,6 +182,8 @@ describe("getTsConfigDetails", () => {
             }],
             false);
         assert.equal(result.length, 2)
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
+        // and merges config objects with overrides, creating new object instances
         assert.deepEqual(result[0].tsConfig, expectedContent1, "Actual:" + JSON.stringify(result[0].tsConfig, null, 2));
         assert.deepEqual(result[1].tsConfig, expectedContent2, "Actual:" + JSON.stringify(result[1].tsConfig, null, 2));
     });
@@ -475,6 +477,7 @@ describe("getTsConfigDetails", () => {
         const filePath = path.join(os.tmpdir(), "non-existing.json");
         const result = getTsConfigDetails(grunt, filePath, false);
         assert.equal(result.length, 1)
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails creates a new object instance
         assert.deepEqual(result[0].tsConfig, {compilerOptions:{}});
     });
 
@@ -484,14 +487,20 @@ describe("getTsConfigDetails", () => {
 
         const result1 = getTsConfigDetails(grunt, null, false);
         assert.equal(result1.length, 1, "result1: " + JSON.stringify(result1))
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
+        // and creates new object instances
         assert.deepEqual(result1[0].tsConfig, defaultConfig, "result1: " + JSON.stringify(result1));
 
         const result2 = getTsConfigDetails(grunt, undefined, false);
         assert.equal(result2.length, 1, "result2: " + JSON.stringify(result2))
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
+        // and creates new object instances
         assert.deepEqual(result2[0].tsConfig, defaultConfig, "result2: " + JSON.stringify(result2));
 
         const result3 = getTsConfigDetails(grunt, "", false);
         assert.equal(result3.length, 1, "result3: " + JSON.stringify(result3))
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
+        // and creates new object instances
         assert.deepEqual(result3[0].tsConfig, defaultConfig, "result3: " + JSON.stringify(result3));
     });
 
@@ -500,6 +509,7 @@ describe("getTsConfigDetails", () => {
             const details = getTsConfigDetails(grunt, "tsconfig.json", false);
             assert.equal(details.length, 1)
             details[0].addFiles("file1.ts");
+            // Using deepEqual instead of deepStrictEqual because the tsConfig.include array is a new instance
             assert.deepEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "file1.ts" ]);
         });
     
@@ -507,6 +517,7 @@ describe("getTsConfigDetails", () => {
             const details = getTsConfigDetails(grunt, "tsconfig.json", false);
             assert.equal(details.length, 1)
             details[0].addFiles([ "file1.ts", "file2.ts"]);
+            // Using deepEqual instead of deepStrictEqual because the tsConfig.include array is a new instance
             assert.deepEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "file1.ts", "file2.ts"]);
         });
     
@@ -514,6 +525,7 @@ describe("getTsConfigDetails", () => {
             const details = getTsConfigDetails(grunt, "tsconfig.json", false);
             assert.equal(details.length, 1)
             details[0].addFiles(["!file1.ts", "file2.ts"]);
+            // Using deepEqual instead of deepStrictEqual because the tsConfig arrays are new instances
             assert.deepEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "file2.ts" ]);
             assert.deepEqual(details[0].tsConfig.exclude, [ "node_modules/", "file1.ts" ]);
         });
@@ -522,6 +534,7 @@ describe("getTsConfigDetails", () => {
             const details = getTsConfigDetails(grunt, "tsconfig.json", false);
             assert.equal(details.length, 1)
             details[0].addFiles(["dir/**", "file2.ts"]);
+            // Using deepEqual instead of deepStrictEqual because the tsConfig.include array is a new instance
             assert.deepEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "dir/**/*", "file2.ts"] );
         });
     });
@@ -532,6 +545,7 @@ describe("getTsConfigDetails", () => {
             assert.equal(details.length, 1)
             details[0].tsConfig = { files: ["file1.ts", "file2.ts"] };
             const files = details[0].getFiles();
+            // Using deepEqual instead of deepStrictEqual because getFiles returns a new array instance
             assert.deepEqual(files, ["file1.ts", "file2.ts"]);
         });
 
@@ -540,14 +554,17 @@ describe("getTsConfigDetails", () => {
             assert.equal(details.length, 1)
             details[0].tsConfig = { include: ["file1.ts", "file2.ts"] };
             const files = details[0].getFiles();
+            // Using deepEqual instead of deepStrictEqual because getFiles returns a new array instance
             assert.deepEqual(files, ["file1.ts", "file2.ts"]);
         });
 
         it("should return an empty array when details.name is null", () => {
             const details = getTsConfigDetails(grunt, null, false);
             assert.equal(details.length, 1)
+            // Using deepEqual instead of deepStrictEqual because the tsConfig.include array is a new instance
             assert.deepEqual(details[0].tsConfig.include, [ "./src/**/*.ts"]);
             const files = details[0].getFiles();
+            // Using deepEqual instead of deepStrictEqual because getFiles returns a new array instance
             assert.deepEqual(files, [ "./src/**/*.ts" ]);
         });
     });
