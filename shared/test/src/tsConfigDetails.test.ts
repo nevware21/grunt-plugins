@@ -135,6 +135,8 @@ describe("getTsConfigDetails", () => {
         // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
         // and creates new object instances, causing tripwire's deepStrictEqual to fail
         assert.deepEqual(result[0].tsConfig, expectedContent1);
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
+        // and creates new object instances, causing tripwire's deepStrictEqual to fail
         assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
 
@@ -185,6 +187,8 @@ describe("getTsConfigDetails", () => {
         // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
         // and merges config objects with overrides, creating new object instances
         assert.deepEqual(result[0].tsConfig, expectedContent1, "Actual:" + JSON.stringify(result[0].tsConfig, null, 2));
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
+        // and merges config objects with overrides, creating new object instances
         assert.deepEqual(result[1].tsConfig, expectedContent2, "Actual:" + JSON.stringify(result[1].tsConfig, null, 2));
     });
 
@@ -235,6 +239,8 @@ describe("getTsConfigDetails", () => {
         // Using deepEqual instead of deepStrictEqual because getTsConfigDetails merges config objects,
         // creating new instances and potentially different property ordering
         assert.deepEqual(result[0].tsConfig, expectedContent1);
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails merges config objects,
+        // creating new instances and potentially different property ordering
         assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
 
@@ -287,6 +293,8 @@ describe("getTsConfigDetails", () => {
         // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
         // and merges config objects, creating new object instances
         assert.deepEqual(result[0].tsConfig, expectedContent1);
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
+        // and merges config objects, creating new object instances
         assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
 
@@ -340,6 +348,8 @@ describe("getTsConfigDetails", () => {
         // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
         // and merges config objects, creating new object instances
         assert.deepEqual(result[0].tsConfig, expectedContent1);
+        // Using deepEqual instead of deepStrictEqual because getTsConfigDetails reads from file
+        // and merges config objects, creating new object instances
         assert.deepEqual(result[1].tsConfig, expectedContent2);
     });
 
@@ -531,6 +541,7 @@ describe("getTsConfigDetails", () => {
             details[0].addFiles(["!file1.ts", "file2.ts"]);
             // Using deepEqual instead of deepStrictEqual because the tsConfig arrays are new instances
             assert.deepEqual(details[0].tsConfig.include, [ "./src/**/*.ts", "file2.ts" ]);
+            // Using deepEqual instead of deepStrictEqual because the tsConfig arrays are new instances
             assert.deepEqual(details[0].tsConfig.exclude, [ "node_modules/", "file1.ts" ]);
         });
     
