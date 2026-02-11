@@ -9,7 +9,7 @@
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { assert } from "chai";
+import { assert } from "@nevware21/tripwire";
 import { findCommonPath, findCommonRoot, findModulePath, getTempFile, locateModulePath, makeRelative, makeRelativeTo, normalizePath, quoteIfRequired, readJsonFile } from "../../src/fileHelpers";
 import { strEndsWith, strStartsWith } from "@nevware21/ts-utils";
 
@@ -294,7 +294,9 @@ describe("fileHelpers", () => {
                 const content = { key: "value" };
                 fs.writeFileSync(filePath, JSON.stringify(content));
                 const result = readJsonFile(filePath);
-                assert.deepStrictEqual(result, content);
+                // Using deepEqual instead of deepStrictEqual because readJsonFile parses JSON from file,
+                // creating a new object instance
+                assert.deepEqual(result, content);
             } finally {
                 fs.unlinkSync(filePath);
             }
@@ -303,7 +305,8 @@ describe("fileHelpers", () => {
         it("should return an empty object when the JSON file does not exist", () => {
             const filePath = path.join(os.tmpdir(), "non-existing.json");
             const result = readJsonFile(filePath);
-            assert.deepStrictEqual(result, {});
+            // Using deepEqual instead of deepStrictEqual because readJsonFile returns a new object instance
+            assert.deepEqual(result, {});
         });
 
         it("should return the content of the JSON file without comments when it contains comments", () => {
@@ -312,7 +315,9 @@ describe("fileHelpers", () => {
                 const content = { key: "value" };
                 fs.writeFileSync(filePath, `// This is a comment\n${JSON.stringify(content)}`);
                 const result = readJsonFile(filePath);
-                assert.deepStrictEqual(result, content);
+                // Using deepEqual instead of deepStrictEqual because readJsonFile parses JSON from file,
+                // creating a new object instance
+                assert.deepEqual(result, content);
             } finally {
                 fs.unlinkSync(filePath);
             }
@@ -324,7 +329,9 @@ describe("fileHelpers", () => {
                 const content = { key: "value" };
                 fs.writeFileSync(filePath, `/* This is a comment\n*/\n${JSON.stringify(content)}`);
                 const result = readJsonFile(filePath);
-                assert.deepStrictEqual(result, content);
+                // Using deepEqual instead of deepStrictEqual because readJsonFile parses JSON from file,
+                // creating a new object instance
+                assert.deepEqual(result, content);
             } finally {
                 fs.unlinkSync(filePath);
             }
@@ -336,7 +343,9 @@ describe("fileHelpers", () => {
                 const content = { key: "value" };
                 fs.writeFileSync(filePath, "{ \"key\": \"value\", }");
                 const result = readJsonFile(filePath);
-                assert.deepStrictEqual(result, content);
+                // Using deepEqual instead of deepStrictEqual because readJsonFile parses JSON from file,
+                // creating a new object instance
+                assert.deepEqual(result, content);
             } finally {
                 fs.unlinkSync(filePath);
             }
