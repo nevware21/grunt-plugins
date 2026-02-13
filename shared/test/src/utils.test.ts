@@ -7,7 +7,7 @@
  */
 
 
-import * as assert from "assert";
+import { assert } from "@nevware21/tripwire";
 import { deepMerge, mergeOptions, resolveValue, resolveValueAsync } from "../../src/utils";
 
 describe("utils", () => {
@@ -171,7 +171,7 @@ describe("utils", () => {
 
         it("should return an empty object when no values are provided", () => {
             const result = mergeOptions();
-            assert.deepStrictEqual(result, undefined);
+            assert.strictEqual(result, undefined);
         });
     });
 });

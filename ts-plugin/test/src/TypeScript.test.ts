@@ -7,7 +7,7 @@
  * Licensed under the MIT license.
  */
 
-import * as assert from "assert";
+import { assert } from "@nevware21/tripwire";
 import * as fs from "fs";
 import * as path from "path";
 import { IExecuteResponse, IGruntWrapper } from "@nevware21/grunt-plugins-shared-utils";
