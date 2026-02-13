@@ -7,7 +7,7 @@
  */
 
 
-import * as assert from "assert";
+import { assert } from "@nevware21/tripwire";
 import * as fs from "fs";
 import * as path from "path";
 import * as os from "os";
@@ -549,7 +549,7 @@ describe("getTsConfigDetails", () => {
                 assert.ok(fs.existsSync(tempName));
             } finally {
                 arrForEach(details, (d) => d.cleanupTemp());
-                arrForEach(details, (d) => assert.equal(fs.existsSync(d.tempName), false));
+                arrForEach(details, (d) => { assert.equal(fs.existsSync(d.tempName), false); });
             }
         });
 
@@ -562,7 +562,7 @@ describe("getTsConfigDetails", () => {
                 assert.strictEqual(tempName, "tsconfig.json");
             } finally {
                 arrForEach(details, (d) => d.cleanupTemp());
-                arrForEach(details, (d) => assert.equal(fs.existsSync(d.tempName), false));
+                arrForEach(details, (d) => { assert.equal(fs.existsSync(d.tempName), false); });
             }
         });
     });
