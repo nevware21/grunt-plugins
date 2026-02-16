@@ -9,7 +9,7 @@
       "version": "0.0.0",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@nevware21/tripwire": ">= 0.1.6 < 2.x",
+        "@nevware21/tripwire": ">= 0.1.7 < 2.x",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^29.0.0",
@@ -1151,10 +1151,10 @@
     "node_modules/@rush-temp/grunt-eslint-ts": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-eslint-ts.tgz",
-      "integrity": "sha512-JqYvV2NjYKPZIcxEjjhzV/bx9p+B3teetIBpcozusnqe6N/7OCre3CJwX731TcwPVlxhYRRrrFRqEypg0cxV3Q==",
+      "integrity": "sha512-zQh8d0Ia0zyffDJy7WacKDZz7C7IpI6SK0kv3R5Md/2+pX3qqOpHViSRRtmBR8GvO38SrAuo45ccog7graKgMw==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@nevware21/tripwire": ">= 0.1.6 < 2.x",
+        "@nevware21/tripwire": ">= 0.1.7 < 2.x",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^29.0.0",
@@ -1186,10 +1186,10 @@
     "node_modules/@rush-temp/grunt-plugins-shared-utils": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-plugins-shared-utils.tgz",
-      "integrity": "sha512-kE8p7MwsBrrZJKvR14La7b82k0jHuHM11vfVi/KjeWcYQ8NNC/KkI2vhNZR7z1Ex4hzzaPfRcnPgPzLEtODFgw==",
+      "integrity": "sha512-WUaIDLZrM3AH2trn1UNcLWr5x1/enScC7NNmKuJjaYKDPfwD40/KHcSG5Mr1G5tbd7vNsSlH73zcBviXIJ+azA==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@nevware21/tripwire": ">= 0.1.6 < 2.x",
+        "@nevware21/tripwire": ">= 0.1.7 < 2.x",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^29.0.0",
@@ -1214,10 +1214,10 @@
     "node_modules/@rush-temp/grunt-ts-plugin": {
       "version": "0.0.0",
       "resolved": "file:projects/grunt-ts-plugin.tgz",
-      "integrity": "sha512-5SvDysENNUMhXdYsj01P98I0cwrQAbIm9FT3I2Q4HbHwmMPqk4JkF9xSxjcpRW9NhRwwl8KdvoI6cHMtikibsQ==",
+      "integrity": "sha512-xVcHmZgmVAW6ujgAVkl6bWbSGtnzzeKjW9bTf8tbjzpRh0fufsLSdRZMEHLQzU8uxbffaeQtuwgDk+fvHg5RQA==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@nevware21/tripwire": ">= 0.1.6 < 2.x",
+        "@nevware21/tripwire": ">= 0.1.7 < 2.x",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^29.0.0",
@@ -1875,9 +1875,9 @@
       }
     },
     "node_modules/caniuse-lite": {
-      "version": "1.0.30001769",
-      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001769.tgz",
-      "integrity": "sha512-BCfFL1sHijQlBGWBMuJyhZUhzo7wer5sVj9hqekB/7xn0Ypy+pER/edCYQm4exbXj4WiySGp40P8UuTh6w1srg==",
+      "version": "1.0.30001770",
+      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001770.tgz",
+      "integrity": "sha512-x/2CLQ1jHENRbHg5PSId2sXq1CIO1CISvwWAj027ltMVG2UNgW+w9oH2+HzgEIRFembL8bUlXtfbBHR1fCg2xw==",
       "funding": [
         {
           "type": "opencollective",
@@ -6083,11 +6083,11 @@
       "optional": true
     },
     "@rush-temp/grunt-eslint-ts": {
-      "version": "file:projects\\grunt-eslint-ts.tgz",
-      "integrity": "sha512-JqYvV2NjYKPZIcxEjjhzV/bx9p+B3teetIBpcozusnqe6N/7OCre3CJwX731TcwPVlxhYRRrrFRqEypg0cxV3Q==",
+      "version": "file:projects/grunt-eslint-ts.tgz",
+      "integrity": "sha512-zQh8d0Ia0zyffDJy7WacKDZz7C7IpI6SK0kv3R5Md/2+pX3qqOpHViSRRtmBR8GvO38SrAuo45ccog7graKgMw==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@nevware21/tripwire": ">= 0.1.6 < 2.x",
+        "@nevware21/tripwire": ">= 0.1.7 < 2.x",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^29.0.0",
@@ -6117,11 +6117,11 @@
       }
     },
     "@rush-temp/grunt-plugins-shared-utils": {
-      "version": "file:projects\\grunt-plugins-shared-utils.tgz",
-      "integrity": "sha512-kE8p7MwsBrrZJKvR14La7b82k0jHuHM11vfVi/KjeWcYQ8NNC/KkI2vhNZR7z1Ex4hzzaPfRcnPgPzLEtODFgw==",
+      "version": "file:projects/grunt-plugins-shared-utils.tgz",
+      "integrity": "sha512-WUaIDLZrM3AH2trn1UNcLWr5x1/enScC7NNmKuJjaYKDPfwD40/KHcSG5Mr1G5tbd7vNsSlH73zcBviXIJ+azA==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@nevware21/tripwire": ">= 0.1.6 < 2.x",
+        "@nevware21/tripwire": ">= 0.1.7 < 2.x",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^29.0.0",
@@ -6144,11 +6144,11 @@
       }
     },
     "@rush-temp/grunt-ts-plugin": {
-      "version": "file:projects\\grunt-ts-plugin.tgz",
-      "integrity": "sha512-5SvDysENNUMhXdYsj01P98I0cwrQAbIm9FT3I2Q4HbHwmMPqk4JkF9xSxjcpRW9NhRwwl8KdvoI6cHMtikibsQ==",
+      "version": "file:projects/grunt-ts-plugin.tgz",
+      "integrity": "sha512-xVcHmZgmVAW6ujgAVkl6bWbSGtnzzeKjW9bTf8tbjzpRh0fufsLSdRZMEHLQzU8uxbffaeQtuwgDk+fvHg5RQA==",
       "requires": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@nevware21/tripwire": ">= 0.1.6 < 2.x",
+        "@nevware21/tripwire": ">= 0.1.7 < 2.x",
         "@nevware21/ts-async": ">= 0.5.2 < 2.x",
         "@nevware21/ts-utils": ">= 0.11.3 < 2.x",
         "@rollup/plugin-commonjs": "^29.0.0",
@@ -6609,9 +6609,9 @@
       "integrity": "sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg=="
     },
     "caniuse-lite": {
-      "version": "1.0.30001769",
-      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001769.tgz",
-      "integrity": "sha512-BCfFL1sHijQlBGWBMuJyhZUhzo7wer5sVj9hqekB/7xn0Ypy+pER/edCYQm4exbXj4WiySGp40P8UuTh6w1srg=="
+      "version": "1.0.30001770",
+      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001770.tgz",
+      "integrity": "sha512-x/2CLQ1jHENRbHg5PSId2sXq1CIO1CISvwWAj027ltMVG2UNgW+w9oH2+HzgEIRFembL8bUlXtfbBHR1fCg2xw=="
     },
     "chalk": {
       "version": "4.1.2",
