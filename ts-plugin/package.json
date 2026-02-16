@@ -62,7 +62,7 @@
         "@types/mocha": "^10.0.7",
         "@types/node": "^25.2.2",
         "@types/sinon": "^21.0.0",
-        "@nevware21/tripwire": ">= 0.1.6 < 2.x",
+        "@nevware21/tripwire": ">= 0.1.7 < 2.x",
         "cross-env": "^10.1.0",
         "codecov": "^3.8.3",
         "mocha": "^10.5.2",
