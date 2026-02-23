@@ -50,7 +50,7 @@
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@types/grunt": "^0.4.27",
         "@types/eslint": "~8.56.12",
-        "grunt": "^1.5.3",
+        "grunt": "^1.6.1",
         "grunt-cli": "^1.4.3",
         "typescript": "5.2.2",
         "rollup": "^4.6.0",
