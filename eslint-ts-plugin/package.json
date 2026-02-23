@@ -48,7 +48,7 @@
         "@types/estree": "^1.0.1",
         "@types/grunt": "^0.4.27",
         "@nevware21/grunt-plugins-shared-utils": "0.5.1",
-        "grunt": "^1.5.3",
+        "grunt": "^1.6.1",
         "grunt-cli": "^1.4.3",
         "typescript": "5.2.2",
         "rollup": "^4.6.0",
