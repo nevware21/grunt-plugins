@@ -1,3 +1,18 @@
+# v0.5.2 (Feb 23rd, 2026)
+
+## Changelog
+
+- #335 [FIX] Resolve TypeScript compilation errors and dependency compatibility issues
+- #369 [Breaking Change] Replace chai with @nevware21/tripwire testing framework
+- #412 Upgrade grunt devDependency from ^1.5.3 to ^1.6.1
+- #410 Bump all @nevware21 components to latest recommended versions
+- #319 Add GitHub Copilot instructions for monorepo development workflow
+- Update GitHub Actions (checkout v6, setup-node v6, codeql-action v4)
+- Update CODEOWNERS file and team structure
+- Multiple dependency updates (@types/node, @rollup components, sinon, and others)
+
+[Full Release Details](https://github.com/nevware21/grunt-plugins/releases/tag/v0.5.2)
+
 # v0.5.1 (Sept 2nd, 2024)
 
 ## Changelog
