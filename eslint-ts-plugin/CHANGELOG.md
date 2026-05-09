@@ -2,7 +2,7 @@
 
 ## Changelog
 
-- [Feature] Upgrade grunt devDependency from ^1.6.1 to ^1.6.2
+- Upgrade grunt devDependency from ^1.6.1 to ^1.6.2
 
 # v0.5.2 (Feb 23rd, 2026)
 
