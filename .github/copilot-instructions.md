@@ -168,3 +168,71 @@ Since automated build/test/lint are broken, use these manual validation approach
 1. Test grunt-ts-plugin: Create a test project with tsconfig.json and verify compilation
 2. Test grunt-eslint-ts: Create a test project with .eslintrc and verify linting
 3. Both plugins should work independently even though the monorepo build is broken
+
+## Release Process
+
+All releases follow a standard process. **The commit/PR title must always follow this format**:
+
+```
+[Release] Increase version to X.Y.Z
+```
+
+### Files to Update for a Release
+
+When creating a release for version `X.Y.Z`, update **all** of the following files:
+
+1. **`package.json`** (root) — bump the `"version"` field to `X.Y.Z`
+2. **`shared/package.json`** — bump the `"version"` field to `X.Y.Z`
+3. **`ts-plugin/package.json`** — bump the `"version"` field to `X.Y.Z` **and** update the `"@nevware21/grunt-plugins-shared-utils"` devDependency to `X.Y.Z`
+4. **`eslint-ts-plugin/package.json`** — bump the `"version"` field to `X.Y.Z` **and** update the `"@nevware21/grunt-plugins-shared-utils"` devDependency to `X.Y.Z`
+5. **`ts-plugin/CHANGELOG.md`** — add a new version section (see format below)
+6. **`eslint-ts-plugin/CHANGELOG.md`** — add a new version section (see format below)
+7. **`README.md`** (root) — update any reference to the recommended/tested plugin version to `X.Y.Z`
+8. **`common/config/rush/npm-shrinkwrap.json`** — run `npm run rupdate` after version bumps so Rush regenerates this file
+
+### CHANGELOG Format
+
+Each CHANGELOG file (`ts-plugin/CHANGELOG.md`, `eslint-ts-plugin/CHANGELOG.md`) follows this structure:
+
+```markdown
+# Unreleased
+
+## Changelog
+
+(items added here after the release for the next version)
+
+# vX.Y.Z (Month Dth, YYYY)
+
+## Changelog
+
+- <significant change 1>
+- <significant change 2>
+- ...
+
+[Full Release Details](https://github.com/nevware21/grunt-plugins/releases/tag/vX.Y.Z)
+
+# vX.Y.(Z-1) ...
+```
+
+**Rules for updating the CHANGELOG:**
+
+- **Prepend** the new version section above all existing version sections
+- **Include only significant changes** in the new version section — you do not need to list every minor dependency bump. Group minor dependency bumps into a single summary line (e.g., `Multiple dependency updates (@types/node, @rollup components, and others)`)
+- **Always add a `[Full Release Details]` link** at the bottom of the new version's changelog section, pointing to the GitHub release tag: `https://github.com/nevware21/grunt-plugins/releases/tag/vX.Y.Z`
+- **Preserve the `# Unreleased` section** — if the CHANGELOG already has a `# Unreleased` section with listed items, include those items as-is in the new version's section. Do **not** remove or reduce them. After the release, leave a fresh empty `# Unreleased` section at the top for future changes.
+
+### Release Tags
+
+GitHub releases are tagged separately for each publishable package:
+- `ts-plugin-X.Y.Z` for `@nevware21/grunt-ts-plugin` (e.g., `ts-plugin-0.5.2`)
+- `eslint-ts-X.Y.Z` for `@nevware21/grunt-eslint-ts` (e.g., `eslint-ts-0.5.2`)
+
+The `[Full Release Details]` link added to each package CHANGELOG conventionally uses the `vX.Y.Z` format (e.g., `https://github.com/nevware21/grunt-plugins/releases/tag/v0.5.2`) as a shared reference for the version, even though the per-package GitHub release tags use the `ts-plugin-X.Y.Z` / `eslint-ts-X.Y.Z` naming scheme.
+
+### Packages Published
+
+Only two packages are published to npm (per `rush.json` `shouldPublish: true`):
+- `@nevware21/grunt-ts-plugin` (`ts-plugin/`)
+- `@nevware21/grunt-eslint-ts` (`eslint-ts-plugin/`)
+
+The shared utils package (`shared/`) has `shouldPublish: false` and is not published independently.
