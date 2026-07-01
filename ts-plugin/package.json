@@ -65,7 +65,7 @@
         "@rollup/plugin-node-resolve": "^16.0.3",
         "@types/mocha": "^10.0.7",
         "@types/node": "^26.0.0",
-        "@types/sinon": "^21.0.0",
+        "@types/sinon": "^22.0.0",
         "@nevware21/tripwire": ">= 0.1.8 < 2.x",
         "cross-env": "^10.1.0",
         "codecov": "^3.8.3",
@@ -79,6 +79,7 @@
         "typescript": ">=1"
     }
 }
+
 
 
 
