@@ -54,7 +54,7 @@
         "@nevware21/grunt-plugins-shared-utils": "0.5.2",
         "grunt": "^1.6.2",
         "grunt-cli": "^1.4.3",
-        "typescript": "5.9.3",
+        "typescript": "7.0.2",
         "rollup": "^4.6.0",
         "@rollup/plugin-commonjs": "^29.0.0",
         "@rollup/plugin-node-resolve": "^16.0.3",
